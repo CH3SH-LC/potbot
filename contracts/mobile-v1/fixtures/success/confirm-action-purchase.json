@@ -1,0 +1,21 @@
+{
+  "$schemaRef": "schemas/confirm-action.schema.json",
+  "note": "确认动作：关键条件（参数摘要/任务修订/报价/金额/币种/期限/范围）任一变化即失效，故全部是必需字段。",
+  "value": {
+    "actionId": "act-3001",
+    "accountRef": "acct:meituan-demo",
+    "taskRevision": 7,
+    "paramsDigest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "quoteRef": "quote:mt-5566",
+    "amount": "38.50",
+    "currency": "CNY",
+    "expiresAt": "2026-10-03T09:00:00Z",
+    "scope": "purchase",
+    "authorizationGrant": {
+      "grantId": "grant-1",
+      "actionId": "act-3001",
+      "issuedAt": "2026-10-03T08:30:00Z",
+      "consumed": false
+    }
+  }
+}

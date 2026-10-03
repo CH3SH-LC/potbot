@@ -1,0 +1,14 @@
+{
+  "$schemaRef": "schemas/external-receipt.schema.json",
+  "note": "K07 toWireExternalReceipt() 输出：fixture 模式、observedState=unknown（fixture 不得 confirmed，不变量 1）。",
+  "value": {
+    "actionId": "act-k07-2",
+    "provider": "meituan",
+    "requestRef": "sub:act-k07-2",
+    "externalId": "MT-2026-0002",
+    "observedState": "unknown",
+    "observedAt": "2026-10-03T00:00:09.000Z",
+    "evidenceRef": "evidence://meituan/MT-2026-0002",
+    "verificationMode": "fixture"
+  }
+}

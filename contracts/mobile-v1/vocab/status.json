@@ -1,0 +1,23 @@
+{
+  "version": "mobile-v1",
+  "$comment": "六线共用状态词表。机器可读；与 schemas/*.json 中对应 $defs 的 enum 必须逐字一致（由 tests/contracts/mobile-v1/contract.test.ts 断言）。",
+  "externalReceiptStates": [
+    "prepared",
+    "authorized",
+    "submitting",
+    "submitted",
+    "unknown",
+    "confirmed",
+    "failed",
+    "cancelled"
+  ],
+  "verificationLayers": [
+    "unit",
+    "contract",
+    "real-api",
+    "on-device",
+    "consumer-reopen",
+    "cross-lane"
+  ],
+  "verificationModes": ["fixture", "real"]
+}

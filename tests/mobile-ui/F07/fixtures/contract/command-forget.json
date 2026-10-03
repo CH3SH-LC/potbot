@@ -1,0 +1,15 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "F07 遗忘：mutate 分支，遗忘范围放在 args.scope",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-f07-forget-1",
+    "operation": "mutate",
+    "idempotencyKey": "idem-f07-forget-1",
+    "payload": {
+      "conversationId": "conv-1",
+      "expectedRevision": 3,
+      "args": { "action": "forget", "scope": { "kind": "owner" } }
+    }
+  }
+}

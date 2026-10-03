@@ -1,0 +1,11 @@
+{
+  "$schemaRef": "schemas/event.schema.json",
+  "note": "反例：succeeded 不带 resultRef（不变量 3 fail-closed）。",
+  "value": {
+    "eventId": "evt-neg",
+    "seq": 1,
+    "commandId": "cmd-neg",
+    "revision": 0,
+    "status": "succeeded"
+  }
+}

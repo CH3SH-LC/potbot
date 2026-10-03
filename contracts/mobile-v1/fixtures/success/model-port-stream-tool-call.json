@@ -1,0 +1,11 @@
+{
+  "$schemaRef": "schemas/model-port.schema.json#/$defs/streamChunk",
+  "note": "流式片段：tool-call，必须带 toolCallId，供工具结果一一对应。",
+  "value": {
+    "type": "tool-call",
+    "toolCallId": "call-7788",
+    "toolName": "read_document",
+    "arguments": { "artifactId": "doc-7" },
+    "done": false
+  }
+}

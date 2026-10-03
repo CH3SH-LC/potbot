@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/mobile-v1/schemas/command.schema.json",
+  "title": "Command",
+  "description": "公共命令输入。冻结必需字段：schemaVersion / commandId / operation / idempotencyKey / payload。create（及 import）允许目标 id/revision 缺省，由内核生成；对已有对象的 mutation 必须带 conversationId 或 taskId 以及 expectedRevision。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "commandId", "operation", "idempotencyKey", "payload"],
+  "properties": {
+    "schemaVersion": { "$ref": "#/$defs/schemaVersion" },
+    "commandId": { "$ref": "#/$defs/id" },
+    "operation": { "$ref": "#/$defs/operation" },
+    "idempotencyKey": { "$ref": "#/$defs/id" },
+    "payload": { "type": "object" },
+    "metadata": { "type": "object" }
+  },
+  "allOf": [
+    {
+      "oneOf": [
+        { "$ref": "#/$defs/createBranch" },
+        { "$ref": "#/$defs/mutationBranch" },
+        { "$ref": "#/$defs/queryBranch" }
+      ]
+    }
+  ],
+  "$defs": {
+    "schemaVersion": { "const": "mobile-v1" },
+    "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "revision": { "type": "integer", "minimum": 0 },
+    "operation": {
+      "enum": [
+        "create",
+        "import",
+        "mutate",
+        "apply",
+        "export",
+        "undo",
+        "redo",
+        "preview",
+        "inspect",
+        "query",
+        "cancel"
+      ]
+    },
+    "targetPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "conversationId": { "$ref": "#/$defs/id" },
+        "taskId": { "$ref": "#/$defs/id" },
+        "targetId": { "$ref": "#/$defs/id" },
+        "id": { "$ref": "#/$defs/id" },
+        "revision": { "$ref": "#/$defs/revision" },
+        "expectedRevision": { "$ref": "#/$defs/revision" },
+        "goal": { "type": "string", "minLength": 1 },
+        "templateId": { "$ref": "#/$defs/id" },
+        "roleHint": { "type": "string" },
+        "content": { "type": "string" },
+        "patch": { "type": "object" },
+        "args": { "type": "object" },
+        "filters": { "type": "object" }
+      }
+    },
+    "createBranch": {
+      "description": "create/import：目标 id/revision 可缺省，由内核生成；不要求 expectedRevision。",
+      "required": ["operation", "payload"],
+      "properties": {
+        "operation": { "enum": ["create", "import"] },
+        "payload": { "$ref": "#/$defs/targetPayload" }
+      }
+    },
+    "mutationBranch": {
+      "description": "对已有对象的 mutation：必须带 conversationId 或 taskId，且必须带 expectedRevision。",
+      "required": ["operation", "payload"],
+      "properties": {
+        "operation": { "enum": ["mutate", "apply", "export", "undo", "redo"] },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["expectedRevision"],
+          "anyOf": [{ "required": ["conversationId"] }, { "required": ["taskId"] }],
+          "properties": {
+            "conversationId": { "$ref": "#/$defs/id" },
+            "taskId": { "$ref": "#/$defs/id" },
+            "targetId": { "$ref": "#/$defs/id" },
+            "id": { "$ref": "#/$defs/id" },
+            "revision": { "$ref": "#/$defs/revision" },
+            "expectedRevision": { "$ref": "#/$defs/revision" },
+            "patch": { "type": "object" },
+            "args": { "type": "object" },
+            "content": { "type": "string" }
+          }
+        }
+      }
+    },
+    "queryBranch": {
+      "description": "只读或取消类命令：必须指向一个已有对象（conversationId 或 taskId）。",
+      "required": ["operation", "payload"],
+      "properties": {
+        "operation": { "enum": ["preview", "inspect", "query", "cancel"] },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "anyOf": [{ "required": ["conversationId"] }, { "required": ["taskId"] }],
+          "properties": {
+            "conversationId": { "$ref": "#/$defs/id" },
+            "taskId": { "$ref": "#/$defs/id" },
+            "targetId": { "$ref": "#/$defs/id" },
+            "id": { "$ref": "#/$defs/id" },
+            "revision": { "$ref": "#/$defs/revision" },
+            "expectedRevision": { "$ref": "#/$defs/revision" },
+            "filters": { "type": "object" }
+          }
+        }
+      }
+    }
+  }
+}

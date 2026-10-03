@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tests/mobile-ui/F-R05/journey-audit.schema.json",
+  "title": "JourneyAuditReport (F-R05)",
+  "description": "F-R05 审计报告形状的机器可读规格。注意：本文件位于 tests/ 下，**不在** contracts/mobile-v1/schemas/，因此**不**由共享校验器 contracts/mobile-v1/validate.mjs 校验（该校验器只解析相对自身目录的 $schemaRef）。它是本包输出形状的规格与文档；产物本身（event/receipt/facts/manifest）由真实校验器单独校验。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "journeys",
+    "realCount",
+    "fixtureOnlyCount",
+    "unmarkedCount",
+    "missingCount",
+    "masqueradeCount",
+    "masqueradeArtifacts",
+    "productSuccess",
+    "unverifiedLayers",
+    "summary"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "mobile-v1" },
+    "journeys": {
+      "type": "array",
+      "minItems": 12,
+      "items": { "$ref": "#/$defs/journeyVerdict" }
+    },
+    "realCount": { "type": "integer", "minimum": 0 },
+    "fixtureOnlyCount": { "type": "integer", "minimum": 0 },
+    "unmarkedCount": { "type": "integer", "minimum": 0 },
+    "missingCount": { "type": "integer", "minimum": 0 },
+    "masqueradeCount": { "type": "integer", "minimum": 0 },
+    "masqueradeArtifacts": { "type": "array", "items": { "type": "string" } },
+    "productSuccess": { "type": "boolean" },
+    "unverifiedLayers": {
+      "type": "array",
+      "items": {
+        "enum": ["unit", "contract", "real-api", "on-device", "consumer-reopen", "cross-lane"]
+      }
+    },
+    "summary": { "type": "string", "minLength": 1 }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "evidenceStatus": {
+      "enum": ["real", "fixture", "unmarked", "missing", "masquerade"]
+    },
+    "slotVerdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slotId", "status", "matchedIds", "reason"],
+      "properties": {
+        "slotId": { "$ref": "#/$defs/id" },
+        "status": { "$ref": "#/$defs/evidenceStatus" },
+        "matchedIds": { "type": "array", "items": { "type": "string" } },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "invariantVerdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "ok", "reason"],
+      "properties": {
+        "kind": { "enum": ["no-duplicate-submission", "monotonic-events"] },
+        "ok": { "type": "boolean" },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "journeyVerdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "journeyId",
+        "title",
+        "requirementCodes",
+        "status",
+        "slots",
+        "invariants",
+        "productSuccess",
+        "summary"
+      ],
+      "properties": {
+        "journeyId": { "enum": ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12"] },
+        "title": { "type": "string", "minLength": 1 },
+        "requirementCodes": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "status": { "$ref": "#/$defs/evidenceStatus" },
+        "slots": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/slotVerdict" } },
+        "invariants": { "type": "array", "items": { "$ref": "#/$defs/invariantVerdict" } },
+        "productSuccess": { "type": "boolean" },
+        "summary": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

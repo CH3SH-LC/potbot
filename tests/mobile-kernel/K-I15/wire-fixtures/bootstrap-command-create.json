@@ -1,0 +1,14 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "K01 bootstrap.validateCommand() 通过后的 create 命令（$defs.createBranch）。",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-k01-create",
+    "operation": "create",
+    "idempotencyKey": "idem-k01-create",
+    "payload": {
+      "goal": "把这份周报改成一页",
+      "templateId": "word-doc"
+    }
+  }
+}

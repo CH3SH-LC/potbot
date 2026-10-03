@@ -1,0 +1,14 @@
+{
+  "$schemaRef": "schemas/external-receipt.schema.json",
+  "note": "负例对照：verificationMode=fixture 却报 observedState=confirmed —— 契约 oneOf/not 不变量必须拒绝（假端口不得冒充真实完成）。此文件使校验器 exit 1，是反向对照，证明校验器不是空壳。",
+  "value": {
+    "actionId": "act-wire-1",
+    "provider": "fixture-provider",
+    "requestRef": "sub:act-wire-1",
+    "externalId": "fixture-1",
+    "observedState": "confirmed",
+    "observedAt": "2026-10-03T00:00:05.000Z",
+    "evidenceRef": "evidence://fixture/1",
+    "verificationMode": "fixture"
+  }
+}

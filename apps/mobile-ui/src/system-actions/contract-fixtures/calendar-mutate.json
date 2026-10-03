@@ -1,0 +1,41 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-calendar-event-8f057c0ee65858a3",
+    "operation": "mutate",
+    "idempotencyKey": "idem-calendar-event-8f057c0ee65858a3",
+    "payload": {
+      "conversationId": "conv-1",
+      "targetId": "ev-1",
+      "expectedRevision": 3,
+      "patch": {
+        "kind": "calendar-event",
+        "title": "评审会",
+        "timezone": "Asia/Shanghai",
+        "accountRef": "acct:cal-work",
+        "time": {
+          "instant": "2026-10-04T01:00:00Z",
+          "timezone": "Asia/Shanghai",
+          "allDay": false
+        },
+        "recurrence": {
+          "rule": "FREQ=WEEKLY"
+        },
+        "occurrenceScope": "this-and-future",
+        "conflictRefs": [],
+        "inviteRefs": [],
+        "inviteState": "none"
+      }
+    },
+    "metadata": {
+      "entry": "system-action",
+      "kind": "calendar-event",
+      "returnTarget": {
+        "conversationId": "conv-1",
+        "anchorMessageId": null,
+        "origin": "system-actions"
+      }
+    }
+  }
+}

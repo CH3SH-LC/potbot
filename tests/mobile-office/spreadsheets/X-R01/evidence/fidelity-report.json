@@ -1,0 +1,167 @@
+{
+  "corpus_size": 8,
+  "entries": [
+    {
+      "id": "excel-multisheet-rich",
+      "provenance": "excel-emulation",
+      "ok": true,
+      "import_status": "ok",
+      "source_digest": "2e4cd56f8fb92c19e8bc4154a74f939ffab3ae0e069c898275a1ef4ecc695826",
+      "exported_digest": "490f3277de165bd2ecafbf8238ab6e13556407de13f24e8cac4178709a18b6bf",
+      "preserved_parts": [
+        "docProps/app.xml",
+        "docProps/core.xml",
+        "xl/calcChain.xml",
+        "xl/comments1.xml",
+        "xl/theme/theme1.xml",
+        "xl/worksheets/_rels/sheet1.xml.rels"
+      ],
+      "missing_preserved_parts": [],
+      "byte_mismatch_parts": [],
+      "dropped_relationships": [
+        "xl/workbook.xml → sharedStrings.xml（目标部件不在本包内）"
+      ],
+      "relationships_out": [
+        "null|http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties|docProps/app.xml|Internal",
+        "null|http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument|xl/workbook.xml|Internal",
+        "null|http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties|docProps/core.xml|Internal",
+        "xl/workbook.xml|http://schemas.openxmlformats.org/officeDocument/2006/relationships/calcChain|calcChain.xml|Internal",
+        "xl/workbook.xml|http://schemas.openxmlformats.org/officeDocument/2006/relationships/externalLink|https://example.invalid/shared/source-workbook.xlsx|External",
+        "xl/workbook.xml|http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles|styles.xml|Internal",
+        "xl/workbook.xml|http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme|theme/theme1.xml|Internal",
+        "xl/workbook.xml|http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet|worksheets/sheet1.xml|Internal",
+        "xl/workbook.xml|http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet|worksheets/sheet2.xml|Internal",
+        "xl/workbook.xml|http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet|worksheets/sheet3.xml|Internal"
+      ],
+      "violations": []
+    },
+    {
+      "id": "wps-default-content-types",
+      "provenance": "wps-emulation",
+      "ok": true,
+      "import_status": "ok",
+      "source_digest": "67e3b78af8fb6445a638cdf92973c3a51c908395c903a5a6356f1a87ae84bfe4",
+      "exported_digest": "b2e7174daee88cfb4cfadf00343f71139028e584747800e3516503a78d03f5f9",
+      "preserved_parts": [
+        "docProps/core.xml",
+        "docProps/custom.xml"
+      ],
+      "missing_preserved_parts": [],
+      "byte_mismatch_parts": [],
+      "dropped_relationships": [],
+      "relationships_out": [
+        "null|http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument|xl/workbook.xml|Internal",
+        "xl/workbook.xml|http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles|styles.xml|Internal",
+        "xl/workbook.xml|http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet|worksheets/sheet1.xml|Internal"
+      ],
+      "violations": []
+    },
+    {
+      "id": "excel-defined-names-shared-range",
+      "provenance": "excel-emulation",
+      "ok": true,
+      "import_status": "ok",
+      "source_digest": "841b563f55e579ee5707eb46e4892d910642c8b9bafb50e829ef55051ff0da31",
+      "exported_digest": "3eee7e40365711fcd8a7e3ad4f932b49614c8887888f34b7c4d926644aa3b754",
+      "preserved_parts": [
+        "docProps/core.xml"
+      ],
+      "missing_preserved_parts": [],
+      "byte_mismatch_parts": [],
+      "dropped_relationships": [],
+      "relationships_out": [
+        "null|http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument|xl/workbook.xml|Internal",
+        "null|http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties|docProps/core.xml|Internal",
+        "xl/workbook.xml|http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles|styles.xml|Internal",
+        "xl/workbook.xml|http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet|worksheets/sheet1.xml|Internal"
+      ],
+      "violations": []
+    },
+    {
+      "id": "excel-drawing-sheet-rels",
+      "provenance": "excel-emulation",
+      "ok": true,
+      "import_status": "ok",
+      "source_digest": "adf7f24e05a68a4eb30a2feed1176474aa3b1b602bbb111735ccea37a23334ce",
+      "exported_digest": "978406e2331f6e9c67bc2203409b61ce6e6b0eff6410399532d7f903a72aca5b",
+      "preserved_parts": [
+        "xl/drawings/drawing1.xml",
+        "xl/worksheets/_rels/sheet1.xml.rels"
+      ],
+      "missing_preserved_parts": [],
+      "byte_mismatch_parts": [],
+      "dropped_relationships": [],
+      "relationships_out": [
+        "null|http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument|xl/workbook.xml|Internal",
+        "xl/workbook.xml|http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles|styles.xml|Internal",
+        "xl/workbook.xml|http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet|worksheets/sheet1.xml|Internal"
+      ],
+      "violations": []
+    },
+    {
+      "id": "negative-not-zip",
+      "provenance": "negative-fixture",
+      "ok": true,
+      "import_status": "rejected",
+      "import_error": "ZipReadError",
+      "source_digest": "f3cac7b9cb4fbc3de095fc92762f1623ceaf54df7a7971e250441ccd1ac923d0",
+      "exported_digest": null,
+      "preserved_parts": [],
+      "missing_preserved_parts": [],
+      "byte_mismatch_parts": [],
+      "dropped_relationships": [],
+      "relationships_out": [],
+      "violations": []
+    },
+    {
+      "id": "negative-truncated",
+      "provenance": "negative-fixture",
+      "ok": true,
+      "import_status": "rejected",
+      "import_error": "ZipReadError",
+      "source_digest": "57e00c1eb48932a3e59bdfe42bed313ab812320cc174e44b3f913e7bc53cf44d",
+      "exported_digest": null,
+      "preserved_parts": [],
+      "missing_preserved_parts": [],
+      "byte_mismatch_parts": [],
+      "dropped_relationships": [],
+      "relationships_out": [],
+      "violations": []
+    },
+    {
+      "id": "negative-missing-workbook",
+      "provenance": "negative-fixture",
+      "ok": true,
+      "import_status": "rejected",
+      "import_error": "ValidationError",
+      "source_digest": "93659db6d22276e8655df8d2ff6b8bf423d4ff8544a5bdb14309a41b1f5d1048",
+      "exported_digest": null,
+      "preserved_parts": [],
+      "missing_preserved_parts": [],
+      "byte_mismatch_parts": [],
+      "dropped_relationships": [],
+      "relationships_out": [],
+      "violations": []
+    },
+    {
+      "id": "negative-unsupported-error-code",
+      "provenance": "negative-fixture",
+      "ok": true,
+      "import_status": "rejected",
+      "import_error": "ValidationError",
+      "source_digest": "03284bebed089e346e31f921573f99e7e2f7e1b53b774f14be2f04e851e242ef",
+      "exported_digest": null,
+      "preserved_parts": [],
+      "missing_preserved_parts": [],
+      "byte_mismatch_parts": [],
+      "dropped_relationships": [],
+      "relationships_out": [],
+      "violations": []
+    }
+  ],
+  "violations": [],
+  "summary": {
+    "passed": 8,
+    "failed": 0
+  }
+}

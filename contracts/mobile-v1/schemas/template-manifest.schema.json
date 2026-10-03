@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/mobile-v1/schemas/template-manifest.schema.json",
+  "title": "TemplateManifest",
+  "description": "模板清单。冻结必需字段：id / version / capabilities / schemas / permissions / runtimeCompatibility / migration / probe。四个就绪态 installed / enabled / authorized / portReady 必须分别报告（各自独立布尔），不得合并成一个布尔——因此根对象 additionalProperties=false 会直接拒绝额外的合并字段（如 ready）。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "capabilities",
+    "schemas",
+    "permissions",
+    "runtimeCompatibility",
+    "migration",
+    "probe"
+  ],
+  "properties": {
+    "id": { "$ref": "#/$defs/id" },
+    "displayName": { "type": "string", "minLength": 1 },
+    "version": { "$ref": "#/$defs/version" },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "schemas": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "permissions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/permission" }
+    },
+    "runtimeCompatibility": { "$ref": "#/$defs/runtimeCompatibility" },
+    "migration": { "$ref": "#/$defs/migration" },
+    "probe": { "$ref": "#/$defs/probe" }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "verificationMode": { "enum": ["fixture", "real"] },
+    "verificationLayer": {
+      "enum": ["unit", "contract", "real-api", "on-device", "consumer-reopen", "cross-lane"]
+    },
+    "permission": {
+      "enum": ["network", "storage", "model", "device", "external-order", "file-write"]
+    },
+    "runtimeCompatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["os", "minimumOs", "runtimes", "abis"],
+      "properties": {
+        "os": { "const": "android" },
+        "minimumOs": { "type": "integer", "minimum": 1 },
+        "runtimes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "enum": ["quickjs", "node", "v8", "native"] }
+        },
+        "abis": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "enum": ["arm64-v8a", "armeabi-v7a", "x86_64"] }
+        }
+      }
+    },
+    "migration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to", "strategy", "reversible"],
+      "properties": {
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "strategy": { "enum": ["none", "additive", "transform", "manual"] },
+        "reversible": { "type": "boolean" }
+      }
+    },
+    "probe": {
+      "description": "四个就绪态分别报告：installed / enabled / authorized / portReady。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["installed", "enabled", "authorized", "portReady", "verificationMode", "layers"],
+      "properties": {
+        "installed": { "type": "boolean" },
+        "enabled": { "type": "boolean" },
+        "authorized": { "type": "boolean" },
+        "portReady": { "type": "boolean" },
+        "verificationMode": { "$ref": "#/$defs/verificationMode" },
+        "layers": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/verificationLayer" }
+        },
+        "checkedAt": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

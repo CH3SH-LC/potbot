@@ -1,0 +1,22 @@
+{
+  "$schemaRef": "schemas/storage-port.schema.json",
+  "note": "blob 读取 + 读回凭据：读回后按 digest 校验，verified 必须由真实字节比对得出。",
+  "value": {
+    "operation": "readBack",
+    "status": "ok",
+    "revision": 12,
+    "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "blob": {
+      "uri": "content://app/artifacts/doc-7.r12.docx",
+      "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteLength": 20480
+    },
+    "readBack": {
+      "credential": "readcred:doc-7.r12",
+      "uri": "content://app/artifacts/doc-7.r12.docx",
+      "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verified": true,
+      "readAt": "2026-10-03T08:06:00Z"
+    }
+  }
+}

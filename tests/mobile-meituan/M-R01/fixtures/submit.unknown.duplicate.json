@@ -1,0 +1,17 @@
+{
+  "fixtureId": "submit.unknown.duplicate.v1",
+  "operation": "submit",
+  "protocolVersion": "wmh5-envelope-v1",
+  "provenance": "synthetic-unverified",
+  "verificationMode": "fixture",
+  "capturedAt": null,
+  "note": "结果未知负例：HTTP 200 + 数值码 4001（重复下单）。订单可能已存在——只能查原单，不得直接判成功，也不得重发。",
+  "value": {
+    "code": 4001,
+    "msg": "duplicate order",
+    "data": {
+      "orderStatus": "unknown",
+      "hint": "query original order"
+    }
+  }
+}

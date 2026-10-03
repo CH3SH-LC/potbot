@@ -1,0 +1,15 @@
+{
+  "$schemaRef": "schemas/external-receipt.schema.json",
+  "note": "K07 wire-codec.ts 的 toWireExternalReceipt() 输出。领域 detail 收进契约允许的 metadata.detail（契约根对象 additionalProperties:false，无顶层 detail）。必须通过 contracts/mobile-v1 校验器。",
+  "value": {
+    "actionId": "act-wire-1",
+    "provider": "meituan",
+    "requestRef": "sub:act-wire-1",
+    "externalId": "MT-2026-0001",
+    "observedState": "confirmed",
+    "observedAt": "2026-10-03T00:00:05.000Z",
+    "evidenceRef": "evidence://meituan/MT-2026-0001",
+    "verificationMode": "real",
+    "metadata": { "detail": "商家已接单" }
+  }
+}

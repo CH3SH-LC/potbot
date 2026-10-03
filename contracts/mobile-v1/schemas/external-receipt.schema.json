@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/mobile-v1/schemas/external-receipt.schema.json",
+  "title": "ExternalReceipt",
+  "description": "外部回执。冻结必需字段：actionId / provider / requestRef / externalId / observedState / observedAt / evidenceRef。observedState 词表见 #/$defs/observedState。不变量（由下方 oneOf 强制）：verificationMode 必须存在；verificationMode=fixture 时 observedState 不得为 confirmed——fixture 产物不得冒充真实订单/支付/手机通过回执。只有 observedState=confirmed 才可声称外部动作已完成。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["actionId", "provider", "requestRef", "externalId", "observedState", "observedAt", "evidenceRef"],
+  "properties": {
+    "actionId": { "$ref": "#/$defs/id" },
+    "provider": { "type": "string", "minLength": 1 },
+    "requestRef": { "type": "string", "minLength": 1 },
+    "externalId": { "type": "string", "minLength": 1 },
+    "observedState": { "$ref": "#/$defs/observedState" },
+    "observedAt": { "$ref": "#/$defs/timestamp" },
+    "evidenceRef": { "type": "string", "minLength": 1 },
+    "verificationMode": { "$ref": "#/$defs/verificationMode" },
+    "cancellation": { "$ref": "#/$defs/cancellation" },
+    "metadata": { "type": "object" }
+  },
+  "oneOf": [
+    {
+      "description": "fixture 模式：verificationMode 必须存在，且 observedState 不得为 confirmed。",
+      "required": ["verificationMode"],
+      "properties": { "verificationMode": { "const": "fixture" } },
+      "not": {
+        "required": ["observedState"],
+        "properties": { "observedState": { "const": "confirmed" } }
+      }
+    },
+    {
+      "description": "real 模式：verificationMode 必须存在。",
+      "required": ["verificationMode"],
+      "properties": { "verificationMode": { "const": "real" } }
+    }
+  ],
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "verificationMode": { "enum": ["fixture", "real"] },
+    "observedState": {
+      "enum": [
+        "prepared",
+        "authorized",
+        "submitting",
+        "submitted",
+        "unknown",
+        "confirmed",
+        "failed",
+        "cancelled"
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,6})?Z$"
+    },
+    "cancellation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cancelled", "providerSemantics"],
+      "properties": {
+        "cancelled": { "type": "boolean" },
+        "providerSemantics": {
+          "description": "取消必须带供应方语义，不能自签。",
+          "enum": ["provider-confirmed", "provider-rejected", "unknown"]
+        }
+      }
+    }
+  }
+}

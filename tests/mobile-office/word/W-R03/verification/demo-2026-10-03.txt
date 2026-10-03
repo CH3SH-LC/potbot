@@ -1,0 +1,887 @@
+
+=== 西文原样（防假阳） ===
+{
+  "decisions": [
+    {
+      "char": "A",
+      "U": "U+41",
+      "script": "latin",
+      "slot": "ascii",
+      "requested": "Calibri",
+      "effective": "Calibri",
+      "status": "kept",
+      "reason": "none"
+    },
+    {
+      "char": "B",
+      "U": "U+42",
+      "script": "latin",
+      "slot": "ascii",
+      "requested": "Calibri",
+      "effective": "Calibri",
+      "status": "kept",
+      "reason": "none"
+    },
+    {
+      "char": "C",
+      "U": "U+43",
+      "script": "latin",
+      "slot": "ascii",
+      "requested": "Calibri",
+      "effective": "Calibri",
+      "status": "kept",
+      "reason": "none"
+    },
+    {
+      "char": "-",
+      "U": "U+2D",
+      "script": "latin",
+      "slot": "ascii",
+      "requested": "Calibri",
+      "effective": "Calibri",
+      "status": "kept",
+      "reason": "none"
+    },
+    {
+      "char": "1",
+      "U": "U+31",
+      "script": "latin",
+      "slot": "ascii",
+      "requested": "Calibri",
+      "effective": "Calibri",
+      "status": "kept",
+      "reason": "none"
+    },
+    {
+      "char": "2",
+      "U": "U+32",
+      "script": "latin",
+      "slot": "ascii",
+      "requested": "Calibri",
+      "effective": "Calibri",
+      "status": "kept",
+      "reason": "none"
+    },
+    {
+      "char": "3",
+      "U": "U+33",
+      "script": "latin",
+      "slot": "ascii",
+      "requested": "Calibri",
+      "effective": "Calibri",
+      "status": "kept",
+      "reason": "none"
+    }
+  ],
+  "fonts": {
+    "substitutions": [],
+    "missingFonts": [],
+    "usedFonts": [
+      "Calibri"
+    ],
+    "explicit": true
+  },
+  "glyphs": {
+    "records": [],
+    "totalMissingOccurrences": 0,
+    "distinctMissingCodePoints": 0,
+    "unresolvedCodePoints": 0,
+    "fontsWithMissingGlyphs": [],
+    "complete": true
+  },
+  "layoutDiff": {
+    "pageCountBefore": 1,
+    "pageCountAfter": 1,
+    "pageCountDelta": 0,
+    "totalLinesBefore": 1,
+    "totalLinesAfter": 1,
+    "totalLineDelta": 0,
+    "paragraphs": [
+      {
+        "paragraphIndex": 0,
+        "lineCountBefore": 1,
+        "lineCountAfter": 1,
+        "lineCountDelta": 0,
+        "firstLineWidthDeltaTwips": 0
+      }
+    ],
+    "changedParagraphs": [],
+    "identical": true
+  },
+  "skippedReasons": []
+}
+
+=== 字体存在但无汉字字形 ⇒ 替代 ===
+{
+  "decisions": [
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "Calibri",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "glyph_absent"
+    }
+  ],
+  "fonts": {
+    "substitutions": [
+      {
+        "requestedFont": "Calibri",
+        "substitutedBy": "Source Han Sans",
+        "script": "han",
+        "reason": "glyph_absent",
+        "affectedOccurrences": 60
+      }
+    ],
+    "missingFonts": [],
+    "usedFonts": [
+      "Source Han Sans"
+    ],
+    "explicit": true
+  },
+  "glyphs": {
+    "records": [
+      {
+        "font": "Calibri",
+        "codePoint": 20013,
+        "char": "中",
+        "script": "han",
+        "occurrences": 40,
+        "recoveredBySubstitution": true,
+        "substitutedBy": "Source Han Sans"
+      },
+      {
+        "font": "Calibri",
+        "codePoint": 25991,
+        "char": "文",
+        "script": "han",
+        "occurrences": 20,
+        "recoveredBySubstitution": true,
+        "substitutedBy": "Source Han Sans"
+      }
+    ],
+    "totalMissingOccurrences": 60,
+    "distinctMissingCodePoints": 2,
+    "unresolvedCodePoints": 0,
+    "fontsWithMissingGlyphs": [
+      "Calibri"
+    ],
+    "complete": true
+  },
+  "layoutDiff": {
+    "pageCountBefore": 1,
+    "pageCountAfter": 1,
+    "pageCountDelta": 0,
+    "totalLinesBefore": 1,
+    "totalLinesAfter": 2,
+    "totalLineDelta": 1,
+    "paragraphs": [
+      {
+        "paragraphIndex": 0,
+        "lineCountBefore": 1,
+        "lineCountAfter": 2,
+        "lineCountDelta": 1,
+        "firstLineWidthDeltaTwips": 1680
+      }
+    ],
+    "changedParagraphs": [
+      0
+    ],
+    "identical": false
+  },
+  "skippedReasons": []
+}
+
+=== 请求字体不存在 ⇒ 替代 ===
+{
+  "decisions": [
+    {
+      "char": "中",
+      "U": "U+4E2D",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "SimSun",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "font_absent"
+    },
+    {
+      "char": "文",
+      "U": "U+6587",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "SimSun",
+      "effective": "Source Han Sans",
+      "status": "substituted",
+      "reason": "font_absent"
+    }
+  ],
+  "fonts": {
+    "substitutions": [
+      {
+        "requestedFont": "SimSun",
+        "substitutedBy": "Source Han Sans",
+        "script": "han",
+        "reason": "font_absent",
+        "affectedOccurrences": 2
+      }
+    ],
+    "missingFonts": [],
+    "usedFonts": [
+      "Source Han Sans"
+    ],
+    "explicit": true
+  },
+  "glyphs": {
+    "records": [],
+    "totalMissingOccurrences": 0,
+    "distinctMissingCodePoints": 0,
+    "unresolvedCodePoints": 0,
+    "fontsWithMissingGlyphs": [],
+    "complete": true
+  },
+  "layoutDiff": null,
+  "skippedReasons": [
+    "paragraph 0: 请求字体「SimSun」在端口不存在，朴素基线排不出来"
+  ]
+}
+
+=== 扩展 B 无候选覆盖 ⇒ 显式缺字 ===
+{
+  "decisions": [
+    {
+      "char": "𠀀",
+      "U": "U+20000",
+      "script": "han",
+      "slot": "eastAsia",
+      "requested": "SimSun",
+      "effective": "Source Han Sans",
+      "status": "unresolved_glyph",
+      "reason": "candidate_lacks_glyph"
+    }
+  ],
+  "fonts": {
+    "substitutions": [],
+    "missingFonts": [],
+    "usedFonts": [
+      "Source Han Sans"
+    ],
+    "explicit": true
+  },
+  "glyphs": {
+    "records": [
+      {
+        "font": "Source Han Sans",
+        "codePoint": 131072,
+        "char": "𠀀",
+        "script": "han",
+        "occurrences": 1,
+        "recoveredBySubstitution": false,
+        "substitutedBy": null
+      }
+    ],
+    "totalMissingOccurrences": 1,
+    "distinctMissingCodePoints": 1,
+    "unresolvedCodePoints": 1,
+    "fontsWithMissingGlyphs": [
+      "Source Han Sans"
+    ],
+    "complete": false
+  },
+  "layoutDiff": null,
+  "skippedReasons": [
+    "paragraph 0: 请求字体「SimSun」在端口不存在，朴素基线排不出来"
+  ]
+}

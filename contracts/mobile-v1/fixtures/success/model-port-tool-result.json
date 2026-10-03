@@ -1,0 +1,9 @@
+{
+  "$schemaRef": "schemas/model-port.schema.json#/$defs/toolResult",
+  "note": "工具结果：toolCallId 必须与调用 ID 对应。",
+  "value": {
+    "toolCallId": "call-7788",
+    "result": { "text": "周报正文……", "revision": 11 },
+    "isError": false
+  }
+}

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">potbot Demo</string>
+
+    <!--
+      APP-06（R258）：界面资源、断线状态、认证状态的**文案资源**集中在这里，
+      不在 Java 里散落硬编码，便于核对与本地化。
+      注意：产品版本 resource（potbot_product_version）由 build.gradle 的 resValue 生成，
+      因此**不在本文件**再声明一次（重复定义会构建失败）。
+    -->
+
+    <!-- 网络/断线状态 -->
+    <string name="potbot_state_offline">当前离线：无法连接服务。任务会在恢复连接后从上次的位置继续，不会重跑已完成的部分。</string>
+    <string name="potbot_state_online">已连接服务。</string>
+    <string name="potbot_state_unknown">网络状态未知（既未确认在线也未确认离线）。</string>
+    <string name="potbot_state_load_failed">页面加载失败：内容没有取到，页面不会显示旧数据冒充已加载。</string>
+    <string name="potbot_state_http_error">页面请求返回错误状态，内容可能不完整。</string>
+
+    <!-- 服务地址与开发模式（R254：USB 只用于开发验证） -->
+    <string name="potbot_endpoint_dev_usb">当前是开发连接（回环地址，需电脑侧映射）。这不是产品运行前提。</string>
+    <string name="potbot_endpoint_invalid">服务地址非法：请填写 http 或 https 的完整地址。</string>
+
+    <!-- 认证 -->
+    <string name="potbot_auth_missing">尚未配置访问凭据（凭据只存本机，不进安装包、不进网页、不进日志）。</string>
+    <string name="potbot_auth_configured">已配置访问凭据。</string>
+
+    <!-- 升级 -->
+    <string name="potbot_upgrade_failed">应用数据升级未完成：原有数据已保留，未按新格式解读。</string>
+    <string name="potbot_upgrade_downgrade">检测到数据来自更高版本：未改动任何数据，请安装不低于该版本的应用。</string>
+
+    <!-- 后台进度通知 -->
+    <string name="potbot_notification_channel">后台任务进度</string>
+    <string name="potbot_notification_channel_desc">任务在后台执行时显示进度（点通知可回到任务）。</string>
+    <string name="potbot_progress_notification_title">potbot 后台任务</string>
+
+    <!--
+      APP-03（输入入口与类型识别）：文本 / 粘贴 / 系统分享 / 文件选择。
+      纪律：判不出来就如实说不支持，绝不把没认出来的当已识别；
+      MIME 与扩展名互相矛盾时具名报错，不猜一个。
+    -->
+    <string name="potbot_input_accepted_file">已收到文件：%1$s。</string>
+    <string name="potbot_input_accepted_text">已收到文本（%1$d 字）。</string>
+    <string name="potbot_input_accepted_multiple">已收到 %1$d 个文件。</string>
+    <string name="potbot_input_unsupported">这个文件类型暂时认不了。请改用 Word、Excel、PowerPoint、PDF、纯文本或图片。</string>
+    <string name="potbot_input_mime_conflict">这个文件的类型信息不一致（系统说是 %1$s，文件名却是 .%2$s）。为避免认错，没有按任何一种类型打开。请把它另存为正确的格式，或改用「选择文件」重新选一次。</string>
+    <string name="potbot_input_text_empty">没有收到文字内容。请重新输入，或换个方式粘贴。</string>
+    <string name="potbot_input_text_too_long">文字太长了（%1$d 字，一次最多 %2$d 字）。请分成几次发给我，或先存成文件再发。</string>
+    <string name="potbot_input_no_uri">这次没有收到文件。请重新选择要发过来的文件。</string>
+    <string name="potbot_input_scheme_not_content">只能收系统里选中的文件。请改用应用里的「选择文件」按钮重新选一次。</string>
+    <string name="potbot_input_multiple_partial">有文件没认出来，整批都没有接收。请逐个重试，或把它们另存为常用格式再发。</string>
+    <string name="potbot_input_none">这次没有带内容进来。请直接在输入框里说明你的需求。</string>
+
+    <!--
+      APP-04（搜索 / 历史版本 / 重命名 / 打开 / 另存 / 分享 + URI 授权与失权）：
+      每条失败文案都要给出**用户能照做**的下一步。
+    -->
+    <string name="potbot_file_uri_permission_lost">这个文件的访问权限已经失效，暂时读不到。请点「选择文件」重新选一次，重新授权后就能继续。</string>
+    <string name="potbot_file_uri_persist_not_granted">这个文件只拿到了本次的临时授权，这次能用，下次需要你重新选一次。</string>
+    <string name="potbot_file_uri_not_content">只能处理系统里选中的文件。请点「选择文件」重新选一次。</string>
+    <string name="potbot_file_uri_invalid">没有拿到这个文件。请重新选一次，或换一个文件试试。</string>
+    <string name="potbot_file_op_cancelled">已取消，没有改动任何文件。需要的话可以随时重新选。</string>
+    <string name="potbot_file_readback_ok">已保存，并且重新打开核对过，内容一致。</string>
+    <string name="potbot_file_readback_mismatch">保存后重新打开核对，内容对不上。请换一个位置再存一次。</string>
+    <string name="potbot_file_readback_failed">保存后打不开核对。请换一个位置再存一次，或先确认拿到文件读取权限。</string>
+    <string name="potbot_file_search_empty">没有找到匹配的任务或文件。换个更短的关键词再试试，或用文件名字里的一段。</string>
+    <string name="potbot_file_history_empty">这个文件还没有更早的版本。请继续正常保存，之后每一次保存都会留在这里。</string>
+    <string name="potbot_file_rename_empty">名字不能是空的。请输入一个名字再确认。</string>
+    <string name="potbot_file_rename_invalid">这个名字里有不能用的符号（/ \ : * ? &quot; &lt; &gt; |）。请换一个不含这些符号的名字。</string>
+    <string name="potbot_file_rename_ok">已改名：%1$s。</string>
+    <string name="potbot_file_open_no_app">手机里还没有能打开这种文件的应用。请先「另存到手机」，再用你常用的应用打开。</string>
+    <string name="potbot_file_share_no_app">手机里还没有可以分享的应用。请先「另存到手机」，再手动分享。</string>
+    <string name="potbot_file_save_as_failed">没有保存成功。请换一个位置再试一次。</string>
+    <string name="potbot_file_open_ok">已交给系统里的应用打开。</string>
+
+    <!--
+      APP-07（授权入口 / 撤销 / 服务连接 / 额度与存储）：
+      错误文案必须带下一步动作；凭据的值**永远不进这里、不进日志、不进页面**。
+    -->
+    <string name="potbot_account_authorize_entry">连接服务</string>
+    <string name="potbot_account_connected">已连接服务，可以开始使用。</string>
+    <string name="potbot_account_disconnected">已断开连接，本机保存的凭据已清除。需要时可以重新点「连接服务」。</string>
+    <string name="potbot_account_auth_needed">还没有连接服务。请点「连接服务」，按提示完成一次连接。</string>
+    <string name="potbot_account_service_unreachable">连不上服务。请检查手机网络是否正常，稍后再点一次「连接服务」。</string>
+    <string name="potbot_account_revoke_failed">断开没有完成，凭据可能还在本机。请稍后再点一次「断开连接」。</string>
+    <string name="potbot_account_quota_low">手机存储空间不够了（现在只剩 %1$s）。请先删掉一些照片或文件，再回来继续。</string>
+    <string name="potbot_account_quota_ok">手机存储空间充足（还剩 %1$s）。</string>
+
+    <!--
+      APP-08（可访问性）：有名字的区域都要有朗读文案，缺一个屏幕阅读器就读成空白。
+    -->
+    <string name="potbot_a11y_content_desc">任务与对话内容</string>
+    <string name="potbot_a11y_input_field">输入你的需求</string>
+    <string name="potbot_a11y_send_button">发送</string>
+    <string name="potbot_a11y_attach_button">添加文件</string>
+</resources>

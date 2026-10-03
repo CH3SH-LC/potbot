@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://potbot.local/tests/mobile-kernel/K-R01/report.schema.json",
+  "title": "K-R01 desktop-dependency audit report",
+  "description": "无电脑静态依赖 / 网络路径 / 私密值审计报告的机器可读契约（schemaVersion 1）。与 audit.mjs 的 buildReport/validateReport 及 report-types.ts 必须保持一致；三者的 enum 由 device-only-blockers.test.ts 断言互等。",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schemaVersion", "auditor", "rules", "summary", "hits"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "auditor": { "const": "K-R01-desktop-dependency-audit" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "gitHead": { "type": ["string", "null"] },
+    "root": { "type": "string" },
+    "limitations": { "type": "array", "items": { "type": "string" } },
+    "knownExceptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "rule", "pathRe", "reason"],
+        "properties": {
+          "id": { "type": "string" },
+          "rule": { "$ref": "#/$defs/ruleId" },
+          "pathRe": { "type": "string" },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "required": ["includeRoots", "filesScanned"],
+      "properties": {
+        "includeRoots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "prefix", "migrationSurface", "present"],
+            "properties": {
+              "id": { "type": "string" },
+              "prefix": { "type": "string" },
+              "migrationSurface": { "enum": ["target", "reference"] },
+              "present": { "type": "boolean" },
+              "note": { "type": "string" }
+            }
+          }
+        },
+        "excludeDirs": { "type": "array", "items": { "type": "string" } },
+        "excludeFilePatterns": { "type": "array", "items": { "type": "string" } },
+        "filesScanned": { "type": "integer", "minimum": 0 },
+        "filesBySurface": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "filesByMigrationSurface": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "testFilesExcluded": { "type": "integer", "minimum": 0 },
+        "skippedBinary": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["rel", "reason"],
+            "properties": { "rel": { "type": "string" }, "reason": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "why", "source", "count"],
+        "properties": {
+          "id": { "$ref": "#/$defs/ruleId" },
+          "title": { "type": "string" },
+          "why": { "type": "string" },
+          "source": { "type": "string" },
+          "count": { "type": "integer", "minimum": 0 },
+          "byContext": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+          "bySeverity": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["totalHits", "byRule", "blockers"],
+      "properties": {
+        "totalHits": { "type": "integer", "minimum": 0 },
+        "byRule": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "bySeverity": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "bySurface": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "r4ByModule": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "blockers": {
+          "description": "device-only 阻断投影计数。hard = 必须迁移/修复；conditional = 取决于运行时是否提供 polyfill/端口。",
+          "type": "object",
+          "required": ["hard", "conditional"],
+          "properties": {
+            "hard": { "type": "integer", "minimum": 0 },
+            "conditional": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "maxHitsPerRulePerFile": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "hits": { "type": "array", "items": { "$ref": "#/$defs/finding" } }
+  },
+  "$defs": {
+    "ruleId": { "enum": ["R1", "R2", "R3", "R4", "R5"] },
+    "severity": { "enum": ["high", "medium", "low", "info"] },
+    "context": { "enum": ["product", "comment", "test", "bind-or-default", "endpoint-constant"] },
+    "blockerClass": { "enum": ["hard", "conditional", null] },
+    "finding": {
+      "type": "object",
+      "required": ["rule", "path", "line", "column", "severity", "context", "blockerClass"],
+      "properties": {
+        "rule": { "$ref": "#/$defs/ruleId" },
+        "subtype": { "type": "string" },
+        "path": { "type": "string", "minLength": 1 },
+        "surface": { "type": "string" },
+        "migrationSurface": { "enum": ["target", "reference"] },
+        "isTestFile": { "type": "boolean" },
+        "line": { "type": "integer", "minimum": 1 },
+        "column": { "type": "integer", "minimum": 1 },
+        "severity": { "$ref": "#/$defs/severity" },
+        "context": { "$ref": "#/$defs/context" },
+        "module": { "type": "string" },
+        "tier": { "type": "integer", "enum": [1, 2] },
+        "text": { "type": "string" },
+        "snippet": { "type": "string" },
+        "severityNote": { "type": "string" },
+        "exceptionId": { "type": "string" },
+        "exceptionReason": { "type": "string" },
+        "blockerClass": { "$ref": "#/$defs/blockerClass" }
+      }
+    }
+  }
+}

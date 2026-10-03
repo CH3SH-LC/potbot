@@ -1,0 +1,14 @@
+// potbot 手机 Word Demo —— 最小 Android 工程（S1 独占写入范围）
+// 不引入 Compose / RN / Capacitor；只用 Java Activity + WebView。
+// 依赖解析仓库：Gradle 离线模式下会直接命中本机缓存，不额外声明也无妨；
+// 此处仍声明，便于按已授权网络补齐缺失依赖时使用。
+
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'potbot-demo'
+include ':app'

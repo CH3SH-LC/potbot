@@ -1,0 +1,48 @@
+{
+  "package": "P-R01",
+  "lane": "P (PPT)",
+  "scope": "PowerPoint/WPS external corpora for multi-master, object animation and speaker notes",
+  "sourceSha": "54e5181",
+  "runAt": "2026-10-03",
+  "commands": [
+    {
+      "cmd": "npx vitest run tests/mobile-office/presentations/P-R01/corpora.test.ts --reporter=basic",
+      "exitCode": 0,
+      "summary": "Test Files 1 passed (1); Tests 21 passed (21); duration ~5.9s"
+    },
+    {
+      "cmd": "npx tsc --noEmit -p tsconfig.json 2>&1 | grep -c 'error TS'",
+      "exitCode": 0,
+      "summary": "98 pre-existing repo-wide type errors (other lanes). NOTE: grep -c returns 0 exit when matches found; these are NOT P-R01's."
+    },
+    {
+      "cmd": "npx tsc --noEmit -p tsconfig.json 2>&1 | grep 'P-R01'",
+      "exitCode": 1,
+      "summary": "no output -> 0 type errors in P-R01 files (grep exit 1 = no match)"
+    }
+  ],
+  "corpora": [
+    { "id": "baseline-single-master", "masters": 1, "slides": 2, "timing": [], "notes": [] },
+    { "id": "multi-master", "masters": 2, "slides": 2, "timing": [], "notes": [] },
+    { "id": "object-animation", "masters": 1, "slides": 2, "timing": ["ppt/slides/slide1.xml"], "notes": [] },
+    { "id": "speaker-notes", "masters": 1, "slides": 2, "timing": [], "notes": ["ppt/notesSlides/notesSlide1.xml"] }
+  ],
+  "observations": {
+    "multiMasterImport": "importPresentation(multi-master) throws PresentationRoundTripError reason=multi_master_unsupported (CONFIRMED by run)",
+    "animatedNoOpRoundtrip": "exportImportedPresentation with no edit -> changed_part_paths=[] and slide1.xml (with p:timing) byte-identical preserved (CONFIRMED)",
+    "animatedEditDropsTiming": "editing slide1 text then saving -> slide1.xml replaced; probe finds has_timing=false afterwards => p:timing SILENTLY LOST on edit (CONFIRMED by run, test section D)",
+    "notesImport": "notesSlide text read back as '这是演讲者备注：讲解要点一二三。' (CONFIRMED)",
+    "notesEdit": "changing notes text -> only ppt/notesSlides/notesSlide1.xml replaced (CONFIRMED)",
+    "notesRemoval": "setSlideNotes(null) then export -> notes_part_removal_unsupported (CONFIRMED)",
+    "structureReadVsImportInconsistency": "readPresentationStructure(multi-master) SUCCEEDS and reports only slideMaster1/theme1 (does not count masters), while importPresentation REJECTS the same file with multi_master_unsupported (CONFIRMED)",
+    "determinism": "same corpus id built twice -> byte-identical (CONFIRMED)"
+  },
+  "verifiedLayer": "unit",
+  "unverifiedLayers": [
+    "real-api",
+    "on-device",
+    "consumer-reopen",
+    "cross-lane"
+  ],
+  "honestBoundary": "Corpora are HAND-AUTHORED to the OOXML spec / known PowerPoint-WPS shapes. No Office license and no device on this machine, so NONE of the four corpora is a file actually exported by PowerPoint or WPS, and none was reopened in a real consumer. Claims are limited to: how the source importer/roundtrip reacts to these shapes."
+}

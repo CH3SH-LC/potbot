@@ -1,0 +1,26 @@
+{
+  "name": "potbot",
+  "version": "0.13.0",
+  "private": true,
+  "type": "module",
+  "description": "potbot 内核 —— 安卓任务式智能体交互层的调度内核（首轮：确定性假 Agent 验证）",
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@10.33.2",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "demo:typecheck": "tsc -p tsconfig.demo.json --noEmit",
+    "demo:build": "tsc -p tsconfig.demo.json",
+    "demo:start": "node .runtime/mobile-word-demo/build/apps/demo/server/main.js",
+    "demo:test": "vitest run --config vitest.demo.config.ts",
+    "mobile:bundle-kernel": "node scripts/mobile/bundle-kernel.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

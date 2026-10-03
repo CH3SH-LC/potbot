@@ -1,0 +1,9 @@
+{
+  "//": "M-I15 定向类型检查：只覆盖 injection-guard 生产源码与 M-I15 测试（含其相对依赖）。不覆盖全仓，避免混入其它线的在途代码。",
+  "extends": "../../../tsconfig.json",
+  "include": [
+    "../../../src/mobile-plugins/meituan/injection-guard/**/*.ts",
+    "../../../src/adapters/meituan/contract.ts",
+    "./**/*.ts"
+  ]
+}

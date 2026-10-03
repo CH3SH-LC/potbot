@@ -1,0 +1,13 @@
+{
+  "$schemaRef": "schemas/external-receipt.schema.json",
+  "note": "反例：回执缺 verificationMode（oneOf 两分支都要求它存在）。",
+  "value": {
+    "actionId": "act-k07-1",
+    "provider": "meituan",
+    "requestRef": "sub:act-k07-1",
+    "externalId": "MT-2026-0001",
+    "observedState": "confirmed",
+    "observedAt": "2026-10-03T00:00:05.000Z",
+    "evidenceRef": "evidence://meituan/MT-2026-0001"
+  }
+}

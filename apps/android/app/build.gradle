@@ -1,0 +1,64 @@
+apply plugin: 'com.android.application'
+
+// ---------------------------------------------------------------------------
+// 版本身份的单一事实源（APP-01）
+//
+// versionCode / versionName **不再各写一份**：统一从 apps/android/version.properties 读取，
+// 并把产品版本注入为运行时资源 potbot_product_version，让宿主/页面能在运行时把
+// "打包版本名" 与 "产品版本" 对照着核对（见 PotbotAppVersion.java）。
+// 文件缺失即构建失败——**不允许**悄悄回退到某个默认版本号。
+// ---------------------------------------------------------------------------
+def potbotVersionFile = rootProject.file('version.properties')
+if (!potbotVersionFile.exists()) {
+    throw new GradleException('缺少版本身份文件：' + potbotVersionFile.getAbsolutePath())
+}
+def potbotVersion = new Properties()
+potbotVersionFile.withInputStream { potbotVersion.load(it) }
+['productVersion', 'versionCode', 'versionName'].each { key ->
+    if (!potbotVersion.getProperty(key)) {
+        throw new GradleException('版本身份文件缺少键 ' + key + '：' + potbotVersionFile.getAbsolutePath())
+    }
+}
+
+android {
+    namespace 'com.potbot.demo'
+    compileSdk 34
+
+    // 本机只安装了 build-tools 34.0.0；不显式指定时 AGP 8.7.3 会去要 35.0.0。
+    buildToolsVersion '34.0.0'
+
+    defaultConfig {
+        applicationId 'com.potbot.demo'
+        minSdk 24
+        targetSdk 34
+        // 版本身份来自 version.properties（APP-01），不在本文件里写死。
+        versionCode potbotVersion.getProperty('versionCode').toInteger()
+        versionName potbotVersion.getProperty('versionName')
+        // 运行时核对用的产品版本（由同一文件注入，不另立一份）。
+        resValue 'string', 'potbot_product_version', potbotVersion.getProperty('productVersion')
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            // 不加 applicationIdSuffix，保证 FileProvider authority 与 getPackageName() 一致
+        }
+        release {
+            minifyEnabled false
+        }
+    }
+
+    lint {
+        abortOnError false
+    }
+}
+
+dependencies {
+    // FileProvider 唯一来源；本机缓存有 1.9.0 / 1.12.0 / 1.13.1，取 1.9.0（方案指定）。
+    implementation 'androidx.core:core:1.9.0'
+}

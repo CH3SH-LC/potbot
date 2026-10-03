@@ -1,0 +1,16 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "F07 记忆停用：mutate 分支，动作放在 args",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-f07-disable-1",
+    "operation": "mutate",
+    "idempotencyKey": "idem-f07-disable-1",
+    "payload": {
+      "conversationId": "conv-1",
+      "targetId": "mem-1",
+      "expectedRevision": 3,
+      "args": { "action": "disable" }
+    }
+  }
+}

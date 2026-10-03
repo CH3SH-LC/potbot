@@ -1,0 +1,33 @@
+{
+  "$schemaRef": "schemas/template-manifest.schema.json",
+  "note": "模板清单示例：四个就绪态 installed/enabled/authorized/portReady 分别报告，未安装时不得合并成一个布尔。",
+  "value": {
+    "id": "word-doc",
+    "displayName": "Word 文档",
+    "version": "1.0.0",
+    "capabilities": ["docx-import", "docx-edit", "docx-export", "pdf-preview"],
+    "schemas": ["office-plugin.schema.json", "storage-port.schema.json", "facts-port.schema.json"],
+    "permissions": ["storage", "file-write", "model"],
+    "runtimeCompatibility": {
+      "os": "android",
+      "minimumOs": 26,
+      "runtimes": ["quickjs"],
+      "abis": ["arm64-v8a"]
+    },
+    "migration": {
+      "from": "0.9.0",
+      "to": "1.0.0",
+      "strategy": "additive",
+      "reversible": true
+    },
+    "probe": {
+      "installed": true,
+      "enabled": true,
+      "authorized": false,
+      "portReady": true,
+      "verificationMode": "fixture",
+      "layers": ["unit", "contract"],
+      "checkedAt": "2026-10-03T08:00:00Z"
+    }
+  }
+}

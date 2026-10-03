@@ -1,0 +1,87 @@
+{
+  "note": "W-R05 independent real-corpus fixtures. Bytes are real DOCX; provenance below. No secrets.",
+  "source": {
+    "file": "source-corpusA.docx",
+    "sha256": "a366374604e6cf406296c42c77fad9681dca0701beed54acfaca03a84681a148",
+    "bytes": 5213,
+    "provenance": "repo export path (src/documents real export), corpus A, from .dev-evidence/word-common-features/WCF-20261002-A/D10/word-export/e3-corpusA-plain.docx",
+    "producerKind": "self-produced-by-implementation"
+  },
+  "consumerReopen": {
+    "file": "consumer-python-docx-1.2.0.docx",
+    "sha256": "b07c6fd6462cb1b87b32d2b941037372e5650b8666cc481d5eec075b40103926",
+    "bytes": 3007,
+    "provenance": "independent consumer open+save with python-docx 1.2.0 (CPython 3.13.13); repro: python -c \"from docx import Document; Document('source-corpusA.docx').save('consumer-python-docx-1.2.0.docx')\"",
+    "producerKind": "independent-consumer-reopen"
+  },
+  "parts": {
+    "source": {
+      "[Content_Types].xml": {
+        "sha256": "3826c85291fad091b84c8fad0bcd2225606e33142ca47e9b19d8c6659cf13e17",
+        "bytes": 720
+      },
+      "_rels/.rels": {
+        "sha256": "b7ae6e1849778a0fa08ce4ad648050804c83b7a055e97ad92c7c234156896480",
+        "bytes": 442
+      },
+      "customXml/item1.xml": {
+        "sha256": "94674ebaa58ebcbc996680ae77919f2654391550f0793690f44e9809a7afd742",
+        "bytes": 137
+      },
+      "docProps/core.xml": {
+        "sha256": "11da64dd28a230a4b545a57975e2e3de3a209e00e9f48e606f67f389456c5b6a",
+        "bytes": 266
+      },
+      "word/_rels/document.xml.rels": {
+        "sha256": "fd275e21fc5dd0046258e1a3fcd19579e07f68f455796fe7d423b91f9933f3d3",
+        "bytes": 559
+      },
+      "word/document.xml": {
+        "sha256": "bec296a08d48197631d3a3b6c6e9df715cf15a6168ad034771eed1b048d848d9",
+        "bytes": 1747
+      },
+      "word/media/image1.png": {
+        "sha256": "a930c2bb4e61c0682068f71c4ef427eefbb07098ecea9390e445e7af4b66a384",
+        "bytes": 24
+      },
+      "word/styles.xml": {
+        "sha256": "94e07d7712b91ef74fd37675e39c4de8e6b8bc6a6f44997f62959ab6a474957d",
+        "bytes": 394
+      }
+    },
+    "consumerReopen": {
+      "[Content_Types].xml": {
+        "sha256": "03b158ba6de3c24f6814aa22e9c1df7895125698b777936cfbd4a632deac3468",
+        "bytes": 721
+      },
+      "_rels/.rels": {
+        "sha256": "88d76211b102228f89f16af987143ea302d84c02be687d87eda92323efe3454b",
+        "bytes": 443
+      },
+      "customXml/item1.xml": {
+        "sha256": "94674ebaa58ebcbc996680ae77919f2654391550f0793690f44e9809a7afd742",
+        "bytes": 137
+      },
+      "docProps/core.xml": {
+        "sha256": "96987e93c93a6b2c7d5ff4a5d803a217ea3f2a4e50c750587a1f7f60ac1b0477",
+        "bytes": 267
+      },
+      "word/_rels/document.xml.rels": {
+        "sha256": "20c938f2d7cd890a7c39568f0ac8c6c935370f11c4e5f58e1eb494fca3813153",
+        "bytes": 560
+      },
+      "word/document.xml": {
+        "sha256": "33fe517a65df998ac6999d054426349e6ce290c8b32b8de7a66ea544cc106688",
+        "bytes": 1748
+      },
+      "word/media/image1.png": {
+        "sha256": "a930c2bb4e61c0682068f71c4ef427eefbb07098ecea9390e445e7af4b66a384",
+        "bytes": 24
+      },
+      "word/styles.xml": {
+        "sha256": "692d04c7367af754f8000949dc1354f87bf2d6b0daa6ca9eba9baf3a8072ffaa",
+        "bytes": 395
+      }
+    }
+  }
+}

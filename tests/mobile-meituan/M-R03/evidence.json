@@ -1,0 +1,58 @@
+{
+  "package": "M-R03",
+  "lane": "M (meituan)",
+  "slot": 13,
+  "date": "2026-10-03",
+  "repoRoot": "<repo>",
+  "allowedPaths": ["tests/mobile-meituan/M-R03/"],
+  "delivered": {
+    "sourceModule": [
+      "tests/mobile-meituan/M-R03/types.ts",
+      "tests/mobile-meituan/M-R03/price-diff.ts",
+      "tests/mobile-meituan/M-R03/guard.ts",
+      "tests/mobile-meituan/M-R03/operations.ts",
+      "tests/mobile-meituan/M-R03/errors.ts",
+      "tests/mobile-meituan/M-R03/index.ts"
+    ],
+    "operationSchemas": ["tests/mobile-meituan/M-R03/operations.ts"],
+    "tests": [
+      "tests/mobile-meituan/M-R03/price-change.test.ts",
+      "tests/mobile-meituan/M-R03/quote-expiry-reconfirm.test.ts",
+      "tests/mobile-meituan/M-R03/boundary.test.ts",
+      "tests/mobile-meituan/M-R03/operations.test.ts"
+    ],
+    "fixtures": ["tests/mobile-meituan/M-R03/support.ts"],
+    "runbook": "tests/mobile-meituan/M-R03/RUNBOOK.md"
+  },
+  "commands": [
+    {
+      "cmd": "npx vitest run tests/mobile-meituan/M-R03/ --reporter=basic",
+      "exitCode": 0,
+      "result": "Test Files 4 passed (4); Tests 33 passed (33); Duration 3.63s"
+    },
+    {
+      "cmd": "npx tsc --noEmit -p tsconfig.json",
+      "exitCode": 2,
+      "result": "repo-wide tsc fails on PRE-EXISTING errors in other lanes (X09, W-R01, W-R02, W-R04, W02, F-R04, F05, F07, F08); not caused by this package",
+      "note": "M-R03 contributes zero errors; verified by grepping tsc output for 'M-R03' (no matches)"
+    },
+    {
+      "cmd": "npx tsc --noEmit -p tsconfig.json 2>&1 | grep -i \"M-R03\"",
+      "exitCode": 1,
+      "result": "no matches => M-R03 has 0 typecheck errors"
+    }
+  ],
+  "verifiedLayers": ["unit"],
+  "unverifiedLayers": ["contract", "real-api", "on-device", "consumer-reopen", "cross-lane"],
+  "unverifiedNotes": [
+    "no real Meituan endpoint contacted; all ports are injected deterministic fixtures",
+    "no on-device / Android run",
+    "not wired to K07 authorization ledger or F/K host",
+    "M04 source not modified (outside allowlist); this package is a complement, not a replacement"
+  ],
+  "secrets": "none; no keys, tokens, phone numbers or addresses present in any artifact",
+  "notes": [
+    "M-R03 gap vs M04: M04 checkQuote uses paramsDigest + injected clock only; it cannot detect server-side price drift under identical params. ReconfirmationGuard adds term-level comparison.",
+    "One real bug was found and fixed during development: the fixture initially copied deliveryFeeMinor by value, so server-side mutations did not reach the port. Fixed by passing the live mutable config object directly."
+  ]
+}

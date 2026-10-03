@@ -1,0 +1,1008 @@
+{
+  "designPageCount": 28,
+  "prototypeScreenCount": 13,
+  "rows": [
+    {
+      "pageId": "C01",
+      "title": "对话主入口与对话主屏",
+      "level": "screen",
+      "screens": [
+        "home",
+        "chat"
+      ],
+      "sheetActs": [],
+      "basis": "home() 首页近期成果；chat() 连续消息主屏",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "C02",
+      "title": "对话列表",
+      "level": "screen",
+      "screens": [
+        "history"
+      ],
+      "sheetActs": [],
+      "basis": "history()/historyResults() 全部对话列表与搜索",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "C03",
+      "title": "对话内搜索",
+      "level": "absent",
+      "screens": [],
+      "sheetActs": [],
+      "basis": "原型只有列表级搜索（groups/history/files），无对话内关键字/日期/文件命中页",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "C04",
+      "title": "附件与分享接收",
+      "level": "sheet",
+      "screens": [],
+      "sheetActs": [
+        "attach"
+      ],
+      "basis": "case 'attach' → sheet('添加附件')，仅示例附件，无解析状态/系统分享",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "C05",
+      "title": "来源与依据",
+      "level": "sheet",
+      "screens": [],
+      "sheetActs": [
+        "sources"
+      ],
+      "basis": "case 'sources' → sheet('来源与依据')",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "T01",
+      "title": "群组列表",
+      "level": "screen",
+      "screens": [
+        "groups"
+      ],
+      "sheetActs": [],
+      "basis": "groups() 群组列表 + 待处理/进行中/已结束 筛选",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "T02",
+      "title": "任务详情",
+      "level": "screen",
+      "screens": [
+        "group"
+      ],
+      "sheetActs": [],
+      "basis": "group() 群组详情：状态、成员、文件、动作卡、进展",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "T03",
+      "title": "修改任务",
+      "level": "absent",
+      "screens": [],
+      "sheetActs": [],
+      "basis": "改条件走 chat 内 'change-people' 内联动作，无独立改任务页",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "T04",
+      "title": "动作详情",
+      "level": "sheet",
+      "screens": [],
+      "sheetActs": [
+        "calendar-review"
+      ],
+      "basis": "case 'calendar-review' → sheet('确认日历安排')，含操作/标题/日期",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "T05",
+      "title": "候选比较",
+      "level": "absent",
+      "screens": [],
+      "sheetActs": [],
+      "basis": "无候选比较页/无 compare 候选页（file 的 compare 是版本比较，非候选）",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "T06",
+      "title": "日程详情",
+      "level": "absent",
+      "screens": [],
+      "sheetActs": [],
+      "basis": "无日程详情页；日历仅出现在动作弹层与群组详情的日程摘要",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "T07",
+      "title": "提醒与计时",
+      "level": "sheet",
+      "screens": [],
+      "sheetActs": [
+        "clock-info"
+      ],
+      "basis": "case 'clock-info' → sheet('提醒权限')，仅权限说明，无计时器/秒表/世界时钟",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "T08",
+      "title": "活动记录",
+      "level": "embedded",
+      "screens": [
+        "group"
+      ],
+      "sheetActs": [],
+      "basis": "group() 内嵌 <ol class=\"pb-timeline\">「进展」时间线，非独立页",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "F01",
+      "title": "文件列表",
+      "level": "screen",
+      "screens": [
+        "files"
+      ],
+      "sheetActs": [],
+      "basis": "files()/fileResults() 文件列表 + 格式筛选",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "F02",
+      "title": "文件预览",
+      "level": "screen",
+      "screens": [
+        "file"
+      ],
+      "sheetActs": [],
+      "basis": "file() 预览 tab（filePreview：文档/表格/演示示例）",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "F03",
+      "title": "版本与比较",
+      "level": "screen",
+      "screens": [
+        "file"
+      ],
+      "sheetActs": [],
+      "basis": "file() 版本 tab（versions/restore）+ case 'compare' 版本比较弹层",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "F04",
+      "title": "保存与分享",
+      "level": "sheet",
+      "screens": [],
+      "sheetActs": [
+        "handoff"
+      ],
+      "basis": "case 'handoff' → sheet('打开 / 分享')，明示未生成真实文件",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "F05",
+      "title": "导入检查",
+      "level": "absent",
+      "screens": [],
+      "sheetActs": [],
+      "basis": "files() 的「导入文件」复用 act 'attach' 弹层，无导入检查页（格式/权限/保留限制）",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "M01",
+      "title": "我的",
+      "level": "screen",
+      "screens": [
+        "me"
+      ],
+      "sheetActs": [],
+      "basis": "me() 我的空间 + 模版/记忆/连接与权限/设置菜单",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "M02",
+      "title": "记忆列表",
+      "level": "screen",
+      "screens": [
+        "memory"
+      ],
+      "sheetActs": [],
+      "basis": "memory() 单条偏好呈现（列表与详情合并）",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "M03",
+      "title": "记忆详情",
+      "level": "embedded",
+      "screens": [
+        "memory"
+      ],
+      "sheetActs": [],
+      "basis": "memory() 内嵌来源/状态/范围/编辑（编辑走 edit-memory 弹层），非独立详情页",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "M04",
+      "title": "遗忘与删除范围",
+      "level": "sheet",
+      "screens": [],
+      "sheetActs": [
+        "forget-memory"
+      ],
+      "basis": "case 'forget-memory' → sheet('忘记这条偏好？')，无索引/摘要/派生经验范围页",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "M05",
+      "title": "模版目录",
+      "level": "screen",
+      "screens": [
+        "templates"
+      ],
+      "sheetActs": [],
+      "basis": "templateList() 七模板目录（templates 键别名）",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "M06",
+      "title": "模版详情",
+      "level": "screen",
+      "screens": [
+        "template"
+      ],
+      "sheetActs": [],
+      "basis": "template() 模版详情：启用状态/连接/版本/访问范围",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "M07",
+      "title": "权限与连接",
+      "level": "screen",
+      "screens": [
+        "permissions"
+      ],
+      "sheetActs": [],
+      "basis": "permissions() 连接与按需授权（日历/美团）",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "M08",
+      "title": "额度与存储",
+      "level": "sheet",
+      "screens": [],
+      "sheetActs": [
+        "storage"
+      ],
+      "basis": "case 'storage' → sheet('额度与存储')",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "M09",
+      "title": "通知与后台说明",
+      "level": "sheet",
+      "screens": [],
+      "sheetActs": [
+        "notifications"
+      ],
+      "basis": "case 'notifications' → sheet('任务通知')",
+      "hasV6Screenshot": false
+    },
+    {
+      "pageId": "M10",
+      "title": "应用信息",
+      "level": "absent",
+      "screens": [],
+      "sheetActs": [],
+      "basis": "设置页只有通知/显示/额度，无应用信息（版本/更新/迁移/脱敏诊断）页",
+      "hasV6Screenshot": false
+    }
+  ],
+  "dedicatedScreenPages": [
+    "C01",
+    "C02",
+    "F01",
+    "F02",
+    "F03",
+    "M01",
+    "M02",
+    "M05",
+    "M06",
+    "M07",
+    "T01",
+    "T02"
+  ],
+  "sheetOnlyPages": [
+    "C04",
+    "C05",
+    "F04",
+    "M04",
+    "M08",
+    "M09",
+    "T04",
+    "T07"
+  ],
+  "embeddedPages": [
+    "M03",
+    "T08"
+  ],
+  "absentPages": [
+    "C03",
+    "F05",
+    "M10",
+    "T03",
+    "T05",
+    "T06"
+  ],
+  "missingPages": [
+    "C03",
+    "C04",
+    "C05",
+    "F04",
+    "F05",
+    "M03",
+    "M04",
+    "M08",
+    "M09",
+    "M10",
+    "T03",
+    "T04",
+    "T05",
+    "T06",
+    "T07",
+    "T08"
+  ],
+  "prototypeOnlyScreens": [
+    "settings"
+  ],
+  "danglingReferences": [],
+  "hashes": [
+    {
+      "path": "docs/design/release-ui/potbot-release.html",
+      "expected": "c2aadf458b02853a14099ef0e68bd90f7e49ec1a44e6ce77c9053bf69ac3a56d",
+      "actual": "c2aadf458b02853a14099ef0e68bd90f7e49ec1a44e6ce77c9053bf69ac3a56d",
+      "match": true,
+      "baseline": "recorded",
+      "note": "基线出自 prototype-checks.json 的 prototypeSha256。"
+    },
+    {
+      "path": "docs/design/release-ui/brand-user.png",
+      "expected": "7cab6b0640f2482641a33e292dfd3d3ff5d8ddda8ef72072ff5c71fc58bb59b3",
+      "actual": "7cab6b0640f2482641a33e292dfd3d3ff5d8ddda8ef72072ff5c71fc58bb59b3",
+      "match": true,
+      "baseline": "recorded",
+      "note": "基线出自 prototype-checks.json 的 visualReview.brandOriginalSha256。"
+    },
+    {
+      "path": "docs/design/design-07-正式发布版App界面与交互.md",
+      "expected": null,
+      "actual": "0cf42e7bd88f09ce5fc84249faa904c073014ddccfeb487be4a0ad52760ef068",
+      "match": false,
+      "baseline": "unrecorded",
+      "note": "design-07 正文无 SHA-256 基线记录（prototype-checks.json 只记录原型/品牌图）；本报告钉住当前实际哈希，供后续批次比对漂移。"
+    }
+  ],
+  "reviewedScenarios": [
+    "offline-new-chat"
+  ],
+  "reviewedUnknown": [],
+  "shellInventory": {
+    "designPageCount": 28,
+    "shellScreenCount": 28,
+    "shellScreenIds": [
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "T01",
+      "T02",
+      "T03",
+      "T04",
+      "T05",
+      "T06",
+      "T07",
+      "T08",
+      "F01",
+      "F02",
+      "F03",
+      "F04",
+      "F05",
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06",
+      "M07",
+      "M08",
+      "M09",
+      "M10"
+    ],
+    "rows": [
+      {
+        "pageId": "C01",
+        "title": "对话主入口与对话主屏",
+        "fr01Level": "screen",
+        "shellLevel": "screen",
+        "shellDeclared": true,
+        "module": "chat",
+        "entry": "chat",
+        "route": "home",
+        "agrees": true
+      },
+      {
+        "pageId": "C02",
+        "title": "对话列表",
+        "fr01Level": "screen",
+        "shellLevel": "screen",
+        "shellDeclared": true,
+        "module": "conversations",
+        "entry": "chat",
+        "route": "conversations",
+        "agrees": true
+      },
+      {
+        "pageId": "C03",
+        "title": "对话内搜索",
+        "fr01Level": "absent",
+        "shellLevel": "absent",
+        "shellDeclared": true,
+        "module": "conversations",
+        "entry": "chat",
+        "route": "conversation-search",
+        "agrees": true
+      },
+      {
+        "pageId": "C04",
+        "title": "附件与分享接收",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "chat",
+        "entry": "chat",
+        "route": "attachments",
+        "agrees": true
+      },
+      {
+        "pageId": "C05",
+        "title": "来源与依据",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "chat",
+        "entry": "chat",
+        "route": "sources",
+        "agrees": true
+      },
+      {
+        "pageId": "T01",
+        "title": "群组列表",
+        "fr01Level": "screen",
+        "shellLevel": "screen",
+        "shellDeclared": true,
+        "module": "groups",
+        "entry": "group",
+        "route": "groups",
+        "agrees": true
+      },
+      {
+        "pageId": "T02",
+        "title": "任务详情",
+        "fr01Level": "screen",
+        "shellLevel": "screen",
+        "shellDeclared": true,
+        "module": "groups",
+        "entry": "group",
+        "route": "group",
+        "agrees": true
+      },
+      {
+        "pageId": "T03",
+        "title": "修改任务",
+        "fr01Level": "absent",
+        "shellLevel": "absent",
+        "shellDeclared": true,
+        "module": "groups",
+        "entry": "group",
+        "route": "task-edit",
+        "agrees": true
+      },
+      {
+        "pageId": "T04",
+        "title": "动作详情",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "decisions",
+        "entry": "group",
+        "route": "action",
+        "agrees": true
+      },
+      {
+        "pageId": "T05",
+        "title": "候选比较",
+        "fr01Level": "absent",
+        "shellLevel": "absent",
+        "shellDeclared": true,
+        "module": "decisions",
+        "entry": "group",
+        "route": "compare",
+        "agrees": true
+      },
+      {
+        "pageId": "T06",
+        "title": "日程详情",
+        "fr01Level": "absent",
+        "shellLevel": "absent",
+        "shellDeclared": true,
+        "module": "system-actions",
+        "entry": "group",
+        "route": "schedule",
+        "agrees": true
+      },
+      {
+        "pageId": "T07",
+        "title": "提醒与计时",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "system-actions",
+        "entry": "group",
+        "route": "reminders",
+        "agrees": true
+      },
+      {
+        "pageId": "T08",
+        "title": "活动记录",
+        "fr01Level": "embedded",
+        "shellLevel": "embedded",
+        "shellDeclared": true,
+        "module": "groups",
+        "entry": "group",
+        "route": "activity",
+        "agrees": true
+      },
+      {
+        "pageId": "F01",
+        "title": "文件列表",
+        "fr01Level": "screen",
+        "shellLevel": "screen",
+        "shellDeclared": true,
+        "module": "files",
+        "entry": "file",
+        "route": "files",
+        "agrees": true
+      },
+      {
+        "pageId": "F02",
+        "title": "文件预览",
+        "fr01Level": "screen",
+        "shellLevel": "screen",
+        "shellDeclared": true,
+        "module": "files",
+        "entry": "file",
+        "route": "file-preview",
+        "agrees": true
+      },
+      {
+        "pageId": "F03",
+        "title": "版本与比较",
+        "fr01Level": "screen",
+        "shellLevel": "screen",
+        "shellDeclared": true,
+        "module": "files",
+        "entry": "file",
+        "route": "file-versions",
+        "agrees": true
+      },
+      {
+        "pageId": "F04",
+        "title": "保存与分享",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "files",
+        "entry": "file",
+        "route": "file-handoff",
+        "agrees": true
+      },
+      {
+        "pageId": "F05",
+        "title": "导入检查",
+        "fr01Level": "absent",
+        "shellLevel": "absent",
+        "shellDeclared": true,
+        "module": "files",
+        "entry": "file",
+        "route": "import-check",
+        "agrees": true
+      },
+      {
+        "pageId": "M01",
+        "title": "我的",
+        "fr01Level": "screen",
+        "shellLevel": "screen",
+        "shellDeclared": true,
+        "module": "shell",
+        "entry": "mine",
+        "route": "me",
+        "agrees": true
+      },
+      {
+        "pageId": "M02",
+        "title": "记忆列表",
+        "fr01Level": "screen",
+        "shellLevel": "screen",
+        "shellDeclared": true,
+        "module": "memory",
+        "entry": "mine",
+        "route": "memory",
+        "agrees": true
+      },
+      {
+        "pageId": "M03",
+        "title": "记忆详情",
+        "fr01Level": "embedded",
+        "shellLevel": "embedded",
+        "shellDeclared": true,
+        "module": "memory",
+        "entry": "mine",
+        "route": "memory-detail",
+        "agrees": true
+      },
+      {
+        "pageId": "M04",
+        "title": "遗忘与删除范围",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "memory",
+        "entry": "mine",
+        "route": "memory-forget",
+        "agrees": true
+      },
+      {
+        "pageId": "M05",
+        "title": "模版目录",
+        "fr01Level": "screen",
+        "shellLevel": "screen",
+        "shellDeclared": true,
+        "module": "templates",
+        "entry": "mine",
+        "route": "templates",
+        "agrees": true
+      },
+      {
+        "pageId": "M06",
+        "title": "模版详情",
+        "fr01Level": "screen",
+        "shellLevel": "screen",
+        "shellDeclared": true,
+        "module": "templates",
+        "entry": "mine",
+        "route": "template",
+        "agrees": true
+      },
+      {
+        "pageId": "M07",
+        "title": "权限与连接",
+        "fr01Level": "screen",
+        "shellLevel": "screen",
+        "shellDeclared": true,
+        "module": "settings",
+        "entry": "mine",
+        "route": "permissions",
+        "agrees": true
+      },
+      {
+        "pageId": "M08",
+        "title": "额度与存储",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "settings",
+        "entry": "mine",
+        "route": "storage",
+        "agrees": true
+      },
+      {
+        "pageId": "M09",
+        "title": "通知与后台说明",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "settings",
+        "entry": "mine",
+        "route": "notifications",
+        "agrees": true
+      },
+      {
+        "pageId": "M10",
+        "title": "应用信息",
+        "fr01Level": "absent",
+        "shellLevel": "absent",
+        "shellDeclared": true,
+        "module": "settings",
+        "entry": "mine",
+        "route": "about",
+        "agrees": true
+      }
+    ],
+    "designPagesMissingFromShell": [],
+    "shellPagesNotInDesign": [],
+    "levelDisagreements": [],
+    "missingPageRows": [
+      {
+        "pageId": "C03",
+        "title": "对话内搜索",
+        "fr01Level": "absent",
+        "shellLevel": "absent",
+        "shellDeclared": true,
+        "module": "conversations",
+        "entry": "chat",
+        "route": "conversation-search",
+        "agrees": true
+      },
+      {
+        "pageId": "C04",
+        "title": "附件与分享接收",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "chat",
+        "entry": "chat",
+        "route": "attachments",
+        "agrees": true
+      },
+      {
+        "pageId": "C05",
+        "title": "来源与依据",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "chat",
+        "entry": "chat",
+        "route": "sources",
+        "agrees": true
+      },
+      {
+        "pageId": "F04",
+        "title": "保存与分享",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "files",
+        "entry": "file",
+        "route": "file-handoff",
+        "agrees": true
+      },
+      {
+        "pageId": "F05",
+        "title": "导入检查",
+        "fr01Level": "absent",
+        "shellLevel": "absent",
+        "shellDeclared": true,
+        "module": "files",
+        "entry": "file",
+        "route": "import-check",
+        "agrees": true
+      },
+      {
+        "pageId": "M03",
+        "title": "记忆详情",
+        "fr01Level": "embedded",
+        "shellLevel": "embedded",
+        "shellDeclared": true,
+        "module": "memory",
+        "entry": "mine",
+        "route": "memory-detail",
+        "agrees": true
+      },
+      {
+        "pageId": "M04",
+        "title": "遗忘与删除范围",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "memory",
+        "entry": "mine",
+        "route": "memory-forget",
+        "agrees": true
+      },
+      {
+        "pageId": "M08",
+        "title": "额度与存储",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "settings",
+        "entry": "mine",
+        "route": "storage",
+        "agrees": true
+      },
+      {
+        "pageId": "M09",
+        "title": "通知与后台说明",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "settings",
+        "entry": "mine",
+        "route": "notifications",
+        "agrees": true
+      },
+      {
+        "pageId": "M10",
+        "title": "应用信息",
+        "fr01Level": "absent",
+        "shellLevel": "absent",
+        "shellDeclared": true,
+        "module": "settings",
+        "entry": "mine",
+        "route": "about",
+        "agrees": true
+      },
+      {
+        "pageId": "T03",
+        "title": "修改任务",
+        "fr01Level": "absent",
+        "shellLevel": "absent",
+        "shellDeclared": true,
+        "module": "groups",
+        "entry": "group",
+        "route": "task-edit",
+        "agrees": true
+      },
+      {
+        "pageId": "T04",
+        "title": "动作详情",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "decisions",
+        "entry": "group",
+        "route": "action",
+        "agrees": true
+      },
+      {
+        "pageId": "T05",
+        "title": "候选比较",
+        "fr01Level": "absent",
+        "shellLevel": "absent",
+        "shellDeclared": true,
+        "module": "decisions",
+        "entry": "group",
+        "route": "compare",
+        "agrees": true
+      },
+      {
+        "pageId": "T06",
+        "title": "日程详情",
+        "fr01Level": "absent",
+        "shellLevel": "absent",
+        "shellDeclared": true,
+        "module": "system-actions",
+        "entry": "group",
+        "route": "schedule",
+        "agrees": true
+      },
+      {
+        "pageId": "T07",
+        "title": "提醒与计时",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "system-actions",
+        "entry": "group",
+        "route": "reminders",
+        "agrees": true
+      },
+      {
+        "pageId": "T08",
+        "title": "活动记录",
+        "fr01Level": "embedded",
+        "shellLevel": "embedded",
+        "shellDeclared": true,
+        "module": "groups",
+        "entry": "group",
+        "route": "activity",
+        "agrees": true
+      }
+    ],
+    "sheetOnlyRows": [
+      {
+        "pageId": "C04",
+        "title": "附件与分享接收",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "chat",
+        "entry": "chat",
+        "route": "attachments",
+        "agrees": true
+      },
+      {
+        "pageId": "C05",
+        "title": "来源与依据",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "chat",
+        "entry": "chat",
+        "route": "sources",
+        "agrees": true
+      },
+      {
+        "pageId": "F04",
+        "title": "保存与分享",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "files",
+        "entry": "file",
+        "route": "file-handoff",
+        "agrees": true
+      },
+      {
+        "pageId": "M04",
+        "title": "遗忘与删除范围",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "memory",
+        "entry": "mine",
+        "route": "memory-forget",
+        "agrees": true
+      },
+      {
+        "pageId": "M08",
+        "title": "额度与存储",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "settings",
+        "entry": "mine",
+        "route": "storage",
+        "agrees": true
+      },
+      {
+        "pageId": "M09",
+        "title": "通知与后台说明",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "settings",
+        "entry": "mine",
+        "route": "notifications",
+        "agrees": true
+      },
+      {
+        "pageId": "T04",
+        "title": "动作详情",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "decisions",
+        "entry": "group",
+        "route": "action",
+        "agrees": true
+      },
+      {
+        "pageId": "T07",
+        "title": "提醒与计时",
+        "fr01Level": "sheet",
+        "shellLevel": "sheet",
+        "shellDeclared": true,
+        "module": "system-actions",
+        "entry": "group",
+        "route": "reminders",
+        "agrees": true
+      }
+    ],
+    "missingPagesWithRoute": 16,
+    "sheetOnlyPagesWithRoute": 8
+  }
+}

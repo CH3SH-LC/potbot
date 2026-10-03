@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light only">
+<title>potbot</title>
+<!--
+  Potbot 本地界面外壳。
+
+  加载路径：file:///android_asset/ui/index.html（WebView，离线自包含）。
+  设计依据：docs/design/design-07-正式发布版App界面与交互.md（v6）
+            docs/design/release-ui/potbot-release.html（可浏览原型）
+  令牌来源：tokens.css ← apps/mobile-ui/foundation.css ← apps/mobile-ui/src/foundation/tokens.ts
+
+  ⚠️ Android WebView 在 file:// 下禁止 ES module：本页与所有屏幕模块一律用
+     经典 <script src>（无 type="module"、无 import/export）。
+     页面不直接用 fetch/XHR：源为 "null"，电脑端后端不发 CORS 头。
+     所有后端访问都经宿主的原生通道 window.PotbotHost（见 host-api.js）。
+
+  本文件只做骨架与加载顺序；布局与路由在 app.js，视觉令牌在 tokens.css，
+  各屏内容由 screens/*.js 通过 window.PB.screens.<key> 注册（契约见 app.js 头部注释）。
+-->
+<link rel="stylesheet" href="tokens.css">
+</head>
+<body>
+
+<div id="pb-app">
+
+  <!-- 顶栏：主入口显示 火锅图标 + potbot + 新建；子页显示 返回 + 标题 -->
+  <header id="pb-topbar">
+    <span id="pb-title" hidden></span>
+  </header>
+
+  <!-- 唯一的屏幕容器：所有屏幕渲染到这里 -->
+  <main id="pb-root" tabindex="-1"></main>
+
+  <!-- 输入区（仅“对话”屏显示；屏幕自带输入控件时自动让位） -->
+  <form id="pb-composer" autocomplete="off" hidden>
+    <div class="pb-inputbubble">
+      <textarea id="pb-input" rows="1" maxlength="1000"
+        placeholder="说点什么…" aria-label="发给 Potbot 的消息"></textarea>
+      <button id="pb-send" type="submit" aria-label="发送" disabled>↑</button>
+    </div>
+    <p class="pb-hint" id="pb-composer-hint"></p>
+  </form>
+
+  <!-- 底部导航：四个文字入口，选中项带细橙色下划线 -->
+  <nav id="pb-tabbar" aria-label="主要导航"></nav>
+</div>
+
+<div class="pb-toast" id="pb-toast" role="status" aria-live="polite"></div>
+
+<!-- ============================================================
+     加载顺序（必须保持）：
+       tokens.css → host-api.js → word-flow.js → bridge.js → screens/*.js → app.js
+     缺失的 screens/*.js 只会使该屏走诚实降级面板，不影响外壳其余部分。
+     ============================================================ -->
+<script src="host-api.js"></script>
+<script src="word-flow.js"></script>
+<script src="bridge.js"></script>
+
+<!-- screens/*.js —— 每个文件注册 window.PB.screens.<key> -->
+<script src="screens/chat.js"></script>
+<script src="screens/groups.js"></script>
+<script src="screens/files.js"></script>
+<script src="screens/me.js"></script>
+<script src="screens/decisions.js"></script>
+<script src="screens/system-actions.js"></script>
+
+<script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "反例：create payload 塞入契约不允许的 split 键（additionalProperties:false）。",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-k01-create",
+    "operation": "create",
+    "idempotencyKey": "idem-k01-create",
+    "payload": {
+      "goal": "x",
+      "split": {}
+    }
+  }
+}

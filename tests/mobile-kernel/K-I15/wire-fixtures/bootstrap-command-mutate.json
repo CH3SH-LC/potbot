@@ -1,0 +1,17 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "K01 bootstrap.validateCommand() 通过后的 mutate 命令（$defs.mutationBranch：expectedRevision + conversationId）。",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-k01-mutate",
+    "operation": "mutate",
+    "idempotencyKey": "idem-k01-mutate",
+    "payload": {
+      "conversationId": "conv-k01",
+      "expectedRevision": 0,
+      "patch": {
+        "title": "一页周报"
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-research-source-6e6fae0c4282e93c",
+    "operation": "query",
+    "idempotencyKey": "idem-research-source-6e6fae0c4282e93c",
+    "payload": {
+      "conversationId": "conv-1",
+      "filters": {
+        "sourceId": "src-1",
+        "refresh": true,
+        "authorize": false
+      }
+    },
+    "metadata": {
+      "entry": "system-action",
+      "kind": "research-source",
+      "returnTarget": {
+        "conversationId": "conv-1",
+        "anchorMessageId": null,
+        "origin": "system-actions"
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schemaRef": "schemas/lifecycle-plan.schema.json#/$defs/lifecycleEvent",
+  "note": "lifecycleEvent 正例：只带持久 taskState（reclaimed），不带运行期 fgsState——两套词表刻意不共用。",
+  "value": {
+    "eventId": "evt-lifecycle-1",
+    "taskId": "task-report",
+    "at": "2026-10-03T08:30:00Z",
+    "taskState": "reclaimed",
+    "detail": "进程被系统回收"
+  }
+}

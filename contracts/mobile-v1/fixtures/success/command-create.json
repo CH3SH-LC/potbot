@@ -1,0 +1,14 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "create 命令：目标 id/revision 缺省，由内核生成。",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-0001",
+    "operation": "create",
+    "idempotencyKey": "idem-0001",
+    "payload": {
+      "goal": "把这份周报改成一页",
+      "templateId": "word-doc"
+    }
+  }
+}

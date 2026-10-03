@@ -1,0 +1,81 @@
+{
+  "package": "X-R06",
+  "lane": "X (Excel / spreadsheets)",
+  "slot": "worker 16 of 16",
+  "task": "unit/amount/fact-version consistency across documents and slides; contract layer only when the other lane is absent",
+  "repo_root": "<repo>",
+  "base_sha": "54e5181e9bfeb08fa1188334ff038d710ecdd7e0",
+  "ran_at_utc": "2026-10-03T09:16:34Z",
+  "allowlist": "tests/mobile-office/spreadsheets/X-R06/",
+  "outside_allowlist_writes": [],
+  "artifacts": [
+    {
+      "path": "tests/mobile-office/spreadsheets/X-R06/cross-artifact-consistency.ts",
+      "sha256": "74c746435553f11f1849f5a985e83161cd5054cd03410a79249d80acda6c24ae",
+      "role": "source module + operation schemas/types (contract layer)"
+    },
+    {
+      "path": "tests/mobile-office/spreadsheets/X-R06/cross-artifact-consistency.test.ts",
+      "sha256": "67736c5c144c28c8fde8e8e8f614db92ad50ba8054bd71cbcf5ab8711a6b2241",
+      "role": "independent test (26 cases, 11 groups)"
+    },
+    {
+      "path": "tests/mobile-office/spreadsheets/X-R06/README.md",
+      "sha256": "0566e2bb7c15922cefda0bae9cc3dc7b787a81e12c8f9ae5bd973474b9088bf6",
+      "role": "runbook"
+    }
+  ],
+  "commands": [
+    {
+      "cmd": "npx vitest run tests/mobile-office/spreadsheets/X-R06 --reporter=basic",
+      "exit_code": 0,
+      "summary": "Test Files 1 passed (1); Tests 26 passed (26); duration ~5-26s (shared machine)"
+    },
+    {
+      "cmd": "npx tsc --noEmit -p tsconfig.json 2>&1 | grep -F \"X-R06\"",
+      "exit_code": 1,
+      "summary": "grep exit 1 = no matches = 0 typecheck errors in X-R06 files. Repo-wide tsc exits 2 with pre-existing errors in OTHER lanes (word W-R02/W-R04/W-R06/W02, mobile-ui F-R02) - not this package."
+    },
+    {
+      "cmd": "npx vitest run <X-R06> (mutation A: compareAmounts unit-mismatch branch forced false)",
+      "exit_code": 1,
+      "summary": "2 tests red (S3 unit_mismatch, S3 negative control); reverted to 26 green"
+    },
+    {
+      "cmd": "npx vitest run <X-R06> (mutation B: versionVerdict stale branch returns 'ok')",
+      "exit_code": 1,
+      "summary": "1 test red (S2 stale_version); reverted to 26 green"
+    }
+  ],
+  "reuse": {
+    "quantity": "src/spreadsheets/quantity.ts (parseQuantity/compareQuantities/formatQuantity) - no second fixed-point impl, no float",
+    "facts_binding": "src/spreadsheets/facts-binding.ts (publishSharedFacts / CrossTemplatePublishPort / not-wired semantics)",
+    "digest": "src/dependency/digest.ts (canonicalDigest)",
+    "sorting": "src/dependency/graph.ts (compareStrings)",
+    "protocol": "src/protocol/index.ts (LogicalTime, ValidationError, asLogicalTime)"
+  },
+  "real_defect_found_and_fixed": {
+    "where": "review_digest",
+    "bug": "first version concatenated digest components in input order, so reversing inputs changed review_digest -> determinism test went red",
+    "fix": "sort digest components before hashing",
+    "caught_by": "X-R06 \u00a78 determinism test"
+  },
+  "verified": [
+    "unit tests all pass (26/26)",
+    "no typecheck errors in allowlist files",
+    "mutation probes A and B both bite (tests are not vacuous)",
+    "missing is not zero (claimed_display === null)",
+    "same-value different-scale does not false-positive",
+    "not-wired publication semantics reused from facts-binding (claimed_published always false)"
+  ],
+  "not_verified": [
+    "docx/pptx lanes are NOT wired - contract layer only; claims are fixtures (verification_mode='fixture')",
+    "no real DOCX/PPTX rendering or consumer readback",
+    "no device/APK/on-device run",
+    "no cross-lane integration with W (Word) or P (PPT) lanes",
+    "dates/booleans not covered, only amount (fixed-point) + text",
+    "review_digest determinism not checked across processes (single-process only)"
+  ],
+  "stubbed": [],
+  "secrets_logged": false
+}

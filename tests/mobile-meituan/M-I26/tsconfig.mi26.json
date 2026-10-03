@@ -1,0 +1,14 @@
+{
+  "//": "M-I26 定向类型检查：只覆盖本单元测试及其跨模块相对依赖（meituan 各包 + K07 账本 + adapters 的 meituan/clock）。不覆盖全仓，避免混入其它线的在途代码。",
+  "extends": "../../../tsconfig.json",
+  "include": [
+    "../../../src/mobile-plugins/meituan/**/*.ts",
+    "../../../src/adapters/meituan/**/*.ts",
+    "../../../src/adapters/clock/**/*.ts",
+    "../../../apps/mobile-kernel/actions/ledger.ts",
+    "../../../apps/mobile-kernel/actions/clock.ts",
+    "../../../apps/mobile-kernel/actions/types.ts",
+    "../../../apps/mobile-kernel/actions/errors.ts",
+    "./**/*.ts"
+  ]
+}

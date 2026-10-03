@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 1,
+  "workPackage": "FA-HONOR-START-RETEST",
+  "question": "修复 0414668（adbd 幂等裸 OKAY 当成功）后，正常 start 的 reverse_setup 是否仍然失败？",
+  "executedAt": "2026-10-03T06:15:36.523Z",
+  "command": "start",
+  "script": {
+    "path": "scripts/demo/honor-connect.mjs",
+    "sha256WorktreeEqualsMainRepo": true,
+    "note": "本次由工作树副本执行（PROJECT_ROOT 随脚本位置解析）；与主仓副本 sha256 相同，已实测。"
+  },
+  "retest": {
+    "verdict": "ready",
+    "exitCode": 0,
+    "processExitCode": 0,
+    "debugReady": true,
+    "errorCode": null,
+    "steps": [
+      {
+        "name": "package_readback",
+        "status": "succeeded",
+        "mayMutate": false,
+        "errorCode": null,
+        "stdoutBytes": 95
+      },
+      {
+        "name": "reverse_setup",
+        "status": "succeeded",
+        "mayMutate": true,
+        "errorCode": null,
+        "stdoutBytes": 4
+      },
+      {
+        "name": "reverse_readback",
+        "status": "succeeded",
+        "mayMutate": false,
+        "errorCode": null,
+        "stdoutBytes": 33
+      },
+      {
+        "name": "phone_health",
+        "status": "succeeded",
+        "mayMutate": false,
+        "errorCode": null,
+        "stdoutBytes": 302
+      },
+      {
+        "name": "potbot_force_stop",
+        "status": "succeeded",
+        "mayMutate": true,
+        "errorCode": null,
+        "stdoutBytes": 20
+      },
+      {
+        "name": "potbot_stopped_pid",
+        "status": "succeeded",
+        "mayMutate": false,
+        "errorCode": null,
+        "stdoutBytes": 19
+      },
+      {
+        "name": "potbot_start",
+        "status": "succeeded",
+        "mayMutate": true,
+        "errorCode": null,
+        "stdoutBytes": 183
+      },
+      {
+        "name": "potbot_pid",
+        "status": "succeeded",
+        "mayMutate": false,
+        "errorCode": null,
+        "stdoutBytes": 25
+      }
+    ],
+    "reverseSetup": {
+      "status": "succeeded",
+      "errorCode": null,
+      "stdoutBytes": 4,
+      "shape": "bare_okay"
+    },
+    "coldStartSteps": [
+      "potbot_force_stop",
+      "potbot_stopped_pid",
+      "potbot_start",
+      "potbot_pid"
+    ],
+    "coldStartReached": true,
+    "appProcess": {
+      "running": true,
+      "pidCount": 1
+    },
+    "launchState": "COLD",
+    "hostHealth": {
+      "bootId": "boot-5d9821e7ed97",
+      "buildId": "potbot-demo-demo-v1-1791005843033",
+      "modelConfigured": true,
+      "modelVerified": true
+    },
+    "phoneHealth": {
+      "sameHostInstance": true,
+      "httpStatus": 200,
+      "bootId": "boot-5d9821e7ed97",
+      "buildId": "potbot-demo-demo-v1-1791005843033"
+    },
+    "mapping": {
+      "transport": "UsbFfs_hdb",
+      "device": "tcp:8765",
+      "host": "tcp:8765",
+      "verified": true
+    },
+    "capabilities": {
+      "forwarding": true,
+      "phoneToHost": true,
+      "appLaunch": true
+    },
+    "packageInstalled": true
+  },
+  "beforeFix": {
+    "source": "<redacted-runtime-path>/honor-connect-1791004119418-10512.json",
+    "executedAt": "2026-10-03T05:08:37.389Z",
+    "verdict": "error",
+    "exitCode": 4,
+    "debugReady": false,
+    "errorCode": "invalid_service_length",
+    "steps": [
+      {
+        "name": "package_readback",
+        "status": "succeeded",
+        "mayMutate": false,
+        "errorCode": null,
+        "stdoutBytes": 95
+      },
+      {
+        "name": "reverse_setup",
+        "status": "outcome_unknown",
+        "mayMutate": true,
+        "errorCode": "invalid_service_length",
+        "stdoutBytes": null
+      }
+    ],
+    "reverseSetup": {
+      "status": "outcome_unknown",
+      "errorCode": "invalid_service_length",
+      "stdoutBytes": null,
+      "shape": "failed"
+    },
+    "coldStartSteps": [
+      "potbot_force_stop",
+      "potbot_stopped_pid",
+      "potbot_start",
+      "potbot_pid"
+    ],
+    "coldStartReached": false,
+    "appProcess": {
+      "running": false,
+      "pidCount": 0
+    },
+    "launchState": null,
+    "hostHealth": {
+      "bootId": "boot-b58cd94f7eea",
+      "buildId": "potbot-demo-demo-v1-1791003754404",
+      "modelConfigured": true,
+      "modelVerified": false
+    },
+    "phoneHealth": null,
+    "mapping": null
+  },
+  "fieldComparison": [
+    {
+      "field": "verdict",
+      "before": "error",
+      "after": "ready"
+    },
+    {
+      "field": "exitCode",
+      "before": 4,
+      "after": 0
+    },
+    {
+      "field": "reverse_setup.status",
+      "before": "outcome_unknown",
+      "after": "succeeded"
+    },
+    {
+      "field": "reverse_setup.error.code",
+      "before": "invalid_service_length",
+      "after": null
+    },
+    {
+      "field": "reverse_setup.stdoutBytes",
+      "before": null,
+      "after": 4
+    },
+    {
+      "field": "coldStartReached",
+      "before": false,
+      "after": true
+    },
+    {
+      "field": "debugReady",
+      "before": false,
+      "after": true
+    },
+    {
+      "field": "capabilities.forwarding",
+      "before": "not_verified",
+      "after": true
+    },
+    {
+      "field": "capabilities.phoneToHost",
+      "before": "not_verified",
+      "after": true
+    },
+    {
+      "field": "capabilities.appLaunch",
+      "before": "not_verified",
+      "after": true
+    },
+    {
+      "field": "writesDeviceStateAtReverseSetup",
+      "before": true,
+      "after": true
+    }
+  ],
+  "hostService": {
+    "port8765OccupiedByOtherAgent": true,
+    "port8765Owner": {
+      "pid": 65836,
+      "name": "node.exe",
+      "commandLine": "\"C:\\Program Files\\nodejs\\node.exe\" .runtime/mobile-word-demo/build/apps/demo/server/main.js"
+    },
+    "healthCheckedAgainstBootId": "boot-5d9821e7ed97",
+    "ownInstance": {
+      "port": 8876,
+      "bind": "127.0.0.1",
+      "startedByThisWorkPackage": true,
+      "bootId": "boot-458323f73a03",
+      "buildId": "potbot-demo-demo-v1-1791008165800",
+      "reachable": true,
+      "reachedByPhoneHealthCheck": false
+    },
+    "caveat": "手机侧固定映射 tcp:8765；本次手机健康检查打到的宿主是 8765 上的**另一实例**（boot-5d9821e7ed97），非本工作包自起的 8876 实例。"
+  },
+  "r169Manual": {
+    "status": "not_done",
+    "marker": "R169",
+    "reason": "R169 要求在手机本体上人工操作，本工作包无法代替人工执行；本次**未做**，不得记为已完成。"
+  },
+  "redactions": [
+    "device-serial",
+    "phone-apk-path"
+  ],
+  "notes": [
+    "reverse_setup 本次 stdoutBytes=4 —— 即裸 OKAY，恰是修复前会抛 invalid_service_length 的那一形态；修复前该步 status=outcome_unknown 且无 stdoutBytes。",
+    "修复前报告里**完全没有** potbot_force_stop / potbot_stopped_pid / potbot_start / potbot_pid 四步（冷启动从未执行）。",
+    "本工作包对真机只执行了既有脚本的 start（含 force-stop 与冷启动），未卸载、未 pm clear、未 root、未改系统设置、未撤任何反向映射。"
+  ]
+}

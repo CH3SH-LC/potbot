@@ -1,0 +1,1974 @@
+{
+  "schema": "potbot.word.wf-map",
+  "schemaVersion": 1,
+  "generator": "tests/mobile-office/word/W-R01/wf-map-json.ts",
+  "digestAlgorithm": "sha256",
+  "independentVerifier": "tests/mobile-office/word/W-R05/verifier/ (independent ZIP/OPC verifier; not src/documents)",
+  "catalog": {
+    "path": "docs/other/ds-word-common-features-2026-10-02.md",
+    "count": 96
+  },
+  "coverage": {
+    "total": 96,
+    "byStatus": {
+      "implemented": 84,
+      "partial": 7,
+      "missing": 3,
+      "unverified": 2
+    },
+    "missing": [
+      "WF-014",
+      "WF-054",
+      "WF-086"
+    ],
+    "partial": [
+      "WF-008",
+      "WF-016",
+      "WF-069",
+      "WF-073",
+      "WF-088",
+      "WF-095",
+      "WF-096"
+    ],
+    "unverified": [
+      "WF-089",
+      "WF-090"
+    ]
+  },
+  "invariants": [],
+  "gaps": {
+    "unmapped": [],
+    "extra": [],
+    "nameMismatch": [],
+    "groupMismatch": []
+  },
+  "operations": [
+    {
+      "id": "WF-001",
+      "name": "加粗及取消加粗",
+      "group": "字符格式",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "toggle",
+        "unset"
+      ],
+      "sources": [
+        "src/documents/operations/character/properties.ts",
+        "src/documents/operations/character/apply.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/character/properties.test.ts",
+        "src/documents/operations/character/apply.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-002",
+      "name": "斜体及取消斜体",
+      "group": "字符格式",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "toggle",
+        "unset"
+      ],
+      "sources": [
+        "src/documents/operations/character/properties.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/character/properties.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-003",
+      "name": "下划线",
+      "group": "字符格式",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "toggle",
+        "unset"
+      ],
+      "sources": [
+        "src/documents/operations/character/properties.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/character/properties.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-004",
+      "name": "删除线",
+      "group": "字符格式",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "toggle",
+        "unset"
+      ],
+      "sources": [
+        "src/documents/operations/character/properties.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/character/properties.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-005",
+      "name": "上标与下标",
+      "group": "字符格式",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset"
+      ],
+      "sources": [
+        "src/documents/operations/character/properties.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/character/properties.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-006",
+      "name": "修改字体",
+      "group": "字符格式",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "clear"
+      ],
+      "sources": [
+        "src/documents/operations/character/properties.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/character/properties.test.ts"
+      ],
+      "note": "ascii/hAnsi/eastAsia/cs 分列；缺失字体只保存指定、不宣称渲染一致。"
+    },
+    {
+      "id": "WF-007",
+      "name": "字号",
+      "group": "字符格式",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/units/font-size.ts",
+        "src/documents/operations/character/properties.ts"
+      ],
+      "evidence": [
+        "src/documents/units/font-size.test.ts"
+      ],
+      "note": "半点值（sz）与中文字号映射表在 units/font-size.ts。"
+    },
+    {
+      "id": "WF-008",
+      "name": "增大/减小字号",
+      "group": "字符格式",
+      "status": "partial",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/units/font-size.ts"
+      ],
+      "evidence": [
+        "src/documents/units/font-size.test.ts"
+      ],
+      "note": "有字号单位与相对步进基础；未确认 UI/工作流层的「增大/减小」入口接线。"
+    },
+    {
+      "id": "WF-009",
+      "name": "字体颜色",
+      "group": "字符格式",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset"
+      ],
+      "sources": [
+        "src/documents/operations/character/properties.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/character/properties.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-010",
+      "name": "文本高亮",
+      "group": "字符格式",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset"
+      ],
+      "sources": [
+        "src/documents/operations/character/properties.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/character/properties.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-011",
+      "name": "字符底纹",
+      "group": "字符格式",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset"
+      ],
+      "sources": [
+        "src/documents/operations/character/properties.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/character/properties.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-012",
+      "name": "字符间距",
+      "group": "字符格式",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset"
+      ],
+      "sources": [
+        "src/documents/operations/character/properties.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/character/properties.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-013",
+      "name": "字符缩放与位置",
+      "group": "字符格式",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset"
+      ],
+      "sources": [
+        "src/documents/operations/character/properties.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/character/properties.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-014",
+      "name": "英文大小写转换",
+      "group": "字符格式",
+      "status": "missing",
+      "operationKinds": [
+        "convert"
+      ],
+      "sources": [],
+      "evidence": [],
+      "note": "全仓检索无大小写转换实现（无 textTransform/toUpper/toLower 应用于选区）。仅有个别统计/编号处的 toUpperCase。"
+    },
+    {
+      "id": "WF-015",
+      "name": "清除字符直接格式",
+      "group": "字符格式",
+      "status": "implemented",
+      "operationKinds": [
+        "clear"
+      ],
+      "sources": [
+        "src/documents/operations/character/types.ts",
+        "src/documents/operations/character/apply.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/character/apply.test.ts"
+      ],
+      "note": "types.ts 提供 clearDirectFormat / inherit 操作语义（R117 四态）。"
+    },
+    {
+      "id": "WF-016",
+      "name": "格式复制/格式刷",
+      "group": "字符格式",
+      "status": "partial",
+      "operationKinds": [
+        "read",
+        "set"
+      ],
+      "sources": [
+        "src/documents/operations/character/read.ts",
+        "src/documents/operations/character/properties.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/character/read.test.ts"
+      ],
+      "note": "有属性读回与设置原语；未见独立的「格式刷」工作流入口。"
+    },
+    {
+      "id": "WF-017",
+      "name": "左对齐",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/alignment.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/alignment.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-018",
+      "name": "居中",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/alignment.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/alignment.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-019",
+      "name": "右对齐",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/alignment.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/alignment.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-020",
+      "name": "两端对齐",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/alignment.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/alignment.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-021",
+      "name": "分散对齐",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/alignment.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/alignment.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-022",
+      "name": "单倍/1.5 倍/双倍行距",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/line-spacing.ts",
+        "src/documents/units/line-spacing.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/line-spacing.test.ts",
+        "src/documents/units/line-spacing.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-023",
+      "name": "自定义多倍行距",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/line-spacing.ts",
+        "src/documents/units/line-spacing.ts"
+      ],
+      "evidence": [
+        "src/documents/units/line-spacing.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-024",
+      "name": "固定值/最小值行距",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/line-spacing.ts",
+        "src/documents/units/line-spacing.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/line-spacing.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-025",
+      "name": "段前间距",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset",
+        "read"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/spacing.ts",
+        "src/documents/units/paragraph-spacing.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/spacing.test.ts",
+        "src/documents/units/paragraph-spacing.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-026",
+      "name": "段后间距",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset",
+        "read"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/spacing.ts",
+        "src/documents/units/paragraph-spacing.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/spacing.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-027",
+      "name": "首行缩进",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset",
+        "read"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/indent.ts",
+        "src/documents/units/indent.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/indent.test.ts",
+        "src/documents/units/indent.test.ts"
+      ],
+      "note": "字符单位与长度单位分列（firstLineChars vs firstLine）；禁止用空格模拟。"
+    },
+    {
+      "id": "WF-028",
+      "name": "悬挂缩进",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset",
+        "read"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/indent.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/indent.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-029",
+      "name": "左右缩进",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset",
+        "read"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/indent.ts",
+        "src/documents/units/indent.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/indent.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-030",
+      "name": "制表位",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "delete",
+        "set"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/tab-stops.ts",
+        "src/documents/units/tab-stop.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/tab-stops.test.ts",
+        "src/documents/units/tab-stop.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-031",
+      "name": "换行与段落拆合",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "delete"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/breaks.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/breaks.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-032",
+      "name": "分页控制",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/pagination.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/pagination.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-033",
+      "name": "段落边框与底纹",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/borders-shading.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/borders-shading.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-034",
+      "name": "清除/复制段落格式",
+      "group": "段落排版",
+      "status": "implemented",
+      "operationKinds": [
+        "clear",
+        "set"
+      ],
+      "sources": [
+        "src/documents/operations/paragraph/clear-copy.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/paragraph/clear-copy.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-035",
+      "name": "正文/标题/副标题样式",
+      "group": "样式、列表与组织",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "link"
+      ],
+      "sources": [
+        "src/documents/styles/named.ts",
+        "src/documents/styles/apply.ts"
+      ],
+      "evidence": [
+        "src/documents/styles/named.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-036",
+      "name": "多级标题",
+      "group": "样式、列表与组织",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "link"
+      ],
+      "sources": [
+        "src/documents/styles/outline.ts",
+        "src/documents/styles/chain.ts"
+      ],
+      "evidence": [
+        "src/documents/styles/outline.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-037",
+      "name": "自定义/修改样式",
+      "group": "样式、列表与组织",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/styles/apply.ts",
+        "src/documents/styles/named.ts"
+      ],
+      "evidence": [
+        "src/documents/styles/apply.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-038",
+      "name": "样式继承与重置",
+      "group": "样式、列表与组织",
+      "status": "implemented",
+      "operationKinds": [
+        "read",
+        "clear"
+      ],
+      "sources": [
+        "src/documents/styles/cascade.ts",
+        "src/documents/styles/explain.ts",
+        "src/documents/styles/run-cascade.ts"
+      ],
+      "evidence": [
+        "src/documents/styles/cascade.test.ts",
+        "src/documents/styles/explain.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-039",
+      "name": "项目符号",
+      "group": "样式、列表与组织",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset"
+      ],
+      "sources": [
+        "src/documents/numbering/apply.ts",
+        "src/documents/numbering/format.ts"
+      ],
+      "evidence": [
+        "src/documents/numbering/apply.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-040",
+      "name": "编号列表",
+      "group": "样式、列表与组织",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset"
+      ],
+      "sources": [
+        "src/documents/numbering/format.ts",
+        "src/documents/numbering/apply.ts"
+      ],
+      "evidence": [
+        "src/documents/numbering/format.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-041",
+      "name": "多级列表",
+      "group": "样式、列表与组织",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/numbering/resolve.ts",
+        "src/documents/numbering/table.ts"
+      ],
+      "evidence": [
+        "src/documents/numbering/resolve.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-042",
+      "name": "列表重启与续编",
+      "group": "样式、列表与组织",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "insert"
+      ],
+      "sources": [
+        "src/documents/numbering/apply.ts",
+        "src/documents/numbering/table.ts"
+      ],
+      "evidence": [
+        "src/documents/numbering/apply.test.ts"
+      ],
+      "note": "restartListForParagraphs / continueListForParagraphs 已存在。"
+    },
+    {
+      "id": "WF-043",
+      "name": "段落/块移动复制删除",
+      "group": "样式、列表与组织",
+      "status": "implemented",
+      "operationKinds": [
+        "move",
+        "insert",
+        "delete"
+      ],
+      "sources": [
+        "src/documents/styles/block-edit.ts"
+      ],
+      "evidence": [
+        "src/documents/styles/block-edit.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-044",
+      "name": "批量格式修改",
+      "group": "样式、列表与组织",
+      "status": "implemented",
+      "operationKinds": [
+        "set"
+      ],
+      "sources": [
+        "src/documents/styles/batch-format.ts"
+      ],
+      "evidence": [
+        "src/documents/styles/batch-format.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-045",
+      "name": "纸张大小",
+      "group": "页面与节",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/sections/page-setup.ts"
+      ],
+      "evidence": [
+        "src/documents/sections/page-setup.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-046",
+      "name": "横向/纵向",
+      "group": "页面与节",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/sections/page-setup.ts"
+      ],
+      "evidence": [
+        "src/documents/sections/page-setup.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-047",
+      "name": "页边距",
+      "group": "页面与节",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/sections/margins.ts",
+        "src/documents/sections/page-setup.ts"
+      ],
+      "evidence": [
+        "src/documents/sections/page-setup.test.ts"
+      ],
+      "note": "margins.ts 无专属 test；由 page-setup.test.ts 间接覆盖。"
+    },
+    {
+      "id": "WF-048",
+      "name": "分页符",
+      "group": "页面与节",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "delete"
+      ],
+      "sources": [
+        "src/documents/sections/breaks.ts",
+        "src/documents/operations/paragraph/breaks.ts"
+      ],
+      "evidence": [
+        "src/documents/sections/breaks.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-049",
+      "name": "分节符",
+      "group": "页面与节",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "delete"
+      ],
+      "sources": [
+        "src/documents/sections/section-breaks.ts"
+      ],
+      "evidence": [
+        "src/documents/sections/section-breaks.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-050",
+      "name": "分栏",
+      "group": "页面与节",
+      "status": "implemented",
+      "operationKinds": [
+        "set"
+      ],
+      "sources": [
+        "src/documents/sections/columns.ts",
+        "src/documents/sections/extras.ts"
+      ],
+      "evidence": [
+        "src/documents/sections/page-setup.test.ts"
+      ],
+      "note": "columns.ts 无专属 test；列宽经 extras/page-setup 覆盖。"
+    },
+    {
+      "id": "WF-051",
+      "name": "页眉与页脚",
+      "group": "页面与节",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "delete",
+        "set"
+      ],
+      "sources": [
+        "src/documents/sections/header-footer.ts",
+        "src/documents/header-footer-workflow.ts"
+      ],
+      "evidence": [
+        "src/documents/sections/header-footer.test.ts",
+        "src/documents/header-footer-workflow.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-052",
+      "name": "首页/奇偶页不同",
+      "group": "页面与节",
+      "status": "implemented",
+      "operationKinds": [
+        "set"
+      ],
+      "sources": [
+        "src/documents/sections/header-footer.ts"
+      ],
+      "evidence": [
+        "src/documents/sections/header-footer.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-053",
+      "name": "页码",
+      "group": "页面与节",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "generate"
+      ],
+      "sources": [
+        "src/documents/sections/page-numbering.ts"
+      ],
+      "evidence": [
+        "src/documents/sections/page-numbering.test.ts"
+      ],
+      "note": "域指令写入 ≠ 页码已计算；真实页码依赖排版（见 W09/W04）。"
+    },
+    {
+      "id": "WF-054",
+      "name": "页面边框/背景/水印",
+      "group": "页面与节",
+      "status": "missing",
+      "operationKinds": [],
+      "sources": [
+        "src/documents/sections/index.ts"
+      ],
+      "evidence": [],
+      "note": "sections/index.ts 明确声明「不做页面边框 / 背景 / 水印（WF-054）」；未找到实现模块。"
+    },
+    {
+      "id": "WF-055",
+      "name": "页内垂直对齐",
+      "group": "页面与节",
+      "status": "implemented",
+      "operationKinds": [
+        "set"
+      ],
+      "sources": [
+        "src/documents/sections/vertical-align.ts"
+      ],
+      "evidence": [
+        "src/documents/sections/page-setup.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-056",
+      "name": "插入/删除表格",
+      "group": "表格",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "delete"
+      ],
+      "sources": [
+        "src/documents/operations/table/table-structure.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/table/table-structure.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-057",
+      "name": "增删行列",
+      "group": "表格",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "delete"
+      ],
+      "sources": [
+        "src/documents/operations/table/edit.ts",
+        "src/documents/operations/table/grid.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/table/grid.test.ts"
+      ],
+      "note": "edit.ts 无专属 test；行列增删由 grid.test.ts / table-structure.test.ts 覆盖。"
+    },
+    {
+      "id": "WF-058",
+      "name": "单元格合并/拆分",
+      "group": "表格",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "delete"
+      ],
+      "sources": [
+        "src/documents/operations/table/merge.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/table/merge.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-059",
+      "name": "列宽/行高",
+      "group": "表格",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "read"
+      ],
+      "sources": [
+        "src/documents/operations/table/size.ts",
+        "src/documents/operations/table/layout.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/table/size.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-060",
+      "name": "表格对齐与定位",
+      "group": "表格",
+      "status": "implemented",
+      "operationKinds": [
+        "set"
+      ],
+      "sources": [
+        "src/documents/operations/table/layout.ts",
+        "src/documents/operations/table/extensions.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/table/properties.test.ts"
+      ],
+      "note": "表格定位/对齐在 layout.ts 与 extensions.ts（无独立 properties.ts 模块）。"
+    },
+    {
+      "id": "WF-061",
+      "name": "单元格内容排版",
+      "group": "表格",
+      "status": "implemented",
+      "operationKinds": [
+        "set"
+      ],
+      "sources": [
+        "src/documents/operations/table/cell-format.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/table/properties.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-062",
+      "name": "表格边框/底纹/样式",
+      "group": "表格",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "unset"
+      ],
+      "sources": [
+        "src/documents/operations/table/borders.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/table/properties.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-063",
+      "name": "表头与跨页行为",
+      "group": "表格",
+      "status": "implemented",
+      "operationKinds": [
+        "set"
+      ],
+      "sources": [
+        "src/documents/operations/table/layout.ts",
+        "src/documents/operations/table/grid.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/table/properties.test.ts"
+      ],
+      "note": "重复标题行（tblHeader）在 layout.ts。"
+    },
+    {
+      "id": "WF-064",
+      "name": "表格内容编辑",
+      "group": "表格",
+      "status": "implemented",
+      "operationKinds": [
+        "replace",
+        "convert"
+      ],
+      "sources": [
+        "src/documents/operations/table/content.ts",
+        "src/documents/table-workflow.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/table/content.test.ts",
+        "src/documents/table-workflow.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-065",
+      "name": "插入/替换/删除图片",
+      "group": "图片与图形",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "replace",
+        "delete"
+      ],
+      "sources": [
+        "src/documents/operations/drawing/image.ts",
+        "src/documents/operations/drawing/media.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/drawing/image.test.ts",
+        "src/documents/operations/drawing/media.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-066",
+      "name": "图片尺寸与旋转",
+      "group": "图片与图形",
+      "status": "implemented",
+      "operationKinds": [
+        "set"
+      ],
+      "sources": [
+        "src/documents/operations/drawing/params.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/drawing/image.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-067",
+      "name": "图片裁剪",
+      "group": "图片与图形",
+      "status": "implemented",
+      "operationKinds": [
+        "set"
+      ],
+      "sources": [
+        "src/documents/operations/drawing/params.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/drawing/image.test.ts"
+      ],
+      "note": "保存裁剪参数（srcRect），不把预览裁剪当文件已裁剪。"
+    },
+    {
+      "id": "WF-068",
+      "name": "图片环绕与位置",
+      "group": "图片与图形",
+      "status": "implemented",
+      "operationKinds": [
+        "set"
+      ],
+      "sources": [
+        "src/documents/operations/drawing/params.ts",
+        "src/documents/operations/drawing/media.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/drawing/image.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-069",
+      "name": "图片描述与题注",
+      "group": "图片与图形",
+      "status": "partial",
+      "operationKinds": [
+        "set",
+        "generate"
+      ],
+      "sources": [
+        "src/documents/operations/drawing/image.ts",
+        "src/documents/references/crossref.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/drawing/image.test.ts"
+      ],
+      "note": "替代文字（docPr descr）与题注编号分散在 drawing/references，未确认端到端接线。"
+    },
+    {
+      "id": "WF-070",
+      "name": "文本框及常用形状",
+      "group": "图片与图形",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "delete",
+        "set"
+      ],
+      "sources": [
+        "src/documents/operations/drawing/shape.ts"
+      ],
+      "evidence": [
+        "src/documents/operations/drawing/shape.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-071",
+      "name": "超链接",
+      "group": "引用、长文与审阅",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "delete",
+        "link"
+      ],
+      "sources": [
+        "src/documents/references/hyperlinks.ts"
+      ],
+      "evidence": [
+        "src/documents/references/hyperlinks.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-072",
+      "name": "书签",
+      "group": "引用、长文与审阅",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "delete",
+        "set"
+      ],
+      "sources": [
+        "src/documents/references/bookmarks.ts",
+        "src/documents/references/anchors.ts"
+      ],
+      "evidence": [
+        "src/documents/references/bookmarks.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-073",
+      "name": "目录",
+      "group": "引用、长文与审阅",
+      "status": "partial",
+      "operationKinds": [
+        "generate"
+      ],
+      "sources": [
+        "src/documents/references/toc.ts"
+      ],
+      "evidence": [
+        "src/documents/references/toc.test.ts"
+      ],
+      "note": "目录生成存在；真实页码依赖排版引擎（W04/W09），不编造缓存页码。"
+    },
+    {
+      "id": "WF-074",
+      "name": "脚注与尾注",
+      "group": "引用、长文与审阅",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "delete",
+        "set"
+      ],
+      "sources": [
+        "src/documents/references/notes.ts"
+      ],
+      "evidence": [
+        "src/documents/references/notes.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-075",
+      "name": "交叉引用",
+      "group": "引用、长文与审阅",
+      "status": "implemented",
+      "operationKinds": [
+        "link",
+        "generate"
+      ],
+      "sources": [
+        "src/documents/references/crossref.ts"
+      ],
+      "evidence": [
+        "src/documents/references/crossref.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-076",
+      "name": "常用域更新",
+      "group": "引用、长文与审阅",
+      "status": "implemented",
+      "operationKinds": [
+        "generate",
+        "read"
+      ],
+      "sources": [
+        "src/documents/references/fields.ts"
+      ],
+      "evidence": [
+        "src/documents/references/fields.test.ts"
+      ],
+      "note": "区分域指令 / 缓存 / 实际刷新；写入域 ≠ 已刷新。"
+    },
+    {
+      "id": "WF-077",
+      "name": "批注",
+      "group": "引用、长文与审阅",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "delete",
+        "set"
+      ],
+      "sources": [
+        "src/documents/review/comments.ts"
+      ],
+      "evidence": [
+        "src/documents/review/comments.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-078",
+      "name": "修订记录",
+      "group": "引用、长文与审阅",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "insert",
+        "delete"
+      ],
+      "sources": [
+        "src/documents/review/revisions.ts"
+      ],
+      "evidence": [
+        "src/documents/review/revisions.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-079",
+      "name": "接受/拒绝修订",
+      "group": "引用、长文与审阅",
+      "status": "implemented",
+      "operationKinds": [
+        "set",
+        "delete"
+      ],
+      "sources": [
+        "src/documents/review/accept.ts",
+        "src/documents/accept-reject.ts"
+      ],
+      "evidence": [
+        "src/documents/review/accept.test.ts",
+        "src/documents/accept-reject.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-080",
+      "name": "版本比较",
+      "group": "引用、长文与审阅",
+      "status": "implemented",
+      "operationKinds": [
+        "compare"
+      ],
+      "sources": [
+        "src/documents/review/compare.ts"
+      ],
+      "evidence": [
+        "src/documents/review/compare.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-081",
+      "name": "新建、重命名与连续编辑",
+      "group": "编辑与文件工作流",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "set"
+      ],
+      "sources": [
+        "src/documents/session/session.ts",
+        "src/documents/session/list-ops.ts"
+      ],
+      "evidence": [
+        "src/documents/session/session.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-082",
+      "name": "导入既有 DOCX",
+      "group": "编辑与文件工作流",
+      "status": "implemented",
+      "operationKinds": [
+        "read"
+      ],
+      "sources": [
+        "src/documents/docx/import.ts"
+      ],
+      "evidence": [
+        "src/documents/docx/roundtrip.test.ts",
+        "src/documents/docx/import-column-width.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-083",
+      "name": "保存并重新打开",
+      "group": "编辑与文件工作流",
+      "status": "implemented",
+      "operationKinds": [
+        "render"
+      ],
+      "sources": [
+        "src/documents/docx/export.ts",
+        "src/documents/session/persistence.ts"
+      ],
+      "evidence": [
+        "src/documents/docx/roundtrip.test.ts",
+        "src/documents/session/session.test.ts"
+      ],
+      "note": "电脑侧往返已验；手机杀进程重开未验（真机层空白）。"
+    },
+    {
+      "id": "WF-084",
+      "name": "另存/导出副本",
+      "group": "编辑与文件工作流",
+      "status": "implemented",
+      "operationKinds": [
+        "render"
+      ],
+      "sources": [
+        "src/documents/session/canonical.ts",
+        "src/documents/docx/export.ts"
+      ],
+      "evidence": [
+        "src/documents/session/session.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-085",
+      "name": "查找替换",
+      "group": "编辑与文件工作流",
+      "status": "implemented",
+      "operationKinds": [
+        "replace"
+      ],
+      "sources": [
+        "src/documents/selection/find.ts",
+        "src/documents/operations/character/replace.ts"
+      ],
+      "evidence": [
+        "src/documents/selection/find.test.ts",
+        "src/documents/operations/character/replace.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-086",
+      "name": "撤销与重做",
+      "group": "编辑与文件工作流",
+      "status": "missing",
+      "operationKinds": [
+        "clear"
+      ],
+      "sources": [],
+      "evidence": [],
+      "note": "src/documents 全仓检索无 undo/redo 实现（无对应方法或模块）；W10 计划补齐。"
+    },
+    {
+      "id": "WF-087",
+      "name": "版本、并发与失败恢复",
+      "group": "编辑与文件工作流",
+      "status": "implemented",
+      "operationKinds": [
+        "compare",
+        "read"
+      ],
+      "sources": [
+        "src/documents/session/session.ts",
+        "src/artifacts/publish.ts"
+      ],
+      "evidence": [
+        "src/documents/session/session.test.ts",
+        "src/artifacts/publish.test.ts"
+      ],
+      "note": "session 有 base_revision 摘要绑定、stale_revision 拒绝、idempotency_conflict。"
+    },
+    {
+      "id": "WF-088",
+      "name": "选区、剪贴板与预览",
+      "group": "编辑与文件工作流",
+      "status": "partial",
+      "operationKinds": [
+        "replace",
+        "insert"
+      ],
+      "sources": [
+        "src/documents/selection/selection.ts",
+        "src/documents/selection/resolve.ts",
+        "src/documents/operations/character/apply.ts"
+      ],
+      "evidence": [
+        "src/documents/selection/selection.test.ts",
+        "src/documents/selection/resolve.test.ts"
+      ],
+      "note": "选区/范围解析与替换存在；剪贴板（复制/剪切/粘贴、纯文本粘贴）未见独立模块。"
+    },
+    {
+      "id": "WF-089",
+      "name": "PDF 导出",
+      "group": "编辑与文件工作流",
+      "status": "unverified",
+      "operationKinds": [
+        "render"
+      ],
+      "sources": [
+        "src/mobile-plugins/word/rendering/paginate.ts",
+        "apps/android/app/src/main/java/com/potbot/demo/PotbotPdfLayout.java"
+      ],
+      "evidence": [],
+      "note": "手机原生排版子集存在（固定 A4/72pt 边距/段落子集）；无仓内自动化证据，真机 PDF 读回未验。"
+    },
+    {
+      "id": "WF-090",
+      "name": "打印交接",
+      "group": "编辑与文件工作流",
+      "status": "unverified",
+      "operationKinds": [
+        "handoff"
+      ],
+      "sources": [
+        "apps/android/app/src/main/java/com/potbot/demo/PotbotPrintHandoff.java"
+      ],
+      "evidence": [],
+      "note": "打印交接类存在；「交接」不等于已打印，无自动化证据。"
+    },
+    {
+      "id": "WF-091",
+      "name": "公式",
+      "group": "其他常用内容与校对",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "replace"
+      ],
+      "sources": [
+        "src/documents/equations/omml.ts",
+        "src/documents/equations/build.ts"
+      ],
+      "evidence": [
+        "src/documents/equations/equations.test.ts",
+        "src/documents/equations/inline.test.ts"
+      ],
+      "note": "OMML 结构化公式；既有复杂公式保留（preserve.ts）。"
+    },
+    {
+      "id": "WF-092",
+      "name": "常用图表",
+      "group": "其他常用内容与校对",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "set"
+      ],
+      "sources": [
+        "src/documents/charts/build.ts",
+        "src/documents/charts/facts.ts"
+      ],
+      "evidence": [
+        "src/documents/charts/charts.test.ts"
+      ],
+      "note": "图表嵌入数据表与事实版本一致性在 charts/facts.ts。"
+    },
+    {
+      "id": "WF-093",
+      "name": "符号与特殊字符",
+      "group": "其他常用内容与校对",
+      "status": "implemented",
+      "operationKinds": [
+        "insert",
+        "convert"
+      ],
+      "sources": [
+        "src/documents/proofing/symbols.ts"
+      ],
+      "evidence": [
+        "src/documents/proofing/symbols.test.ts"
+      ],
+      "note": null
+    },
+    {
+      "id": "WF-094",
+      "name": "字数与统计",
+      "group": "其他常用内容与校对",
+      "status": "implemented",
+      "operationKinds": [
+        "count"
+      ],
+      "sources": [
+        "src/documents/proofing/counts.ts"
+      ],
+      "evidence": [
+        "src/documents/proofing/counts.test.ts"
+      ],
+      "note": "中英文/emoji 计数口径；页数须真实排版，不由字符数推算。"
+    },
+    {
+      "id": "WF-095",
+      "name": "拼写与语法检查",
+      "group": "其他常用内容与校对",
+      "status": "partial",
+      "operationKinds": [
+        "read",
+        "set"
+      ],
+      "sources": [
+        "src/documents/proofing/spelling.ts"
+      ],
+      "evidence": [
+        "src/documents/proofing/spelling.test.ts"
+      ],
+      "note": "有拼写检查骨架；「不以固定提示冒充真实检查」——真实模型输出绑定见 W08。"
+    },
+    {
+      "id": "WF-096",
+      "name": "文本语言与选区翻译",
+      "group": "其他常用内容与校对",
+      "status": "partial",
+      "operationKinds": [
+        "set",
+        "translate"
+      ],
+      "sources": [
+        "src/documents/proofing/language.ts",
+        "src/documents/proofing/translation.ts",
+        "src/documents/proofing/port.ts"
+      ],
+      "evidence": [
+        "src/documents/proofing/translation.test.ts",
+        "src/documents/proofing/port.test.ts"
+      ],
+      "note": "language.ts 无专属 test（经 translation/port 间接触及）；真实 Flash 输出、revision 绑定与模型预算由 W08 补，当前标 partial。"
+    }
+  ],
+  "corpus": {
+    "byOrigin": {
+      "hand-authored-ooxml": 4,
+      "real-office": 2,
+      "self-produced": 1,
+      "external-real-document": 1,
+      "not-present": 3
+    },
+    "digests": [
+      {
+        "id": "corpus-a-independent-deflate",
+        "origin": "hand-authored-ooxml",
+        "path": "tests/word-acceptance/fixtures/corpus-a-independent-deflate.docx",
+        "compression": "DEFLATE",
+        "provenanceRef": "tests/word-acceptance/fixtures/PROVENANCE.md",
+        "bytes": 2977,
+        "sha256": "10a84344d004f5fab37c8cf66e6bd1bfad9eafc7e6f1b326aeae7b4b8106fcd7",
+        "independentRead": {
+          "verifier": "tests/mobile-office/word/W-R05/verifier/ (independent ZIP/OPC verifier; not src/documents)",
+          "ok": true,
+          "partCount": 8,
+          "crcAllMatch": true,
+          "parts": {
+            "[Content_Types].xml": "3826c85291fad091b84c8fad0bcd2225606e33142ca47e9b19d8c6659cf13e17",
+            "_rels/.rels": "b7ae6e1849778a0fa08ce4ad648050804c83b7a055e97ad92c7c234156896480",
+            "word/document.xml": "bec296a08d48197631d3a3b6c6e9df715cf15a6168ad034771eed1b048d848d9",
+            "word/_rels/document.xml.rels": "fd275e21fc5dd0046258e1a3fcd19579e07f68f455796fe7d423b91f9933f3d3",
+            "word/styles.xml": "94e07d7712b91ef74fd37675e39c4de8e6b8bc6a6f44997f62959ab6a474957d",
+            "word/media/image1.png": "a930c2bb4e61c0682068f71c4ef427eefbb07098ecea9390e445e7af4b66a384",
+            "customXml/item1.xml": "94674ebaa58ebcbc996680ae77919f2654391550f0793690f44e9809a7afd742",
+            "docProps/core.xml": "11da64dd28a230a4b545a57975e2e3de3a209e00e9f48e606f67f389456c5b6a"
+          }
+        },
+        "note": "WCF-D10 手工拼 OOXML；证明「按规范可解析」，不证明 Word 接受（Word 拒绝打开该文件，错误码 24601）。"
+      },
+      {
+        "id": "corpus-b-independent-deflate",
+        "origin": "hand-authored-ooxml",
+        "path": "tests/word-acceptance/fixtures/corpus-b-independent-deflate.docx",
+        "compression": "DEFLATE",
+        "provenanceRef": "tests/word-acceptance/fixtures/PROVENANCE.md",
+        "bytes": 2800,
+        "sha256": "c6c7264486720021c1823fd8f6faa22dd831fb7858cc5e9c68be979c4dd6a7af",
+        "independentRead": {
+          "verifier": "tests/mobile-office/word/W-R05/verifier/ (independent ZIP/OPC verifier; not src/documents)",
+          "ok": true,
+          "partCount": 7,
+          "crcAllMatch": true,
+          "parts": {
+            "[Content_Types].xml": "ab6ddf85077c5bd8832140d664d1c7be4299b370f053ccd0c0e3a334a39971b0",
+            "_rels/.rels": "650e0d3f14f772b03484d7940671ae71a057bca3055026098ef666a78f00a0f6",
+            "word/document.xml": "87ef07d2533807e18a50cdf760a73f4c3cd5d060c722e70b258f440368b3201a",
+            "word/_rels/document.xml.rels": "6ee19aeea30d2440d1d13eb585ec7d05e9cfb81f7210d2cf033e0fdb8bd0dd42",
+            "word/styles.xml": "df6b118b8c253d46da1f34b4103dcb8bd05651196142e688431658c78ef4c725",
+            "word/media/image1.png": "2b640882ae1d1107c5712205382693d103f8cf8d9afcb5c5292b6dc1103e04c4",
+            "docProps/custom.xml": "0f7241fdb2c22d1d122f6adc9f549355f4d5fb0545f663fe250b8a6d5194558d"
+          }
+        },
+        "note": "手工拼 OOXML（公文风，独立内容）。"
+      },
+      {
+        "id": "corpus-c-word16-created",
+        "origin": "real-office",
+        "path": "tests/word-acceptance/fixtures/corpus-c-word16-created.docx",
+        "compression": "DEFLATE",
+        "provenanceRef": "tests/word-acceptance/fixtures/PROVENANCE.md",
+        "bytes": 14466,
+        "sha256": "6b2c2e142faa7a563a8ec142f1389107445bed8162567713f1903bfaa4481026",
+        "independentRead": {
+          "verifier": "tests/mobile-office/word/W-R05/verifier/ (independent ZIP/OPC verifier; not src/documents)",
+          "ok": true,
+          "partCount": 11,
+          "crcAllMatch": true,
+          "parts": {
+            "[Content_Types].xml": "dfa90f373b8fd8147ee3e4bfe1ee059e536cc1b068f7ec140c3fc0e6554f331a",
+            "_rels/.rels": "e19238d7a71fa7a2490776252686f70e2de6238c87cd509b5e3a3cc07c2ea4df",
+            "word/document.xml": "21aafb28a294f9d4b6d28c96426688bcb2f00bc5ca8bb1a7b8103310d6ecfbe8",
+            "word/_rels/document.xml.rels": "b725d5476e76f555fc24ecb908474fd29b671687336e5e1177a5c4c35cb5939f",
+            "word/theme/theme1.xml": "3a2aeb9bef6b86fcb2a98dad83a943e4bf31ba4af5bbd20844c4abbcfa50b0f6",
+            "word/settings.xml": "b81c89616c02f05202a9b2d00edbaeeb00729ca34710333600000d6d38979619",
+            "word/styles.xml": "b93c5bcd9e05c4ee941203c68704ce089f4fda8261be3e70d90090e3c625f665",
+            "word/webSettings.xml": "f2f6fe7679634963bf49bae65f941f41934de42ceeb3a806afac4bab92274853",
+            "word/fontTable.xml": "7cbbda913ce439e5880f7e946c453aaa27d5b26d29eeacf15dd275a0647285b2",
+            "docProps/core.xml": "4369d18e6a7ad9a1fc8e80bcc1d4eaf20e17fd5e904fa35d036cd74be7ca4d7f",
+            "docProps/app.xml": "a1ff763577da693bff175f427e93460e2907871a0103acb390ed919bcf1966a2"
+          }
+        },
+        "note": "本机真实 Microsoft Word 16.0.20430（COM 自动化）新建并保存；只支持「Word 16.0.20430 通过」这一条声明。"
+      },
+      {
+        "id": "legacy-golden-potbot-store",
+        "origin": "self-produced",
+        "path": "tests/word-acceptance/fixtures/legacy-golden-potbot-store.docx",
+        "compression": "STORE",
+        "provenanceRef": "tests/word-acceptance/fixtures/PROVENANCE.md",
+        "bytes": 1688,
+        "sha256": "3f30889034034b840718283ae6ab783205d40fec1ad2b58586406d1eac3c1378",
+        "independentRead": {
+          "verifier": "tests/mobile-office/word/W-R05/verifier/ (independent ZIP/OPC verifier; not src/documents)",
+          "ok": true,
+          "partCount": 3,
+          "crcAllMatch": true,
+          "parts": {
+            "[Content_Types].xml": "ae413e8cf08209fc02c75b18c971f7327d0ecb05fe194f182258fbaae0d9da2f",
+            "_rels/.rels": "6b1f432240d639e697da68ee65a70d6252b5eb7204e58daeae6514a0f85f2285",
+            "word/document.xml": "a293fac77b197e4f0820cfb252be60cc734ce58283245d865b1433a4a2be3348"
+          }
+        },
+        "note": "FREEZE-6 时期 potbot 生成器自产产物的逐字节副本（兼容回归）；摘要已钉死。"
+      },
+      {
+        "id": "corpus-d-reference-elements",
+        "origin": "hand-authored-ooxml",
+        "path": "tests/word-acceptance/fixtures/corpus-d-reference-elements.docx",
+        "compression": "unknown",
+        "provenanceRef": "tests/word-acceptance/fixtures/PROVENANCE.md",
+        "bytes": 4077,
+        "sha256": "5a9c631ef08cfcdc00e3e9395e761e3f6d1123890b30cf0caa25d49788ada219",
+        "independentRead": {
+          "verifier": "tests/mobile-office/word/W-R05/verifier/ (independent ZIP/OPC verifier; not src/documents)",
+          "ok": true,
+          "partCount": 10,
+          "crcAllMatch": true,
+          "parts": {
+            "[Content_Types].xml": "05d0522f1d046b814cd05a0e482a0d4139fa560a0101aaef4567081eaeecad36",
+            "_rels/.rels": "b7ae6e1849778a0fa08ce4ad648050804c83b7a055e97ad92c7c234156896480",
+            "word/document.xml": "a2b6624292f41bce5d3c16bc7b99b24b7232e7258d7133d4cce12f7c7f8f9bc7",
+            "word/_rels/document.xml.rels": "f20180baa98b6af2eb240e76cccbd939637e385bd7f1d2a3d3d9dda7de66d975",
+            "word/styles.xml": "94e07d7712b91ef74fd37675e39c4de8e6b8bc6a6f44997f62959ab6a474957d",
+            "word/footnotes.xml": "55a57d9818924eeb805eddc10a1f2b8ddcb829a2a366d6ea576069e2568176bc",
+            "word/endnotes.xml": "ad2094cd5cbc91b2fed66fc03cb8ee8f21a2c2768808a12a292ff4887335fa30",
+            "word/comments.xml": "28bbbc61520e10b80e58feb521190791333cc1e3c2bce789764b09153e2e98eb",
+            "word/charts/chart1.xml": "8095335f7239ad76a1ebfb12595db2325d741eed04b941303eaccd95ff8b039b",
+            "docProps/core.xml": "11da64dd28a230a4b545a57975e2e3de3a209e00e9f48e606f67f389456c5b6a"
+          }
+        },
+        "note": "手工 OOXML，覆盖引用类元素。"
+      },
+      {
+        "id": "corpus-e-annotation-export",
+        "origin": "hand-authored-ooxml",
+        "path": "tests/word-acceptance/fixtures/corpus-e-annotation-export.docx",
+        "compression": "unknown",
+        "provenanceRef": "tests/word-acceptance/fixtures/PROVENANCE.md",
+        "bytes": 8264,
+        "sha256": "f4a25feca4f1b68180052beecda3cc7c3771d8fb0fd38e61a273018187b18b13",
+        "independentRead": {
+          "verifier": "tests/mobile-office/word/W-R05/verifier/ (independent ZIP/OPC verifier; not src/documents)",
+          "ok": true,
+          "partCount": 11,
+          "crcAllMatch": true,
+          "parts": {
+            "[Content_Types].xml": "8b26483f8b57a7876f88861498da7361a77db215c6a818dd404c013f9f21a55c",
+            "_rels/.rels": "b7ae6e1849778a0fa08ce4ad648050804c83b7a055e97ad92c7c234156896480",
+            "word/document.xml": "4f704dd6eb7b5d0a547714d4f814d91c0b7aa07029b93e397c41fae1a2542f0b",
+            "word/_rels/document.xml.rels": "95dad580bd4c7289fdbd04dedd3cab58a2e4f3808209cd4351d1334f0c24052a",
+            "word/styles.xml": "94e07d7712b91ef74fd37675e39c4de8e6b8bc6a6f44997f62959ab6a474957d",
+            "customXml/item1.xml": "94674ebaa58ebcbc996680ae77919f2654391550f0793690f44e9809a7afd742",
+            "docProps/core.xml": "11da64dd28a230a4b545a57975e2e3de3a209e00e9f48e606f67f389456c5b6a",
+            "word/footnotes.xml": "9c8d79cecbaa2f0dec134d90bdbab40bf3db39522ef2775b5606cbf310b39aee",
+            "word/endnotes.xml": "49c867f44b65ae9c816da8b0a242d140d33274309dc8d0f8a46353950d71a0cd",
+            "word/comments.xml": "ab9715fdc0e6dc8a5d6cde62fdd844dd42812665f4db04cb7504bf978d285289",
+            "word/media/image1.png": "a930c2bb4e61c0682068f71c4ef427eefbb07098ecea9390e445e7af4b66a384"
+          }
+        },
+        "note": "手工 OOXML，覆盖批注/修订导出。"
+      },
+      {
+        "id": "research-real-word16",
+        "origin": "real-office",
+        "path": "src/adapters/research/__fixtures__/real-word16.docx",
+        "compression": "unknown",
+        "provenanceRef": null,
+        "bytes": 14466,
+        "sha256": "6b2c2e142faa7a563a8ec142f1389107445bed8162567713f1903bfaa4481026",
+        "independentRead": {
+          "verifier": "tests/mobile-office/word/W-R05/verifier/ (independent ZIP/OPC verifier; not src/documents)",
+          "ok": true,
+          "partCount": 11,
+          "crcAllMatch": true,
+          "parts": {
+            "[Content_Types].xml": "dfa90f373b8fd8147ee3e4bfe1ee059e536cc1b068f7ec140c3fc0e6554f331a",
+            "_rels/.rels": "e19238d7a71fa7a2490776252686f70e2de6238c87cd509b5e3a3cc07c2ea4df",
+            "word/document.xml": "21aafb28a294f9d4b6d28c96426688bcb2f00bc5ca8bb1a7b8103310d6ecfbe8",
+            "word/_rels/document.xml.rels": "b725d5476e76f555fc24ecb908474fd29b671687336e5e1177a5c4c35cb5939f",
+            "word/theme/theme1.xml": "3a2aeb9bef6b86fcb2a98dad83a943e4bf31ba4af5bbd20844c4abbcfa50b0f6",
+            "word/settings.xml": "b81c89616c02f05202a9b2d00edbaeeb00729ca34710333600000d6d38979619",
+            "word/styles.xml": "b93c5bcd9e05c4ee941203c68704ce089f4fda8261be3e70d90090e3c625f665",
+            "word/webSettings.xml": "f2f6fe7679634963bf49bae65f941f41934de42ceeb3a806afac4bab92274853",
+            "word/fontTable.xml": "7cbbda913ce439e5880f7e946c453aaa27d5b26d29eeacf15dd275a0647285b2",
+            "docProps/core.xml": "4369d18e6a7ad9a1fc8e80bcc1d4eaf20e17fd5e904fa35d036cd74be7ca4d7f",
+            "docProps/app.xml": "a1ff763577da693bff175f427e93460e2907871a0103acb390ed919bcf1966a2"
+          }
+        },
+        "note": "研究用真实 Word 16 产物；具体授权/来源未在本文件复述，以所在目录说明为准。"
+      },
+      {
+        "id": "source-roadshow-docx",
+        "origin": "external-real-document",
+        "path": "docs/source/项目介绍_路演策划版.docx",
+        "compression": "unknown",
+        "provenanceRef": null,
+        "bytes": 44566,
+        "sha256": "50f9c87488719706786b753b9a936e8089c6f195fc0f957cc346fb9dcbe0049e",
+        "independentRead": {
+          "verifier": "tests/mobile-office/word/W-R05/verifier/ (independent ZIP/OPC verifier; not src/documents)",
+          "ok": true,
+          "partCount": 19,
+          "crcAllMatch": true,
+          "parts": {
+            "[Content_Types].xml": "479ad1a2258771db93540fbde6ad43e861d8d39dd2559e3f6db17286b11cc6ab",
+            "_rels/.rels": "a9ae57efe9186f07d48303bcac5d54c7e359bf3f503939c03ad2954e5c59a5c4",
+            "docProps/core.xml": "3ff000af08bb3604082a54d3368c835d8fcbd9b6ccdf6a88bbd6d3088395fb06",
+            "docProps/app.xml": "be664981c3141cddfc59362beb287ebf20d0773660e2dd6faac5968a5930a081",
+            "word/document.xml": "f4d8b4912aad513cfe58b485faf21809710d02950bff0aa5b96f9487294483fe",
+            "word/_rels/document.xml.rels": "157ed86827865b095c9c6b39e7c3451315a4b0d6127daa8636026684d8b9df89",
+            "word/styles.xml": "3df92bdf396c00332200a57c44013cb1dcb6e7d9084938fa596edab7340a864f",
+            "word/stylesWithEffects.xml": "463ae0928cf0d84775dbf8cf18d6c3029f6707c81bf590f6d6dd8757a5e93f15",
+            "word/settings.xml": "51a0d348fe85965c66e4748a03c3c0d055d78455514f03cb121c334af7d73689",
+            "word/webSettings.xml": "349d36de7434d09f86987ff671d8814964a0588c1e630c06e562cda7e75e9f95",
+            "word/fontTable.xml": "79385fb7f60247507ecaffc292e9ebd52ea0657b8634f629ba6fccc54011d6bb",
+            "word/theme/theme1.xml": "e3a8ab7db9ca7afca56f5f2820a56e8b660016c647773555b060b0a02ac76941",
+            "customXml/item1.xml": "a86086ffc5d8e83ebd6c71a55d1d2efaa31b137977f5f3a752366e1023612144",
+            "customXml/_rels/item1.xml.rels": "1ca6c9a64edcebe24ee703a54403611b322d96da33371779e742d2d3f7ed7a6c",
+            "customXml/itemProps1.xml": "c542307b13ec29a8b546217bb37936ab4822e044b265d2952985ec3d6afed24e",
+            "word/numbering.xml": "70976f19cbcd896e51890859fe6ecb3467a5a7ad0c040160fedc5a1993cb09ce",
+            "word/header1.xml": "9035d31a1fd2439b41dd8245b4360dfded3a96a13f231fbafa11b43154c84a96",
+            "word/footer1.xml": "5b526ca3ce6f086f3a9be81d1c6b375638db1c4fe11d2babd7d967b3f0574c45",
+            "docProps/thumbnail.jpeg": "96367138dc44ce09bf2c8f0f8e49348a1478d2c5c0af69bbc2bbc38b63cdcead"
+          }
+        },
+        "note": "项目真实文档（只读素材区）。**来源工具（Word/WPS/其它）未登记**，不得据此宣称 Word 兼容已验。"
+      }
+    ],
+    "notPresent": [
+      {
+        "id": "missing-wps-saved",
+        "origin": "not-present",
+        "note": "仓内无 WPS 保存的真实产物；「WPS 通过」目前无任何证据。"
+      },
+      {
+        "id": "missing-phone-saved",
+        "origin": "not-present",
+        "note": "仓内无手机端（荣耀真机）保存的 DOCX；真机层语料空白，手机闭环未验。"
+      },
+      {
+        "id": "missing-word-other-version",
+        "origin": "not-present",
+        "note": "仓内仅有 Word 16.0.20430 一份真实产物；无其它 Word 版本语料。"
+      }
+    ]
+  }
+}

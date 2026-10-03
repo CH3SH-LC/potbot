@@ -1,0 +1,10 @@
+{
+  "//": "M-I23 定向类型检查：只覆盖 order-submit / order-lifecycle / order-intent 生产源码与本目录测试（含其相对依赖）。不覆盖全仓，避免混入其它线的在途代码。",
+  "extends": "../../../tsconfig.json",
+  "include": [
+    "../../../src/mobile-plugins/meituan/order-submit/**/*.ts",
+    "../../../src/mobile-plugins/meituan/order-lifecycle/**/*.ts",
+    "../../../src/mobile-plugins/meituan/order-intent/**/*.ts",
+    "./**/*.ts"
+  ]
+}

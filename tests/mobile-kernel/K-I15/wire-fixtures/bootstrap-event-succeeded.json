@@ -1,0 +1,17 @@
+{
+  "$schemaRef": "schemas/event.schema.json",
+  "note": "K01 createBootstrapRuntime().dispatch() 真实返回的 succeeded 事件（带 resultRef、verificationMode=fixture、idempotentReplay=false）。",
+  "value": {
+    "eventId": "evt-1",
+    "seq": 1,
+    "commandId": "cmd-k01-create",
+    "revision": 1,
+    "status": "succeeded",
+    "verificationMode": "fixture",
+    "idempotentReplay": false,
+    "metadata": {
+      "emittedAt": "2026-10-03T00:00:00.001Z"
+    },
+    "resultRef": "artifact:conv-k01@1"
+  }
+}

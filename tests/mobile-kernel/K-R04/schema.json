@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "potbot/test/mobile-kernel/K-R04/key-leak-audit-report.schema.json",
+  "title": "K-R04 key-leak audit report",
+  "description": "K-R04「key 泄漏、备份、剪贴板、日志/崩溃诊断」审计器的机器可读报告契约。运行时对应物见 key-leak-audit.mjs 的 validateReport()/validateFinding()。",
+  "type": "object",
+  "required": ["schemaVersion", "auditor", "generatedAt", "scope", "rules", "summary", "findings", "limitations"],
+  "additionalProperties": true,
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "auditor": { "const": "K-R04-key-leak-audit" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "gitHead": { "type": ["string", "null"] },
+    "root": { "type": "string" },
+    "scope": {
+      "type": "object",
+      "required": ["includeRoots", "filesScanned", "testFilesExcluded", "skippedBinary"],
+      "properties": {
+        "includeRoots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "prefix", "migrationSurface", "present"],
+            "properties": {
+              "id": { "type": "string" },
+              "prefix": { "type": "string" },
+              "migrationSurface": { "enum": ["target", "reference"] },
+              "present": { "type": "boolean" },
+              "note": { "type": "string" }
+            }
+          }
+        },
+        "excludeDirs": { "type": "array", "items": { "type": "string" } },
+        "excludeFilePatterns": { "type": "array", "items": { "type": "string" } },
+        "filesScanned": { "type": "integer", "minimum": 0 },
+        "filesBySurface": { "type": "object", "additionalProperties": { "type": "integer" } },
+        "filesByMigrationSurface": { "type": "object", "additionalProperties": { "type": "integer" } },
+        "testFilesExcluded": { "type": "integer", "minimum": 0 },
+        "skippedBinary": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["rel", "reason"],
+            "properties": { "rel": { "type": "string" }, "reason": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "surfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "prefix", "present"],
+        "properties": { "id": { "type": "string" }, "prefix": { "type": "string" }, "present": { "type": "boolean" } }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "sink", "title", "why", "source", "baseSeverity", "count"],
+        "properties": {
+          "id": { "enum": ["BK1", "BK2", "BK3", "BK4", "CB1", "CB2", "CB3", "CB4", "LG1", "LG2", "LG3", "CR1", "CR2", "CR3", "SM1"] },
+          "sink": { "enum": ["backup", "clipboard", "logs", "crash", "secret-material"] },
+          "title": { "type": "string" },
+          "why": { "type": "string" },
+          "source": { "type": "string" },
+          "baseSeverity": { "enum": ["info", "low", "medium", "high", "critical"] },
+          "count": { "type": "integer", "minimum": 0 },
+          "bySeverity": { "type": "object", "additionalProperties": { "type": "integer" } }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["totalFindings", "byRule", "bySeverity", "bySurface", "bySink"],
+      "properties": {
+        "totalFindings": { "type": "integer", "minimum": 0 },
+        "byRule": { "type": "object", "additionalProperties": { "type": "integer" } },
+        "bySeverity": { "type": "object", "additionalProperties": { "type": "integer" } },
+        "bySurface": { "type": "object", "additionalProperties": { "type": "integer" } },
+        "bySink": { "type": "object", "additionalProperties": { "type": "integer" } },
+        "maxHitsPerRulePerFile": { "type": "integer" }
+      }
+    },
+    "byFile": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "surface", "findings"],
+        "properties": { "path": { "type": "string" }, "surface": { "type": "string" }, "findings": { "type": "integer" } }
+      }
+    },
+    "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
+    "knownExceptions": { "type": "array", "items": { "type": "object" } },
+    "limitations": { "type": "array", "items": { "type": "string" } }
+  },
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "required": ["rule", "sink", "subtype", "severity", "confidence", "path", "line", "column", "context", "snippet", "evidence", "fixHint"],
+      "additionalProperties": true,
+      "properties": {
+        "rule": { "enum": ["BK1", "BK2", "BK3", "BK4", "CB1", "CB2", "CB3", "CB4", "LG1", "LG2", "LG3", "CR1", "CR2", "CR3", "SM1"] },
+        "sink": { "enum": ["backup", "clipboard", "logs", "crash", "secret-material"] },
+        "subtype": { "type": "string", "minLength": 1 },
+        "severity": { "enum": ["info", "low", "medium", "high", "critical"] },
+        "confidence": { "enum": ["static", "dynamic"] },
+        "path": { "type": "string", "minLength": 1 },
+        "line": { "type": "integer", "minimum": 1 },
+        "column": { "type": "integer", "minimum": 1 },
+        "context": { "enum": ["product", "comment", "test"] },
+        "snippet": { "type": "string" },
+        "evidence": { "type": "string" },
+        "fixHint": { "type": "string" },
+        "surface": { "type": "string" },
+        "migrationSurface": { "enum": ["target", "reference"] },
+        "exceptionId": { "type": "string" },
+        "exceptionReason": { "type": "string" },
+        "severityNote": { "type": "string" }
+      }
+    }
+  }
+}

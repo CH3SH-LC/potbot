@@ -1,0 +1,18 @@
+{
+  "$schemaRef": "schemas/storage-port.schema.json",
+  "note": "流式写入：产物地址必须是手机 content URI，绝不是电脑绝对路径。",
+  "value": {
+    "operation": "writeStream",
+    "status": "ok",
+    "revision": 5,
+    "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "uri": "content://app/artifacts/doc-7.r12.docx",
+    "write": {
+      "streamId": "stream-1",
+      "bytesWritten": 20480,
+      "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "atomic": true,
+      "uri": "content://app/artifacts/doc-7.r12.docx"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "fixtureId": "query.readback.submitted.v1",
+  "operation": "query",
+  "protocolVersion": "wmh5-envelope-v1.1",
+  "provenance": "synthetic-unverified",
+  "verificationMode": "fixture",
+  "capturedAt": null,
+  "note": "查原单回执（fixture 模式）。按 mobile-v1 不变量：fixture 回执不得报 confirmed，故 observedState=submitted。协议版本 v1.1 演示新增可选字段 traceId。",
+  "value": {
+    "code": 0,
+    "msg": "ok",
+    "traceId": "trace-9f8e7d",
+    "data": {
+      "orderId": "order-abc789",
+      "observedState": "submitted",
+      "providerOrderRef": "order-abc789",
+      "observedAt": "2026-10-03T11:05:00Z"
+    }
+  }
+}

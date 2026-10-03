@@ -1,0 +1,143 @@
+/*
+ * F01 foundation —— 设计令牌的 CSS 变量投影。
+ *
+ * 本文件的**唯一来源**是 apps/mobile-ui/src/foundation/tokens.ts；两者不得各写一套。
+ * 一致性由 tests/mobile-ui/F01/design-token-conformance.test.ts 断言：
+ * 该用例会同时解析 tokens.ts、本文件与 docs/design/design-07-正式发布版App界面与交互.md，
+ * 三者不一致即红。改动色值请改 design 文档 → tokens.ts → 本文件。
+ *
+ * 未在此处定义的值 = 设计文档未写死（例如具体字体族、下划线粗细 dp、
+ * 卡片圆角单值、过渡时长单值）。**不要为了"看着完整"而补一个编造值。**
+ */
+
+:root {
+  /* ---- 颜色（design-07 §3 令牌表，行 82–95） ---- */
+  --pb-color-brand: #E9A66D;
+  --pb-color-action-primary: #E9A66D;
+  --pb-color-action-foreground: #241A14;
+  --pb-color-canvas: #FFFFFF;
+  --pb-color-surface: #FFFFFF;
+  --pb-color-input: #FAFAF9;
+  --pb-color-text-primary: #28231F;
+  --pb-color-text-secondary: #77716B;
+  --pb-color-outline: #E8E4DF;
+  --pb-color-accent-surface: #FFF0E2;
+  --pb-color-accent-text: #825034;
+  --pb-color-success: #306A4B;
+  --pb-color-danger: #A73729;
+  --pb-color-focus-ring: #825034;
+
+  /* ---- 主题（design-07 §3 行 78 / 行 107） ---- */
+  /* 固定白色主题：系统深色偏好也不切换页面底色。 */
+  color-scheme: light only;
+  --pb-elevation: none;
+
+  /* ---- 字号与行高（design-07 §3 行 102，单位 sp/dp） ---- */
+  --pb-font-page-title-size: 24sp;
+  --pb-font-page-title-line: 32dp;
+  --pb-font-section-title-size: 20sp;
+  --pb-font-section-title-line: 28dp;
+  --pb-font-body-size: 16sp;
+  --pb-font-body-line: 24dp;
+  --pb-font-button-size: 16sp;
+  --pb-font-button-line: 24dp;
+  --pb-font-auxiliary-size: 14sp;
+  --pb-font-auxiliary-line: 20dp;
+  --pb-font-annotation-minor-size: 12sp;
+  --pb-font-annotation-minor-line: 18dp;
+
+  /* ---- 字重（design-07 §3 行 103） ---- */
+  --pb-weight-title: 600;
+  --pb-weight-body: 400;
+  --pb-weight-button-min: 500;
+  --pb-weight-button-max: 600;
+
+  /* ---- 间距（design-07 §3 行 104，单位 dp） ---- */
+  --pb-space-base: 4dp;
+  --pb-space-page-inline: 20dp;
+  --pb-space-page-inline-narrow: 16dp;
+
+  /* ---- 触区（design-07 §3 行 105，单位 dp） ---- */
+  --pb-touch-min-target: 48dp;
+
+  /* ---- 圆角（design-07 §3 行 106，单位 dp） ---- */
+  --pb-radius-control: 12dp;
+  --pb-radius-card-min: 12dp;
+  --pb-radius-card-max: 20dp;
+
+  /* ---- 动效（design-07 §3 行 108，单位 ms） ---- */
+  --pb-motion-duration-min: 160ms;
+  --pb-motion-duration-max: 220ms;
+
+  /* ---- 入口选中态（design-07 §2 行 36） ---- */
+  /* 细橙色下划线；非整块橙底。粗细 dp 设计未定，故不定义。 */
+  --pb-entry-indicator-color: #E9A66D;
+
+  /* ---- 基础控件投影（controls.ts → listControls()；§3 行 105/106/102/103、§2 行 36） ----
+   * 由 controlsCssVariables() 生成，与 apps/mobile-ui/src/foundation/controls.ts 同源；
+   * 颜色角色为 null 的面不生成变量（不伪造 transparent）。 */
+  --pb-control-primary-button-min-touch: 48dp;
+  --pb-control-primary-button-radius: 12dp;
+  --pb-control-primary-button-font-size: 16sp;
+  --pb-control-primary-button-line-height: 24dp;
+  --pb-control-primary-button-font-weight-min: 500;
+  --pb-control-primary-button-font-weight-max: 600;
+  --pb-control-primary-button-background: #E9A66D;
+  --pb-control-primary-button-foreground: #241A14;
+
+  --pb-control-icon-button-min-touch: 48dp;
+  --pb-control-icon-button-radius: 12dp;
+  --pb-control-icon-button-font-size: 16sp;
+  --pb-control-icon-button-line-height: 24dp;
+  --pb-control-icon-button-font-weight-min: 500;
+  --pb-control-icon-button-font-weight-max: 600;
+  --pb-control-icon-button-foreground: #28231F;
+
+  --pb-control-text-entry-min-touch: 48dp;
+  --pb-control-text-entry-radius: 0dp;
+  --pb-control-text-entry-font-size: 16sp;
+  --pb-control-text-entry-line-height: 24dp;
+  --pb-control-text-entry-font-weight-min: 400;
+  --pb-control-text-entry-font-weight-max: 600;
+  --pb-control-text-entry-foreground: #28231F;
+
+  --pb-control-text-input-min-touch: 48dp;
+  --pb-control-text-input-radius: 12dp;
+  --pb-control-text-input-font-size: 16sp;
+  --pb-control-text-input-line-height: 24dp;
+  --pb-control-text-input-font-weight-min: 400;
+  --pb-control-text-input-font-weight-max: 400;
+  --pb-control-text-input-background: #FAFAF9;
+  --pb-control-text-input-foreground: #28231F;
+  --pb-control-text-input-border: #E8E4DF;
+
+  --pb-control-card-min-touch: 0dp;
+  --pb-control-card-radius-min: 12dp;
+  --pb-control-card-radius-max: 20dp;
+  --pb-control-card-font-size: 16sp;
+  --pb-control-card-line-height: 24dp;
+  --pb-control-card-font-weight-min: 400;
+  --pb-control-card-font-weight-max: 600;
+  --pb-control-card-background: #FFFFFF;
+  --pb-control-card-foreground: #28231F;
+  --pb-control-card-border: #E8E4DF;
+
+  --pb-control-list-row-min-touch: 48dp;
+  --pb-control-list-row-radius: 0dp;
+  --pb-control-list-row-font-size: 16sp;
+  --pb-control-list-row-line-height: 24dp;
+  --pb-control-list-row-font-weight-min: 400;
+  --pb-control-list-row-font-weight-max: 400;
+  --pb-control-list-row-background: #FFFFFF;
+  --pb-control-list-row-foreground: #28231F;
+  --pb-control-list-row-border: #E8E4DF;
+
+  --pb-control-status-chip-min-touch: 0dp;
+  --pb-control-status-chip-radius: 12dp;
+  --pb-control-status-chip-font-size: 12sp;
+  --pb-control-status-chip-line-height: 18dp;
+  --pb-control-status-chip-font-weight-min: 500;
+  --pb-control-status-chip-font-weight-max: 600;
+  --pb-control-status-chip-background: #FFF0E2;
+  --pb-control-status-chip-foreground: #825034;
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  FileProvider 只暴露应用私有目录下的 artifacts/ 子目录。
+  绝不暴露外部存储根目录、也绝不把 file:// 或电脑磁盘路径交给办公软件。
+-->
+<paths>
+    <files-path
+        name="artifacts"
+        path="artifacts/" />
+</paths>

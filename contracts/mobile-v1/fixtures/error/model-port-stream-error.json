@@ -1,0 +1,12 @@
+{
+  "$schemaRef": "schemas/model-port.schema.json#/$defs/streamChunk",
+  "note": "流式片段：error（脱敏失败原因，不含密钥或完整请求体）。",
+  "value": {
+    "type": "error",
+    "error": {
+      "code": "UPSTREAM_UNAVAILABLE",
+      "message": "模型服务在超时前未返回"
+    },
+    "done": true
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "//": "M-I01 定向类型检查：只覆盖 capability-discovery 源码与 M-I01 测试（含其相对依赖）。不覆盖全仓，避免混入其它线的在途代码。",
+  "extends": "../../../tsconfig.json",
+  "include": ["../../../src/mobile-plugins/meituan/capability-discovery/**/*.ts", "./**/*.ts"]
+}

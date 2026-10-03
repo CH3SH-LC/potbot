@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/mobile-v1/schemas/storage-port.schema.json",
+  "title": "StoragePort",
+  "description": "存储端口（K09）。能力：原子事务、blob 读取、流式写入、SHA-256、版本 CAS（compareAndSwap）、content URI、读回凭据。禁止返回电脑绝对路径：#/$defs/contentUri 只接受 content/blob/app scheme，并用 not+pattern 显式拒绝盘符路径 ^[A-Za-z]: 与 POSIX 绝对路径 ^/。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["operation", "status"],
+  "properties": {
+    "operation": { "$ref": "#/$defs/operation" },
+    "status": { "$ref": "#/$defs/status" },
+    "transactionId": { "$ref": "#/$defs/id" },
+    "committed": { "type": "boolean" },
+    "uri": { "$ref": "#/$defs/contentUri" },
+    "revision": { "type": "integer", "minimum": 0 },
+    "expectedRevision": { "type": "integer", "minimum": 0 },
+    "digest": { "$ref": "#/$defs/digest" },
+    "blob": { "$ref": "#/$defs/blob" },
+    "write": { "$ref": "#/$defs/write" },
+    "cas": { "$ref": "#/$defs/cas" },
+    "readBack": { "$ref": "#/$defs/readBack" }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "operation": {
+      "enum": [
+        "beginTransaction",
+        "commit",
+        "rollback",
+        "readBlob",
+        "writeStream",
+        "hash",
+        "compareAndSwap",
+        "getContentUri",
+        "readBack"
+      ]
+    },
+    "status": { "enum": ["ok", "conflict", "not-found", "failed"] },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "contentUri": {
+      "description": "只接受手机内容 URI，显式拒绝桌面绝对路径。",
+      "type": "string",
+      "minLength": 1,
+      "allOf": [
+        { "not": { "pattern": "^[A-Za-z]:" } },
+        { "not": { "pattern": "^/" } },
+        { "pattern": "^(content|blob|app):/" }
+      ]
+    },
+    "blob": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uri", "digest", "byteLength"],
+      "properties": {
+        "uri": { "$ref": "#/$defs/contentUri" },
+        "digest": { "$ref": "#/$defs/digest" },
+        "byteLength": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "write": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["streamId", "bytesWritten", "digest"],
+      "properties": {
+        "streamId": { "type": "string", "minLength": 1 },
+        "bytesWritten": { "type": "integer", "minimum": 0 },
+        "digest": { "$ref": "#/$defs/digest" },
+        "atomic": { "type": "boolean" },
+        "uri": { "$ref": "#/$defs/contentUri" }
+      }
+    },
+    "cas": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expectedRevision", "newRevision", "result"],
+      "properties": {
+        "expectedRevision": { "type": "integer", "minimum": 0 },
+        "newRevision": { "type": "integer", "minimum": 0 },
+        "result": { "$ref": "#/$defs/status" }
+      }
+    },
+    "readBack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["credential", "uri", "digest", "verified"],
+      "properties": {
+        "credential": { "type": "string", "minLength": 1 },
+        "uri": { "$ref": "#/$defs/contentUri" },
+        "digest": { "$ref": "#/$defs/digest" },
+        "verified": { "type": "boolean" },
+        "readAt": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

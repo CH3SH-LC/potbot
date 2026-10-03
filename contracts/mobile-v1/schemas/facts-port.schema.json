@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/mobile-v1/schemas/facts-port.schema.json",
+  "title": "FactsPort",
+  "description": "共享事实端口（K08）。冻结必需字段：snapshotId / revision / sourceRefs / values / units。可选记录发布者、消费者、目标版本与实际消费回执（#/$defs/consumptionReceipt），供 W/X/P 在同一版本上消费并留痕。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["snapshotId", "revision", "sourceRefs", "values", "units"],
+  "properties": {
+    "snapshotId": { "$ref": "#/$defs/id" },
+    "revision": { "type": "integer", "minimum": 0 },
+    "sourceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "values": { "type": "object" },
+    "units": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+    "publisher": { "type": "string", "minLength": 1 },
+    "consumers": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "targetRevision": { "type": "integer", "minimum": 0 },
+    "consumptionReceipts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/consumptionReceipt" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "verificationLayer": {
+      "enum": ["unit", "contract", "real-api", "on-device", "consumer-reopen", "cross-lane"]
+    },
+    "consumptionReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["consumer", "snapshotId", "consumedRevision", "consumedAt"],
+      "properties": {
+        "consumer": { "type": "string", "minLength": 1 },
+        "snapshotId": { "type": "string", "minLength": 1 },
+        "consumedRevision": { "type": "integer", "minimum": 0 },
+        "consumedAt": { "type": "string", "minLength": 1 },
+        "layer": { "$ref": "#/$defs/verificationLayer" }
+      }
+    }
+  }
+}

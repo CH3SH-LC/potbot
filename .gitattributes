@@ -1,0 +1,46 @@
+# 带 shebang 的 .mjs 必须保持 LF：Vite 的 hashbang 正则不匹配 CRLF（JS 的 `.` 不匹配 \r），
+# 会让它把导出注册代码插到 #! 之前 ⇒ 收集期 SyntaxError（0 tests）。
+# 见 tests/demo/honor-connect.test.ts 与 honor-hdb.test.ts 的失败根因（2026-10-03 定位）。
+*.mjs text eol=lf
+*.mts text eol=lf
+
+# 全仓 shebang 行尾普查（FA-CRLF-SHEBANG-SCAN，tests/full-app/crlf-shebang/）发现：
+# 除 .mjs 外，**带 shebang 的 shell 脚本在 CRLF 工作区下同样是坏的**（`bash a.sh` ⇒
+# `\r: command not found`），且当前 5 个 tracked `.sh` 全是 CRLF 且无属性保护。
+# 只做加法：本规则不改写任何已提交内容（这些 .sh 的 index/blob 本就是 LF，
+# core.autocrlf=true 只是强制了工作区 CRLF），仅把工作区收敛为 LF。
+*.sh text eol=lf
+
+# 同源但**未**在本次覆盖（超出本任务扩展名范围，留待协调者决断）：
+# `*.py`（14 个 tracked shebang 脚本，全 CRLF 无保护；Unix 侧 `#!/usr/bin/env python3\r`
+# 会被解析成 `python3\r` ⇒ 找不到解释器）、`*.ps1`（本仓暂无）。
+# 若采纳，规则形如 `*.py text eol=lf` / `*.ps1 text eol=lf`。
+
+# ——— 语料目录文本行尾定死（FA-CRLF-CORPUS，2026-10-03） ———
+# 根因：`src/adapters/research/independent-readback.test.ts` 按**字节偏移**回读语料
+# （`bytes.subarray(byteStart, byteEnd)` 与引用原文逐字节比对），偏移量记在
+# `.task-manifest/outputs/FA-G2/run/report.json` 里、按**生成时写入的原始字节**算。
+# 但语料是 UTF-8 文本：`core.autocrlf=true` 会在检出时把 blob 的 LF 变 CRLF，
+# 而 blob 入库时又被 autocrlf 归一成 LF ⇒ 生成时是 CRLF 的文件能对上、生成时是 LF 的对不上。
+# 实测（notes.md，生成时 LF）：blob@42=0xE5(229) vs 工作区@42=0x0D(13)，blob 76B vs 工作区 79B。
+# 这里把行尾**显式定死**，让"按字节偏移读取"这类断言在本机与 CI 完全一致，
+# 且不再依赖 core.autocrlf 的隐式行为。
+#
+# 受保护扩展名（显式列出，均为 UTF-8/ASCII 纯文本）：.md .txt .csv .json
+# **刻意不含二进制资产**：.docx .xlsx .pptx .pdf .png .bin .zip 等。
+# 原因：给二进制加 `text` 会让 git 把裸 0x0D0A 序列当行尾改写 ⇒ 直接损坏 OOXML/PDF/
+# 图片/ZIP（OOXML 内部是 ZIP，改一个字节即 CRC 失配）。故这些一律不加 `text`，
+# 保持默认"按二进制原样"处理。`.py` 的行尾问题同 *.mjs/.sh 渊源，超出本任务范围，
+# 已在上方"留待协调者决断"中登记，此处不重复覆盖。
+/.task-manifest/outputs/**/*.md text eol=lf
+/.task-manifest/outputs/**/*.txt text eol=lf
+/.task-manifest/outputs/**/*.csv text eol=lf
+/.task-manifest/outputs/**/*.json text eol=lf
+#
+# **例外（必须放在上面的通用规则之后：gitattributes 以"最后一条匹配"为准）**：
+# `memo.txt` 是语料生成器**故意**写 CRLF 的样本
+# （`tests/word-acceptance/fa-g2-corpus-run.ts:85` 用 `'备注\r\n…'`），
+# 其 byteStart=8 正是按 CRLF 计（`备`3B+`注`3B+`\r`1B+`\n`1B ⇒ `2` 落在偏移 8）；
+# 而入库时 autocrlf 已把 blob 归一成 LF ⇒ 今日这份断言**只在 Windows+autocrlf 下才通过**，
+# 换 Linux/CI 即红。用 `eol=crlf` 让它在所有平台都检出 CRLF，与记录偏移一致、也与生成器意图一致。
+/.task-manifest/outputs/FA-G2/run/corpus/memo.txt text eol=crlf

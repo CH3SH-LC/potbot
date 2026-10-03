@@ -1,0 +1,178 @@
+{
+  "bookmarks": {
+    "duplicate_start_ids": [],
+    "names": [
+      "总则"
+    ],
+    "paired": true,
+    "starts": [
+      {
+        "id": 1,
+        "name": "总则"
+      }
+    ],
+    "unpaired_end_ids": [],
+    "unpaired_start_ids": []
+  },
+  "charts": [],
+  "comments": {
+    "dangling_reference_ids": [],
+    "paired_range_ids": [
+      1
+    ],
+    "part_present": true,
+    "range_end_ids": [
+      1
+    ],
+    "range_start_ids": [
+      1
+    ],
+    "reference_ids": [
+      1
+    ],
+    "relationship": true,
+    "unpaired_range_end_ids": [],
+    "unpaired_range_start_ids": [],
+    "unreferenced_comment_ids": []
+  },
+  "dangling_anchors": [],
+  "external_targets": [
+    {
+      "relationship_id": "rId13",
+      "target": "https://example.com/wcf-d60"
+    }
+  ],
+  "field_pairing": {
+    "balanced": true,
+    "begin": 1,
+    "end": 1,
+    "separate": 1,
+    "unclosed": false
+  },
+  "fields": [
+    {
+      "cached_text": null,
+      "dirty": true,
+      "has_cache": false,
+      "has_instruction": true,
+      "instruction": " REF 总则 \\h ",
+      "kind": "simple",
+      "refreshed": false,
+      "state": "instruction_no_cache"
+    },
+    {
+      "cached_text": "第一章 总则",
+      "dirty": true,
+      "has_cache": true,
+      "has_instruction": true,
+      "instruction": "TOC \\o \"1-3\" \\h \\z \\u",
+      "kind": "complex",
+      "refreshed": false,
+      "state": "cached_not_refreshed"
+    }
+  ],
+  "hyperlinks": [
+    {
+      "anchor": null,
+      "kind": "external",
+      "relationship_id": "rId13",
+      "target": "https://example.com/wcf-d60",
+      "target_mode": "External",
+      "tooltip": "外部链接（只记录，不抓取）"
+    },
+    {
+      "anchor": "总则",
+      "anchor_resolves": true,
+      "kind": "internal",
+      "relationship_id": null,
+      "tooltip": null
+    }
+  ],
+  "label": "corpus-e（potbot WCF-D60 真实产物副本：书签/超链接/域/注记/批注/修订/目录）",
+  "math": {
+    "count": 0,
+    "structures": []
+  },
+  "notes": {
+    "endnotes": {
+      "dangling_reference_ids": [],
+      "has_separators": true,
+      "present": true,
+      "reference_ids": [
+        1
+      ],
+      "relationship": true,
+      "unreferenced_note_ids": []
+    },
+    "footnotes": {
+      "dangling_reference_ids": [],
+      "has_separators": true,
+      "present": true,
+      "reference_ids": [
+        1
+      ],
+      "relationship": true,
+      "unreferenced_note_ids": []
+    }
+  },
+  "relationships": [
+    {
+      "id": "rId13",
+      "owner_part_path": "word/document.xml",
+      "target": "https://example.com/wcf-d60",
+      "target_mode": "External",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
+    },
+    {
+      "id": "rId14",
+      "owner_part_path": "word/document.xml",
+      "target": "footnotes.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footnotes"
+    },
+    {
+      "id": "rId15",
+      "owner_part_path": "word/document.xml",
+      "target": "endnotes.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes"
+    },
+    {
+      "id": "rId16",
+      "owner_part_path": "word/document.xml",
+      "target": "comments.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments"
+    }
+  ],
+  "required_parts": [
+    "[Content_Types].xml",
+    "_rels/.rels",
+    "customXml/item1.xml",
+    "docProps/core.xml",
+    "word/_rels/document.xml.rels",
+    "word/comments.xml",
+    "word/document.xml",
+    "word/endnotes.xml",
+    "word/footnotes.xml",
+    "word/media/image1.png",
+    "word/styles.xml"
+  ],
+  "revisions": {
+    "authors": [
+      "审阅人"
+    ],
+    "del": 1,
+    "del_text": 2,
+    "del_without_del_text": 0,
+    "ins": 1
+  },
+  "sha256": "f4a25feca4f1b68180052beecda3cc7c3771d8fb0fd38e61a273018187b18b13",
+  "source": {
+    "path": ".task-manifest/outputs/WCF-D60/artifacts/annotations.docx",
+    "producer": "potbot WCF-D60 引用/审阅导出（design-05-P7 导出侧收口）",
+    "sha256": "f4a25feca4f1b68180052beecda3cc7c3771d8fb0fd38e61a273018187b18b13"
+  },
+  "unbound_hyperlinks": [],
+  "unparsed_elements": {}
+}

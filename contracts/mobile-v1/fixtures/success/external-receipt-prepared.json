@@ -1,0 +1,14 @@
+{
+  "$schemaRef": "schemas/external-receipt.schema.json",
+  "note": "fixture 模式只允许非 confirmed 状态：prepared 表示尚未发出真实动作。",
+  "value": {
+    "actionId": "act-3001",
+    "provider": "meituan",
+    "requestRef": "req-8801",
+    "externalId": "pending-local-01",
+    "observedState": "prepared",
+    "observedAt": "2026-10-03T08:39:00Z",
+    "evidenceRef": "evidence:prepared/act-3001.json",
+    "verificationMode": "fixture"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "conflict 场景输入：调用方携带的 expectedRevision 已落后于当前修订。命令本身合法，但内核必须答复 conflict 事件（见 conflict/event-conflict.json），不得当成 succeeded。",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-0004",
+    "operation": "mutate",
+    "idempotencyKey": "idem-0004",
+    "payload": {
+      "taskId": "task-9",
+      "expectedRevision": 3,
+      "patch": {
+        "op": "add",
+        "path": "/notes/-",
+        "value": "过期修订提交"
+      }
+    }
+  }
+}

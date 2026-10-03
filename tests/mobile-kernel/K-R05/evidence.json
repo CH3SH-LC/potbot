@@ -1,0 +1,80 @@
+{
+  "package": "K-R05",
+  "lane": "K",
+  "title": "模版卸载撤权与在途版本冻结（独立审计 + 反例）",
+  "baselineSha": "54e5181e9bfeb08fa1188334ff038d710ecdd7e0",
+  "generatedAt": "2026-10-03",
+  "updatedAt": "2026-10-03",
+  "verifiedLayer": "unit",
+  "unverifiedLayers": ["contract", "real-api", "on-device", "consumer-reopen", "cross-lane"],
+  "commands": [
+    {
+      "cmd": "npx vitest run tests/mobile-kernel/K-R05/ --reporter=basic",
+      "exitCode": 0,
+      "summary": "Test Files 3 passed (3); Tests 22 passed (22)。D1/D2 修复后两条缺陷守卫由 it.fails 转为硬断言（02 的 8 例并为 7 例，总数 23 -> 22）"
+    },
+    {
+      "cmd": "npx vitest run tests/mobile-kernel/K06 tests/mobile-kernel/K-R05 tests/mobile-kernel/K-I01",
+      "exitCode": 0,
+      "summary": "集成门禁：Test Files 9 passed (9); Tests 106 passed (106)（K06 72 + K-R05 22 + K-I01 12）"
+    },
+    {
+      "cmd": "npx tsc --noEmit -p tsconfig.json",
+      "exitCode": 2,
+      "elapsedSeconds": 33,
+      "summary": "仓库级红来自其他线并行在写的文件（基线快照），tests/mobile-kernel/K-R05/ 与 tests/mobile-kernel/K-I01/ 为 0 条"
+    }
+  ],
+  "tests": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "suites": [
+      { "file": "01-uninstall-revocation.test.ts", "assertions": 8, "status": "passed" },
+      { "file": "02-inflight-freeze.test.ts", "assertions": 7, "status": "passed" },
+      { "file": "03-audit-module.test.ts", "assertions": 7, "status": "passed" }
+    ]
+  },
+  "openSet": [],
+  "openSetNote": "本包原先钉住的开放缺陷集 {K-R05-D1, K-R05-D2} 已由集成单元 K-I01 在 apps/mobile-kernel/templates/lifecycle.ts 修复并转硬断言，开放集现为空。修复前 02-inflight-freeze.test.ts 的两条 it.fails 会因底层缺陷使用例体失败而通过；修复后它们转为硬断言（用例体必须通过），并在真实实现上跑 runTrace 得到零发现。",
+  "defects": [
+    {
+      "id": "K-R05-D1",
+      "severity": "high",
+      "invariant": "I2-retained-version-pinnedby-intact",
+      "title": "重装被在途任务保留的版本会静默清空 pinnedBy，随后卸载夺走在途版本",
+      "observedRepro": [
+        "install(meituan@1.0.0); enable; authorize[network,external-order]; pin(task-1) -> 1.0.0",
+        "uninstall(meituan) -> retainedForPinnedTasks=true, removed=false; get(meituan@1.0.0).pinnedBy=['task-1']",
+        "install(meituan@1.0.0)  // 用户重装同一版本 while task-1 in flight",
+        "get(meituan@1.0.0).pinnedBy=[]  // <== 记账被重置（修复前）",
+        "uninstall(meituan) -> retainedForPinnedTasks=false, removed=true  // <== 在途版本被移除（修复前）",
+        "resolve(task-1) -> TemplateError[version_not_installed] 任务 task-1 钉住的 meituan@1.0.0 记录缺失（冻结版本不得被移除）"
+      ],
+      "status": "fixed",
+      "guardTest": "02-inflight-freeze.test.ts（硬断言，原 it.fails）+ 审计器在 REINSTALL_TRACE 上零发现",
+      "fixOwner": "K06 apps/mobile-kernel/templates/lifecycle.ts adopt()",
+      "resolution": "adopt() 命中'已卸载但被在途任务保留'的同版本时改为**复活既有记录**（重置安装态、原样保留 pinnedBy），不再重建丢账。集成验收 tests/mobile-kernel/K-I01/01-reinstall-retention.test.ts（6 例）。"
+    },
+    {
+      "id": "K-R05-D2",
+      "severity": "medium",
+      "invariant": "I5-new-pin-not-stale-fallback",
+      "title": "在用版本被卸载后，新任务未指定版本时静默回退绑定到已被取代的旧版本",
+      "observedRepro": [
+        "install(1.0.0); pin(task-1)->1.0.0; upgrade(1.0.0->1.1.0)",
+        "uninstall(meituan) -> 卸掉在用 1.1.0 (removed=true); activeVersionOf(meituan)=null",
+        "pin(task-2, 无版本) -> 成功绑定 1.0.0 (旧/非在用版本)，未报错（修复前）"
+      ],
+      "status": "fixed",
+      "guardTest": "02-inflight-freeze.test.ts（硬断言，原 it.fails）+ 审计器在 STALE_FALLBACK_TRACE 上零发现",
+      "fixOwner": "K06 lifecycle.ts pin()",
+      "resolution": "pin() 在'已卸载'检查之后增加：未指定版本且没有任何在用版本（activeVersionOf==null）时抛 template_not_installed，不再回退。保持既有口径：唯一版本已卸载时仍抛 version_not_installed（K06 用例依赖）。集成验收 tests/mobile-kernel/K-I01/02-no-stale-pin.test.ts（6 例）。"
+    }
+  ],
+  "sanity": {
+    "detectorSelfProof": "03-audit-module.test.ts 用故意损坏的假探针证明 I1/I2/I3/I4/I5 各会被报，且健康轨迹零发现（判据非空壳）",
+    "mutationProof": "临时禁用 D2 守卫（if (false && ...)）后 K-I01/02 两组用例转红（2 failed / 4 passed），对照组仍绿；随后还原。证明新硬断言不空转。",
+    "noSecrets": "无密钥、手机号、地址；仅只读引用 apps/mobile-kernel/templates 的公开类型"
+  }
+}

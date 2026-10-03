@@ -1,0 +1,43 @@
+{
+  "$schemaRef": "schemas/lifecycle-plan.schema.json",
+  "note": "RecoveryPlan 正例（根对象）：三个任务分别演示三条不变量——外部挂起只能查原单、被回收从游标续跑、已结清不重跑。",
+  "value": {
+    "killMode": "reclaim",
+    "resume": ["task-report"],
+    "queryExternal": ["task-order"],
+    "settled": ["task-done"],
+    "blockedBySystem": [],
+    "tasks": [
+      {
+        "taskId": "task-order",
+        "state": "unknown-external",
+        "action": "query-external",
+        "resumeFromStep": 2,
+        "totalSteps": 5,
+        "externalPending": true,
+        "mayRedoCompletedSteps": false,
+        "detail": "已发起美团下单未取回结果，只能查原单，不得重做"
+      },
+      {
+        "taskId": "task-report",
+        "state": "reclaimed",
+        "action": "resume-from-cursor",
+        "resumeFromStep": 3,
+        "totalSteps": 5,
+        "externalPending": false,
+        "mayRedoCompletedSteps": false,
+        "detail": "进程被系统回收，从游标续跑"
+      },
+      {
+        "taskId": "task-done",
+        "state": "completed",
+        "action": "none",
+        "resumeFromStep": null,
+        "totalSteps": 4,
+        "externalPending": false,
+        "mayRedoCompletedSteps": false,
+        "detail": "已结清，无需动作"
+      }
+    ]
+  }
+}

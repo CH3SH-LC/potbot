@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/mobile-v1/schemas/lifecycle-plan.schema.json",
+  "title": "LifecyclePlan",
+  "description": "K10 生命周期（进程回收 / 前台服务 / 网络恢复）的 wire 契约。根对象是 RecoveryPlan：由手机账本重放推出的『下一步做什么』，而不是『假装还活着』。生命周期事件见 #/$defs/lifecycleEvent。三套词表刻意**不共用**（FGS 运行期状态 / 持久 TASK_STATES / 恢复 RECOVERY_ACTIONS），合并会把『进程还在但网断了』误报成『进程死了』。关键不变量（由下方 not 强制）：(a) 外部副作用悬而未决（externalPending=true）时 action 必须为 query-external，绝不重做；(b) 终态任务（completed/failed/cancelled）的 action 必须为 none，不重跑已结清任务；(c) mayRedoCompletedSteps 恒为 false。",
+  "$ref": "#/$defs/recoveryPlan",
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,6})?Z$",
+      "description": "wire 层时间戳按总协调裁决用 ISO-8601 字符串；领域层（apps/mobile-kernel/lifecycle）用注入时钟的整数，两者在边界换算。"
+    },
+    "fgsState": {
+      "description": "前台服务成员状态（运行期，不持久化）。",
+      "enum": ["registered", "foreground", "running", "finished", "cancelled", "failed"]
+    },
+    "taskState": {
+      "description": "持久任务状态。reclaimed = 进程被系统回收；unknown-external = 已发起外部副作用未取回结果，只能查原单。",
+      "enum": [
+        "registered",
+        "running",
+        "awaiting-network",
+        "unknown-external",
+        "completed",
+        "failed",
+        "cancelled",
+        "reclaimed"
+      ]
+    },
+    "recoveryAction": {
+      "description": "恢复动作。query-external 表示只能查原单、不得重做；none 表示无需动作（终态已结清，或被 force-stop 系统限制）。",
+      "enum": ["none", "start", "resume-from-cursor", "query-external", "finalize"]
+    },
+    "killMode": {
+      "description": "进程消失方式。reclaim 允许下次启动续跑；force-stop 后系统不允许自动复活，本计划不承诺自动恢复。",
+      "enum": ["reclaim", "force-stop"]
+    },
+    "taskRecoveryPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "taskId",
+        "state",
+        "action",
+        "resumeFromStep",
+        "totalSteps",
+        "externalPending",
+        "mayRedoCompletedSteps",
+        "detail"
+      ],
+      "properties": {
+        "taskId": { "$ref": "#/$defs/id" },
+        "state": { "$ref": "#/$defs/taskState" },
+        "action": { "$ref": "#/$defs/recoveryAction" },
+        "resumeFromStep": { "type": ["integer", "null"], "minimum": 0 },
+        "totalSteps": { "type": "integer", "minimum": 0 },
+        "externalPending": { "type": "boolean" },
+        "mayRedoCompletedSteps": { "const": false },
+        "detail": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": ["externalPending", "action"],
+            "properties": {
+              "externalPending": { "const": true },
+              "action": { "not": { "const": "query-external" } }
+            }
+          }
+        },
+        {
+          "not": {
+            "required": ["state", "action"],
+            "properties": {
+              "state": { "enum": ["completed", "failed", "cancelled"] },
+              "action": { "not": { "const": "none" } }
+            }
+          }
+        }
+      ]
+    },
+    "recoveryPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["killMode", "resume", "queryExternal", "settled", "blockedBySystem", "tasks"],
+      "properties": {
+        "killMode": { "$ref": "#/$defs/killMode" },
+        "resume": {
+          "description": "会从游标续跑（或 start/finalize）的任务 id，按字典序。",
+          "type": "array",
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "queryExternal": {
+          "description": "需要查原单的任务 id（已发起、未结清的外部副作用），按字典序。",
+          "type": "array",
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "settled": {
+          "description": "已结清、无需动作的任务 id，按字典序。",
+          "type": "array",
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "blockedBySystem": {
+          "description": "force-stop 下被系统限制、本进程不自动复活的任务 id，按字典序。",
+          "type": "array",
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "tasks": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/taskRecoveryPlan" }
+        }
+      }
+    },
+    "lifecycleEvent": {
+      "description": "生命周期事件（journal 条目 / 状态迁移）。至少携带一个状态词：fgsState（运行期）或 taskState（持久）。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["eventId", "taskId", "at"],
+      "properties": {
+        "eventId": { "$ref": "#/$defs/id" },
+        "taskId": { "$ref": "#/$defs/id" },
+        "at": { "$ref": "#/$defs/timestamp" },
+        "fgsState": { "$ref": "#/$defs/fgsState" },
+        "taskState": { "$ref": "#/$defs/taskState" },
+        "detail": { "type": "string" }
+      },
+      "anyOf": [{ "required": ["fgsState"] }, { "required": ["taskState"] }]
+    }
+  }
+}

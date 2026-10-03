@@ -1,0 +1,30 @@
+{
+  "$schemaRef": "schemas/facts-port.schema.json",
+  "note": "共享事实快照：发布者、消费者、目标版本与实际消费回执留痕。",
+  "value": {
+    "snapshotId": "facts-5001",
+    "revision": 4,
+    "sourceRefs": ["artifact:doc-7@12", "artifact:sheet-2@3"],
+    "values": {
+      "q3Revenue": 1250000,
+      "headcount": 42,
+      "region": "华东"
+    },
+    "units": {
+      "q3Revenue": "CNY",
+      "headcount": "person"
+    },
+    "publisher": "excel-lane",
+    "consumers": ["word-lane", "ppt-lane"],
+    "targetRevision": 5,
+    "consumptionReceipts": [
+      {
+        "consumer": "word-lane",
+        "snapshotId": "facts-5001",
+        "consumedRevision": 4,
+        "consumedAt": "2026-10-03T08:50:00Z",
+        "layer": "consumer-reopen"
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schemaRef": "schemas/confirm-action.schema.json",
+  "note": "反例：amount 小数位超过 4 位（\"1.23456\"），违反契约金额 pattern。",
+  "value": {
+    "actionId": "act-k07-1",
+    "accountRef": "acct:meituan:7788",
+    "taskRevision": 7,
+    "paramsDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "quoteRef": "quote:mt-001",
+    "amount": "1.23456",
+    "currency": "CNY",
+    "expiresAt": "2026-10-03T00:00:00.000Z",
+    "scope": "purchase"
+  }
+}

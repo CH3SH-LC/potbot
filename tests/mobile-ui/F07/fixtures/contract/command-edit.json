@@ -1,0 +1,16 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "F07 记忆编辑：mutate 分支，带 expectedRevision 与 conversationId",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-f07-edit-1",
+    "operation": "mutate",
+    "idempotencyKey": "idem-f07-edit-1",
+    "payload": {
+      "conversationId": "conv-1",
+      "targetId": "mem-1",
+      "expectedRevision": 3,
+      "patch": { "body": "偏好喝拿铁" }
+    }
+  }
+}

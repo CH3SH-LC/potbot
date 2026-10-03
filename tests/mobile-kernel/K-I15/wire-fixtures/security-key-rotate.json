@@ -1,0 +1,10 @@
+{
+  "$schemaRef": "schemas/security-keystore.schema.json",
+  "note": "K03 assertSecurityCommand() 通过后的 key.rotate payload（command.operation=\"mutate\"，无任何明文字段）。",
+  "value": {
+    "operation": "key.rotate",
+    "kind": "meituan",
+    "expectedRevision": 3,
+    "sourceRef": "oneshot:desktop-rotate-1"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schemaRef": "schemas/model-port.schema.json#/$defs/streamChunk",
+  "note": "流式片段：usage（脱敏的用量记录）。",
+  "value": {
+    "type": "usage",
+    "usage": {
+      "promptTokens": 128,
+      "completionTokens": 64,
+      "totalTokens": 192
+    },
+    "done": true
+  }
+}

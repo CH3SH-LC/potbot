@@ -1,0 +1,29 @@
+{
+  "fixtureId": "preview.response.v1",
+  "operation": "preview",
+  "protocolVersion": "wmh5-envelope-v1",
+  "provenance": "synthetic-unverified",
+  "verificationMode": "fixture",
+  "capturedAt": null,
+  "note": "协议形状示例（synthetic）。服务端计价：地址/联系人/坐标均以占位符表示，绝不落明文。总价以十进制字符串给出。",
+  "value": {
+    "code": 0,
+    "msg": "ok",
+    "data": {
+      "quoteRef": "quote-a1b2c3",
+      "currency": "CNY",
+      "itemsTotal": "76.00",
+      "deliveryFee": "3.00",
+      "discountTotal": "10.00",
+      "payableTotal": "69.00",
+      "quoteExpiresAt": "2026-10-03T12:00:00Z",
+      "delivery": {
+        "address": "«redacted:address#1»",
+        "contactName": "«redacted:contact_name#1»",
+        "phone": "«redacted:phone#1»",
+        "latitude": "«redacted:geo#1»",
+        "longitude": "«redacted:geo#2»"
+      }
+    }
+  }
+}

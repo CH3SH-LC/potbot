@@ -1,0 +1,40 @@
+{
+  "fixtureId": "menu.response.v1",
+  "operation": "menu",
+  "protocolVersion": "wmh5-envelope-v1",
+  "provenance": "synthetic-unverified",
+  "verificationMode": "fixture",
+  "capturedAt": null,
+  "note": "协议形状示例（synthetic）。SKU 规格分组、库存均为合成。价格用十进制字符串，与 mobile-v1 金额编码裁决一致。",
+  "value": {
+    "code": 0,
+    "msg": "ok",
+    "data": {
+      "poiId": "poi-cbd-hg001",
+      "dishList": [
+        {
+          "dishId": "dish-spicy-pot",
+          "name": "「合成」鸳鸯锅底",
+          "basePrice": "38.00",
+          "stock": { "known": true, "remaining": 20 },
+          "specGroups": [
+            {
+              "groupId": "spice",
+              "name": "辣度",
+              "required": true,
+              "multiSelect": false,
+              "options": [
+                { "optionId": "mild", "name": "微辣", "priceDelta": "0.00" },
+                { "optionId": "medium", "name": "中辣", "priceDelta": "0.00" }
+              ]
+            }
+          ],
+          "skuList": [
+            { "skuId": "sku-pot-small", "name": "小份", "price": "38.00" },
+            { "skuId": "sku-pot-large", "name": "大份", "price": "58.00" }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+
+ RUN  v3.2.7 <repo>
+
+ DEPRECATED  'basic' reporter is deprecated and will be removed in Vitest v3.
+Remove 'basic' from 'reporters' option. To match 'basic' reporter 100%, use configuration:
+{
+  "test": {
+    "reporters": [
+      [
+        "default",
+        {
+          "summary": false
+        }
+      ]
+    ]
+  }
+}
+ ✓ tests/mobile-office/spreadsheets/X-R01/external-corpus-fidelity.test.ts (23 tests) 58ms
+
+
+ Test Files  1 passed (1)
+      Tests  23 passed (23)
+   Start at  18:40:42
+   Duration  1.65s (transform 489ms, setup 0ms, collect 841ms, tests 58ms, environment 0ms, prepare 336ms)
+

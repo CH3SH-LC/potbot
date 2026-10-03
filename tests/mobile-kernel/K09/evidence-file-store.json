@@ -1,0 +1,85 @@
+{
+  "package": "K09",
+  "lane": "K",
+  "increment": "StoragePort persistent filesystem backend (FileStoragePort) + portable FileSystemPort",
+  "baseline": {
+    "head": "54e5181e9bfeb08fa1188334ff038d710ecdd7e0",
+    "worktreeDirtyEntries": 223,
+    "note": "223 dirty entries belong to six concurrent lanes on the shared tree; only apps/mobile-kernel/storage/** and tests/mobile-kernel/K09/** were touched by this worker."
+  },
+  "commands": [
+    {
+      "cmd": "npx vitest run tests/mobile-kernel/K09 --reporter=default",
+      "exitCode": 0,
+      "observed": "Test Files 4 passed (4); Tests 59 passed (59)",
+      "breakdown": {
+        "tests/mobile-kernel/K09/file-store.test.ts": "17 passed (new)",
+        "tests/mobile-kernel/K09/storage-port.test.ts": "11 passed (pre-existing, unchanged)",
+        "tests/mobile-kernel/K09/reverse-controls.test.ts": "22 passed (pre-existing, unchanged)",
+        "tests/mobile-kernel/K09/sha256.test.ts": "9 passed (pre-existing, unchanged)"
+      }
+    },
+    {
+      "cmd": "npx vitest run tests/mobile-kernel/K09/file-store.test.ts --reporter=default",
+      "exitCode": 0,
+      "observed": "Tests 17 passed (17)"
+    },
+    {
+      "cmd": "npx tsc --noEmit -p tsconfig.json",
+      "exitCode": 2,
+      "observed": "152 pre-existing errors in OTHER lanes (actions/dispatch/lifecycle/memory/mobile-ui/src/documents/src/presentations/src/mobile-plugins). Filtered result: 0 errors mentioning apps/mobile-kernel/storage or K09.",
+      "filter": "grep -n 'mobile-kernel/storage' => (none)"
+    }
+  ],
+  "artifacts": {
+    "created": [
+      "apps/mobile-kernel/storage/fs-port.ts",
+      "apps/mobile-kernel/storage/file-store.ts",
+      "tests/mobile-kernel/K09/file-store.test.ts",
+      "tests/mobile-kernel/K09/evidence-file-store.json"
+    ],
+    "modified": [
+      "apps/mobile-kernel/storage/uri.ts",
+      "apps/mobile-kernel/storage/index.ts",
+      "apps/mobile-kernel/storage/README.md"
+    ],
+    "sha256": {
+      "apps/mobile-kernel/storage/file-store.ts": "a1836719754209551d99e0a3f2a8b1d1aaa200b9525e9cd43dbfffd56a16a210",
+      "apps/mobile-kernel/storage/fs-port.ts": "17a405800e29706bbd3c20fed3b78a9389df19bd2781372628a726c3849537ba",
+      "apps/mobile-kernel/storage/uri.ts": "c0435ce9113e959c1ddd591e16f97fc09211351e3a0fd6fc728dd22199682933",
+      "apps/mobile-kernel/storage/index.ts": "d745f96372cca27f57f1169cc0a99ba4b3db6b483ff1e17cf8e22be2e54ac819",
+      "tests/mobile-kernel/K09/file-store.test.ts": "f78a3fdb03c6f92c48d7852696a48cb27c85d88d87e7f1919c5ae16062c07564",
+      "apps/mobile-kernel/storage/README.md": "40f84d0a4c91fa001a189709a4ca04f33637cc18d101167774a528dd7a75c2a6"
+    }
+  },
+  "verifiedBehaviour": [
+    "streaming write persists bytes to a real temp dir and digest matches node:crypto oracle",
+    "reopen (new FileStoragePort instance over same root) reads persisted bytes/revision/digest",
+    "version CAS: conflict is read-only and returns current revision; correct version succeeds and survives reopen",
+    "transaction staged writes invisible before commit (this instance and a fresh instance), visible after commit",
+    "rollback discards staged writes (nothing on disk)",
+    "crash at commit:before-apply => no artifact, old version readable after reopen",
+    "crash at commit:applying (mid) => NEW-A half-state PROVEN on disk, then whole rollback on reopen (report rolledBack=1)",
+    "crash at commit:after-apply => finalize on reopen (report finalized=1), full new version readable, re-commit rejected",
+    "readBack recomputes digest from medium: direct on-disk tamper => status failed, verified=false",
+    "desktop absolute paths rejected at all entries (desktop_path_rejected); no returned string field is a desktop abs path or contains the platform root",
+    "content URI construct/parse round-trip works; non-potbot authority rejected (invalid_content_uri)"
+  ],
+  "notVerified": [
+    "on-device / real Android SAF or app-private-dir FileSystemPort adapter (node:fs adapter lives only in the test)",
+    "artifacts-host (K09 row) not built",
+    "no fsync before rename; power-loss (not process kill) durability",
+    "direct (non-transaction) single-file write crash window between the two renames",
+    "cross-process multi-writer arbitration",
+    "memory-bounded streaming (chunks buffered in memory until commit)",
+    "ZIP platform port and share port",
+    "wiring StoragePort into any host"
+  ],
+  "secretsScan": "grep -niE 'ds.txt|美团api|api[_-]?key|secret|token|PRIVATE KEY' over allowlist => clean; no NUL bytes",
+  "sourcesUsed": [
+    "docs/other/ds-six-lanes-2026-10-03/KERNEL.md (K09 row)",
+    "docs/other/ds-six-lanes-2026-10-03/README.md sections 3-5 (architecture, StoragePort v1 contract)",
+    "contracts/mobile-v1/schemas/storage-port.schema.json",
+    "pre-existing apps/mobile-kernel/storage/{types,errors,uri,sha256,memory-store}.ts (reused, not rewritten)"
+  ]
+}

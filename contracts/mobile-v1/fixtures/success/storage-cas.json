@@ -1,0 +1,15 @@
+{
+  "$schemaRef": "schemas/storage-port.schema.json",
+  "note": "版本 CAS：expectedRevision 不符 ⇒ result=conflict，写入被拒绝。",
+  "value": {
+    "operation": "compareAndSwap",
+    "status": "conflict",
+    "expectedRevision": 3,
+    "revision": 7,
+    "cas": {
+      "expectedRevision": 3,
+      "newRevision": 4,
+      "result": "conflict"
+    }
+  }
+}

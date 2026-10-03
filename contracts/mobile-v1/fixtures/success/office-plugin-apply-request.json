@@ -1,0 +1,13 @@
+{
+  "$schemaRef": "schemas/office-plugin.schema.json#/$defs/request",
+  "note": "OfficePlugin 请求：操作取自 import/create/inspect/apply/preview/export/undo/redo。",
+  "value": {
+    "operation": "apply",
+    "artifactId": "doc-7",
+    "conversationId": "conv-42",
+    "expectedRevision": 11,
+    "args": {
+      "edits": [{ "path": "/paragraphs/3/text", "value": "十月周报" }]
+    }
+  }
+}

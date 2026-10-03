@@ -1,0 +1,56 @@
+{
+  "package": "W-R04",
+  "lane": "W",
+  "title": "手机输入法/选区/无障碍与编辑对象定位",
+  "workerSlot": "14/16",
+  "sourceSha": "54e5181e9bfeb08fa1188334ff038d710ecdd7e0",
+  "capturedAtLocal": "2026-10-03T17:1x (本机时区)",
+  "allowlist": ["tests/mobile-office/word/W-R04/"],
+  "verificationLayerActuallyReached": "unit",
+  "delivered": {
+    "sourceModules": ["ime-bridge.ts", "accessibility.ts", "edit-targeting.ts"],
+    "operationSchemas": "operations.ts",
+    "independentTest": "ime-accessibility-targeting.test.ts",
+    "runbook": "RUNBOOK.md"
+  },
+  "commands": [
+    {
+      "cmd": "npx vitest run tests/mobile-office/word/W-R04/ime-accessibility-targeting.test.ts --reporter=basic",
+      "exitCode": 0,
+      "result": "Test Files 1 passed (1); Tests 43 passed (43)"
+    },
+    {
+      "cmd": "npx tsc --noEmit -p tsconfig.json",
+      "exitCode": 2,
+      "result": "整仓 exit 2，报错全部来自其它线（X-R05/X02/X08/X09、W-R01/W-R02/W02/W04、mobile-ui/F08）的既有问题；grep W-R04 无输出 ⇒ 本包零类型错误。耗时约 59s。"
+    },
+    {
+      "cmd": "npx tsc --noEmit -p tsconfig.json 2>&1 | grep W-R04",
+      "exitCode": 1,
+      "result": "无输出（grep 未命中）= 本包无 tsc 报错"
+    }
+  ],
+  "testBreakdown": {
+    "§A UTF-16→码位严格换算": 6,
+    "§B 组合态生命周期": 6,
+    "§C deleteSurroundingText 码位安全": 5,
+    "§D 无障碍": 11,
+    "§E 编辑对象定位": 8,
+    "§F schema 校验": 7,
+    "total": 43
+  },
+  "knownExternalInconsistency": {
+    "file": "src/documents/selection/types.ts",
+    "line": 7,
+    "issue": "注释称 ZWJ 家庭 '👨‍👩‍👧' 为 11 个 UTF-16 码元；实测为 8（2+1+2+1+2）。testing.ts 的 ZWJ_FAMILY 注释写的是 8（正确）。本包测试按实测 8 断言，不改 src。"
+  },
+  "honestUnverifiedLayers": [
+    "real IME (InputConnection) 调用序列",
+    "real TalkBack / 无障碍服务朗读",
+    "真实触摸坐标来源（WebView/原生 View）",
+    "真实排版/分页（行盒为 fixture，非 W09 真实布局；不产生页码）",
+    "词边界非 UAX#29（本模块自定义规则）",
+    "行界仅模型软换行 w:br，非视觉自动换行",
+    "on-device / consumer-reopen / cross-lane"
+  ]
+}

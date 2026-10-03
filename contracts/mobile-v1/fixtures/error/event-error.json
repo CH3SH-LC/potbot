@@ -1,0 +1,16 @@
+{
+  "$schemaRef": "schemas/event.schema.json",
+  "note": "失败事件：failed 带 error，不带 resultRef。fail-closed——没有执行器时内核只能上报 failed/pending/running，不得产出 succeeded。",
+  "value": {
+    "eventId": "evt-1006",
+    "seq": 6,
+    "commandId": "cmd-0006",
+    "revision": 0,
+    "status": "failed",
+    "error": {
+      "code": "EXECUTOR_UNAVAILABLE",
+      "message": "缺少可用执行器，未执行任何外部动作",
+      "retryable": true
+    }
+  }
+}

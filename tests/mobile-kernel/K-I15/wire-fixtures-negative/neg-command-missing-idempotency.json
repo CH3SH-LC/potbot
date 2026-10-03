@@ -1,0 +1,13 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "反例：删掉根必需字段 idempotencyKey。",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-k01-create",
+    "operation": "create",
+    "payload": {
+      "goal": "把这份周报改成一页",
+      "templateId": "word-doc"
+    }
+  }
+}

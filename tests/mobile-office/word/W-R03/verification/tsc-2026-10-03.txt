@@ -1,0 +1,16 @@
+# command: npx tsc --noEmit -p tsconfig.json
+# date: 2026-10-03
+# result: TSC_EXIT=2 (repo-wide, pre-existing errors in OTHER lanes' packages)
+# W-R03 error count: 0
+# total error TS lines: 97
+# error count by top package:
+     25 tests/mobile-office/presentations/P05
+     16 tests/mobile-office/spreadsheets/X-R04
+     11 tests/mobile-office/presentations/P01
+      7 tests/mobile-office/presentations/P-R01
+      6 tests/mobile-office/spreadsheets/X-R05
+      5 tests/mobile-office/spreadsheets/X10
+      3 tests/mobile-office/word/W09
+      2 tests/mobile-office/word/W02
+      1 tests/mobile-office/spreadsheets/X08
+      1 tests/mobile-office/spreadsheets/X02

@@ -1,0 +1,8 @@
+{
+  "$schemaRef": "schemas/security-keystore.schema.json",
+  "note": "反例：key.import 缺 sourceRef（keyImport required）。",
+  "value": {
+    "operation": "key.import",
+    "kind": "model"
+  }
+}

@@ -1,0 +1,102 @@
+apps/mobile-kernel/actions/wire-codec.ts(135,35): error TS2532: Object is possibly 'undefined'.
+apps/mobile-kernel/actions/wire-codec.ts(157,43): error TS18048: 'unit' is possibly 'undefined'.
+apps/mobile-kernel/actions/wire-codec.ts(158,33): error TS18048: 'unit' is possibly 'undefined'.
+apps/mobile-ui/src/decisions/card.ts(288,86): error TS2552: Cannot find name 'ConfirmGateResult'. Did you mean 'ConfirmResult'?
+apps/mobile-ui/src/decisions/card.ts(306,15): error TS2552: Cannot find name 'ConfirmActionBase'. Did you mean 'ConfirmAction'?
+apps/mobile-ui/src/memory/recall.ts(20,29): error TS2724: '"./rows.js"' has no exported member named 'MemoryRow'. Did you mean 'toMemoryRow'?
+src/presentations/index.ts(40,1): error TS2308: Module './text.js' has already exported a member named 'TextMatch'. Consider explicitly re-exporting to resolve the ambiguity.
+src/presentations/index.ts(40,1): error TS2308: Module './text.js' has already exported a member named 'findText'. Consider explicitly re-exporting to resolve the ambiguity.
+src/presentations/media-parts/av-package.ts(348,31): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/presentations/media-parts/relationships.ts(135,12): error TS2339: Property 'pop' does not exist on type 'readonly string[]'.
+src/spreadsheets/data-ops/operations.ts(463,10): error TS2339: Property 'op' does not exist on type 'FilterCondition | FilterGroup'.
+  Property 'op' does not exist on type 'FilterCondition'.
+src/spreadsheets/data-ops/operations.ts(463,31): error TS2339: Property 'op' does not exist on type 'FilterCondition | FilterGroup'.
+  Property 'op' does not exist on type 'FilterCondition'.
+src/spreadsheets/data-ops/operations.ts(464,33): error TS2345: Argument of type 'FilterCondition | FilterGroup' is not assignable to parameter of type 'FilterGroup'.
+  Type 'FilterCondition' is missing the following properties from type 'FilterGroup': op, conditions
+src/spreadsheets/data-ops/operations.ts(465,26): error TS2339: Property 'column' does not exist on type 'FilterCondition | FilterGroup'.
+  Property 'column' does not exist on type 'FilterGroup'.
+src/spreadsheets/data-ops/operations.ts(465,44): error TS2339: Property 'operator' does not exist on type 'FilterCondition | FilterGroup'.
+  Property 'operator' does not exist on type 'FilterGroup'.
+src/spreadsheets/sheet.ts(552,19): error TS2304: Cannot find name 'parseCellReference'.
+src/spreadsheets/xlsx-preservation/roundtrip-audit.ts(238,41): error TS2345: Argument of type 'readonly string[]' is not assignable to parameter of type 'string[]'.
+  The type 'readonly string[]' is 'readonly' and cannot be assigned to the mutable type 'string[]'.
+tests/mobile-kernel/K-R01/device-only-blockers.test.ts(48,39): error TS2322: Type 'string' is not assignable to type 'RuleId | undefined'.
+tests/mobile-kernel/K-R01/device-only-blockers.test.ts(171,27): error TS7006: Parameter 'e' implicitly has an 'any' type.
+tests/mobile-kernel/K-R01/device-only-blockers.test.ts(178,27): error TS7006: Parameter 'e' implicitly has an 'any' type.
+tests/mobile-kernel/K-R01/device-only-blockers.test.ts(179,27): error TS7006: Parameter 'e' implicitly has an 'any' type.
+tests/mobile-kernel/K-R01/device-only-blockers.test.ts(187,27): error TS7006: Parameter 'e' implicitly has an 'any' type.
+tests/mobile-kernel/K-R01/device-only-blockers.test.ts(194,27): error TS7006: Parameter 'e' implicitly has an 'any' type.
+tests/mobile-kernel/K03/fixtures.ts(108,5): error TS2741: Property 'errorCode' is missing in type '{ ok: true; keystoreKeyAlias: string; created: boolean; }' but required in type 'ProvisionResult'.
+tests/mobile-kernel/K07/wire-codec.test.ts(280,37): error TS2345: Argument of type '{ observedState: never; actionId: string; provider: string; requestRef: string; externalId: string; observedAt: string; evidenceRef: string; verificationMode: string; }' is not assignable to parameter of type 'WireExternalReceipt'.
+  Types of property 'verificationMode' are incompatible.
+    Type 'string' is not assignable to type '"real" | "fixture"'.
+tests/mobile-kernel/K07/wire-codec.test.ts(284,37): error TS2345: Argument of type '{ verificationMode: never; actionId: string; provider: string; requestRef: string; externalId: string; observedState: string; observedAt: string; evidenceRef: string; }' is not assignable to parameter of type 'WireExternalReceipt'.
+  Types of property 'observedState' are incompatible.
+    Type 'string' is not assignable to type '"confirmed" | "unknown" | "failed" | "cancelled"'.
+tests/mobile-meituan/M-R02/preflight.ts(15,9): error TS4104: The type 'readonly CatalogIssue[]' is 'readonly' and cannot be assigned to the mutable type 'CatalogIssue[]'.
+tests/mobile-office/presentations/P-R01/corpora.test.ts(258,12): error TS2532: Object is possibly 'undefined'.
+tests/mobile-office/presentations/P-R01/corpus/probe.ts(105,22): error TS2538: Type 'undefined' cannot be used as an index type.
+tests/mobile-office/presentations/P-R01/corpus/probe.ts(105,45): error TS2538: Type 'undefined' cannot be used as an index type.
+tests/mobile-office/presentations/P-R01/corpus/probe.ts(110,35): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/mobile-office/presentations/P-R01/corpus/probe.ts(114,34): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/mobile-office/presentations/P-R01/corpus/probe.ts(120,28): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/mobile-office/presentations/P-R01/corpus/probe.ts(162,39): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/mobile-office/presentations/P05/media-parts.test.ts(103,67): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/mobile-office/presentations/P05/media-parts.test.ts(253,12): error TS2532: Object is possibly 'undefined'.
+tests/mobile-office/presentations/P05/media-parts.test.ts(451,12): error TS2532: Object is possibly 'undefined'.
+tests/mobile-office/presentations/P05/media-parts.test.ts(452,12): error TS2532: Object is possibly 'undefined'.
+tests/mobile-office/presentations/P05/media-parts.test.ts(472,12): error TS2532: Object is possibly 'undefined'.
+tests/mobile-office/presentations/P05/media-parts.test.ts(473,12): error TS2532: Object is possibly 'undefined'.
+tests/mobile-office/spreadsheets/X-R04/crash-safety.test.ts(22,3): error TS2724: '"../../../../src/spreadsheets/history.js"' has no exported member named 'getSheetIndex'. Did you mean 'sheetIndex'?
+tests/mobile-office/spreadsheets/X-R04/crash-safety.test.ts(65,20): error TS2339: Property 'set' does not exist on type 'ReadonlyMap<string, CellValue>'.
+tests/mobile-office/spreadsheets/X-R04/input-boundary.test.ts(282,61): error TS2345: Argument of type 'string' is not assignable to parameter of type 'ZipReadErrorReason'.
+tests/mobile-office/spreadsheets/X-R04/operations.ts(198,59): error TS2345: Argument of type 'SpreadsheetSession' is not assignable to parameter of type 'HistoryState'.
+  Type 'SpreadsheetSession' is missing the following properties from type 'HistoryState': past, present, future
+tests/mobile-office/spreadsheets/X-R04/operations.ts(209,35): error TS2345: Argument of type 'SpreadsheetSession' is not assignable to parameter of type 'HistoryState'.
+  Type 'SpreadsheetSession' is missing the following properties from type 'HistoryState': past, present, future
+tests/mobile-office/spreadsheets/X-R04/operations.ts(235,51): error TS2345: Argument of type 'SpreadsheetSession' is not assignable to parameter of type 'HistoryState'.
+  Type 'SpreadsheetSession' is missing the following properties from type 'HistoryState': past, present, future
+tests/mobile-office/spreadsheets/X-R04/operations.ts(242,42): error TS2345: Argument of type 'SpreadsheetSession' is not assignable to parameter of type 'HistoryState'.
+  Type 'SpreadsheetSession' is missing the following properties from type 'HistoryState': past, present, future
+tests/mobile-office/spreadsheets/X-R04/operations.ts(254,53): error TS2345: Argument of type 'SpreadsheetSession' is not assignable to parameter of type 'HistoryState'.
+  Type 'SpreadsheetSession' is missing the following properties from type 'HistoryState': past, present, future
+tests/mobile-office/spreadsheets/X-R04/operations.ts(268,42): error TS2345: Argument of type 'SpreadsheetSession' is not assignable to parameter of type 'HistoryState'.
+  Type 'SpreadsheetSession' is missing the following properties from type 'HistoryState': past, present, future
+tests/mobile-office/spreadsheets/X-R04/operations.ts(275,51): error TS2345: Argument of type 'SpreadsheetSession' is not assignable to parameter of type 'HistoryState'.
+  Type 'SpreadsheetSession' is missing the following properties from type 'HistoryState': past, present, future
+tests/mobile-office/spreadsheets/X-R04/operations.ts(284,51): error TS2345: Argument of type 'SpreadsheetSession' is not assignable to parameter of type 'HistoryState'.
+  Type 'SpreadsheetSession' is missing the following properties from type 'HistoryState': past, present, future
+tests/mobile-office/spreadsheets/X-R04/operations.ts(289,96): error TS2345: Argument of type 'SpreadsheetSession' is not assignable to parameter of type 'HistoryState'.
+  Type 'SpreadsheetSession' is missing the following properties from type 'HistoryState': past, present, future
+tests/mobile-office/spreadsheets/X-R04/operations.ts(293,96): error TS2345: Argument of type 'SpreadsheetSession' is not assignable to parameter of type 'HistoryState'.
+  Type 'SpreadsheetSession' is missing the following properties from type 'HistoryState': past, present, future
+tests/mobile-office/spreadsheets/X-R04/operations.ts(300,51): error TS2345: Argument of type 'SpreadsheetSession' is not assignable to parameter of type 'HistoryState'.
+  Type 'SpreadsheetSession' is missing the following properties from type 'HistoryState': past, present, future
+tests/mobile-office/spreadsheets/X-R04/operations.ts(313,51): error TS2345: Argument of type 'SpreadsheetSession' is not assignable to parameter of type 'HistoryState'.
+  Type 'SpreadsheetSession' is missing the following properties from type 'HistoryState': past, present, future
+tests/mobile-office/spreadsheets/X-R04/operations.ts(327,47): error TS2345: Argument of type 'SpreadsheetSession' is not assignable to parameter of type 'HistoryState'.
+  Type 'SpreadsheetSession' is missing the following properties from type 'HistoryState': past, present, future
+tests/mobile-office/spreadsheets/X-R05/consumer-reopen.ts(55,26): error TS2305: Module '"../../../../src/spreadsheets/value.js"' has no exported member 'ScalarValue'.
+tests/mobile-office/spreadsheets/X-R05/consumer-reopen.ts(222,13): error TS2322: Type 'ScalarValue' is not assignable to type 'never'.
+tests/mobile-office/spreadsheets/X-R05/print-diff.ts(318,62): error TS2345: Argument of type 'PageHeaderFooter' is not assignable to parameter of type 'Record<string, unknown>'.
+  Index signature for type 'string' is missing in type 'PageHeaderFooter'.
+tests/mobile-office/spreadsheets/X-R05/print-diff.ts(319,34): error TS2345: Argument of type 'PageHeaderFooter' is not assignable to parameter of type 'Record<string, unknown>'.
+  Index signature for type 'string' is missing in type 'PageHeaderFooter'.
+tests/mobile-office/spreadsheets/X-R05/print-diff.ts(324,62): error TS2345: Argument of type 'PrintOptions | null' is not assignable to parameter of type 'Record<string, unknown>'.
+  Type 'null' is not assignable to type 'Record<string, unknown>'.
+tests/mobile-office/spreadsheets/X-R05/print-diff.ts(325,35): error TS2345: Argument of type 'PrintOptions | null' is not assignable to parameter of type 'Record<string, unknown>'.
+  Type 'null' is not assignable to type 'Record<string, unknown>'.
+tests/mobile-office/spreadsheets/X02/structural-ops.test.ts(231,33): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+tests/mobile-office/spreadsheets/X08/pivot-refresh-precision.test.ts(283,51): error TS18048: 'only' is possibly 'undefined'.
+tests/mobile-office/spreadsheets/X09/pagination.test.ts(72,12): error TS2739: Type '{ row: number; column: number; }' is missing the following properties from type 'CellReference': abs_column, abs_row
+tests/mobile-office/spreadsheets/X09/pagination.test.ts(72,59): error TS2739: Type '{ row: number; column: number; }' is missing the following properties from type 'CellReference': abs_column, abs_row
+tests/mobile-office/spreadsheets/X09/pagination.test.ts(94,37): error TS2540: Cannot assign to 'maxPages' because it is a read-only property.
+tests/mobile-office/word/W02/character-selection-verification.test.ts(548,41): error TS2322: Type '"pt"' is not assignable to type '"expanded" | "condensed"'.
+tests/mobile-office/word/W02/character-selection-verification.test.ts(548,53): error TS2322: Type 'number' is not assignable to type 'Length'.

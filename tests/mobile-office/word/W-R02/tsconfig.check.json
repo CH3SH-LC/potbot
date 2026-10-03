@@ -1,0 +1,5 @@
+{
+  "// W-R02 targeted typecheck": "本文件在 W-R02 写权范围内。它只把本包（含其被 import 的 src 子集）作为 TS 程序根，避免全仓 tsc 的 OOM（见 RUNBOOK）。不得改动根 tsconfig.json。",
+  "extends": "../../../../tsconfig.json",
+  "include": ["."]
+}

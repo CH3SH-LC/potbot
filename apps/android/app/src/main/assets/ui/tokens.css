@@ -1,0 +1,197 @@
+/*
+ * tokens.css —— Potbot v6 设计令牌 + 外壳（chrome）样式。
+ *
+ * 唯一来源：apps/mobile-ui/src/foundation/tokens.ts → apps/mobile-ui/foundation.css。
+ * 一致性由 tests/mobile-ui/F01/design-token-conformance.test.ts 断言（色值不一致即红）。
+ * 本文件**只**做 CSS 变量投影 + 外壳布局；屏幕样式归各 screens/*.js 自己（可用这些变量）。
+ * 未在 design-07 写死的值（字体族、下划线粗细、过渡时长单值）此处不编造：
+ * 下划线厚度是实现细节，标为 2px 并集中在一处，便于真机调。
+ */
+
+:root {
+  /* ---- 颜色（design-07 §3 令牌表） ---- */
+  --pb-color-brand: #E9A66D;
+  --pb-color-action-primary: #E9A66D;
+  --pb-color-action-foreground: #241A14;
+  --pb-color-canvas: #FFFFFF;
+  --pb-color-surface: #FFFFFF;
+  --pb-color-input: #FAFAF9;
+  --pb-color-text-primary: #28231F;
+  --pb-color-text-secondary: #77716B;
+  --pb-color-outline: #E8E4DF;
+  --pb-color-accent-surface: #FFF0E2;
+  --pb-color-accent-text: #825034;
+  --pb-color-success: #306A4B;
+  --pb-color-danger: #A73729;
+  --pb-color-focus-ring: #825034;
+
+  /* ---- 主题：固定白色，系统深色偏好也不切换 ---- */
+  color-scheme: light only;
+  --pb-elevation: none;
+
+  /* ---- 字号 / 行高 ---- */
+  --pb-font-page-title-size: 24sp;
+  --pb-font-section-title-size: 20sp;
+  --pb-font-body-size: 16sp;
+  --pb-font-button-size: 16sp;
+  --pb-font-auxiliary-size: 14sp;
+  --pb-font-annotation-minor-size: 12sp;
+
+  /* ---- 字重 ---- */
+  --pb-weight-title: 600;
+  --pb-weight-body: 400;
+  --pb-weight-button-min: 500;
+  --pb-weight-button-max: 600;
+
+  /* ---- 间距 / 触区 / 圆角 / 动效 ---- */
+  --pb-space-base: 4dp;
+  --pb-space-page-inline: 20dp;
+  --pb-space-page-inline-narrow: 16dp;
+  --pb-touch-min-target: 48dp;
+  --pb-radius-control: 12dp;
+  --pb-radius-card-min: 12dp;
+  --pb-radius-card-max: 20dp;
+  --pb-motion-duration-min: 160ms;
+  --pb-motion-duration-max: 220ms;
+  --pb-entry-indicator-color: #E9A66D;
+
+  /* ---- 外壳实现变量（非设计令牌，外壳自用） ---- */
+  --pb-touch: 48px;
+  --pb-indicator-h: 2px;      /* 选中项细橙色下划线厚度（design 未定值） */
+  --pb-chrome-radius: 12px;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  margin: 0; padding: 0;
+  background: var(--pb-color-canvas);
+  color: var(--pb-color-text-primary);
+  font-family: -apple-system, "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  font-size: 16px; line-height: 24px;
+}
+body { overscroll-behavior: none; }
+
+/* 应用容器：整屏纵向 flex；高度由 app.js 用 visualViewport 驱动，
+   软键盘弹出时输入区仍在键盘上方（flex 容器会一起缩）。 */
+#pb-app {
+  display: flex; flex-direction: column;
+  height: 100vh; height: 100dvh;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  overflow: hidden;
+}
+
+/* ---- 顶栏 ---- */
+#pb-topbar {
+  flex: none; display: flex; align-items: center; gap: 8px;
+  min-height: 56px; padding: 8px 20px 0 20px;
+  padding-top: calc(8px + env(safe-area-inset-top));
+}
+#pb-title { flex: 1; font-size: 17px; font-weight: 600; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.pb-brandmark { width: 32px; height: 32px; flex: none; display: block; }
+.pb-wordmark { font-size: 20px; font-weight: 600; letter-spacing: .02em; flex: 1; }
+
+.pb-iconbtn {
+  min-width: var(--pb-touch); min-height: var(--pb-touch);
+  display: flex; align-items: center; justify-content: center;
+  background: none; border: 0; border-radius: var(--pb-chrome-radius);
+  color: var(--pb-color-text-primary); font: inherit; font-size: 15px; padding: 0 10px;
+}
+.pb-iconbtn:active { background: var(--pb-color-accent-surface); }
+
+/* ---- 屏幕容器 ---- */
+#pb-root {
+  flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 4px 20px 16px;
+}
+#pb-root:focus { outline: none; }
+
+/* ---- 错误面板（某屏模块缺失/抛错时的诚实降级） ---- */
+.pb-fallback {
+  margin: 24px 0; padding: 16px; border: 1px dashed var(--pb-color-outline);
+  border-radius: var(--pb-radius-card-min); background: var(--pb-color-input);
+}
+.pb-fallback h2 { margin: 0 0 6px; font-size: 18px; }
+.pb-fallback p { margin: 6px 0; font-size: 14px; line-height: 20px; color: var(--pb-color-text-secondary); }
+.pb-fallback code { font-size: 13px; background: var(--pb-color-canvas); padding: 1px 4px; border-radius: 4px; }
+.pb-fallback .pb-misslist { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.pb-fallback .pb-misslist span {
+  font-size: 12px; padding: 2px 8px; border-radius: 8px;
+  background: var(--pb-color-accent-surface); color: var(--pb-color-accent-text);
+}
+
+/* ---- 输入区（仅 chat 屏；位于 tabbar 之上、键盘之上） ---- */
+#pb-composer {
+  flex: none; padding: 8px 16px calc(8px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--pb-color-outline); background: var(--pb-color-canvas);
+}
+#pb-app.pb-keyboard #pb-composer { padding-bottom: 8px; }
+.pb-inputbubble {
+  display: flex; align-items: flex-end; gap: 8px;
+  background: var(--pb-color-input); border: 1px solid var(--pb-color-outline);
+  border-radius: var(--pb-radius-control); padding: 6px 6px 6px 12px;
+}
+#pb-input {
+  flex: 1; border: 0; outline: 0; background: none; font: inherit;
+  color: var(--pb-color-text-primary); resize: none;
+  max-height: 72px; min-height: 32px; padding: 4px 0; line-height: 24px;
+}
+#pb-input::placeholder { color: var(--pb-color-text-secondary); }
+#pb-send {
+  flex: none; width: var(--pb-touch); height: var(--pb-touch);
+  border-radius: var(--pb-radius-control); border: 0;
+  background: var(--pb-color-brand); color: var(--pb-color-action-foreground);
+  font-size: 16px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+}
+#pb-send:disabled { opacity: .45; }
+#pb-composer .pb-hint { font-size: 12px; line-height: 18px; color: var(--pb-color-text-secondary); margin: 4px 2px 0; }
+
+/* ---- 底部导航：文字 + 细橙色选中下划线 ---- */
+#pb-tabbar {
+  flex: none; display: flex; border-top: 1px solid var(--pb-color-outline);
+  padding-bottom: env(safe-area-inset-bottom); background: var(--pb-color-canvas);
+}
+#pb-app.pb-keyboard #pb-tabbar { display: none; }
+.pb-tab {
+  flex: 1; min-height: var(--pb-touch); background: none; border: 0;
+  font: inherit; font-size: 15px; color: var(--pb-color-text-secondary);
+  position: relative; padding: 12px 0 10px;
+}
+.pb-tab[aria-current="page"] { color: var(--pb-color-text-primary); font-weight: 600; }
+.pb-tab[aria-current="page"]::after {
+  content: ""; position: absolute; left: 50%; transform: translateX(-50%);
+  bottom: 2px; width: 28px; height: var(--pb-indicator-h);
+  border-radius: 1px; background: var(--pb-entry-indicator-color);
+}
+
+/* ---- 焦点环（键盘可达性；design-07 §3 focus-ring ≥2dp） ---- */
+.pb-tab:focus-visible, .pb-iconbtn:focus-visible, #pb-send:focus-visible,
+#pb-root button:focus-visible, #pb-root a:focus-visible,
+#pb-root input:focus-visible, #pb-root textarea:focus-visible {
+  outline: 2px solid var(--pb-color-focus-ring); outline-offset: 2px;
+}
+
+/* ---- 外壳级通用类（屏幕模块可复用） ---- */
+.pb-btn {
+  min-height: var(--pb-touch); padding: 0 16px;
+  border-radius: var(--pb-radius-control); border: 0; font: inherit; font-weight: 500;
+}
+.pb-btn.primary { background: var(--pb-color-action-primary); color: var(--pb-color-action-foreground); }
+.pb-btn.secondary { background: var(--pb-color-surface); color: var(--pb-color-text-primary);
+  border: 1px solid var(--pb-color-outline); }
+.pb-toast {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: calc(96px + env(safe-area-inset-bottom));
+  background: #28231F; color: #fff; font-size: 13px; line-height: 18px;
+  padding: 8px 14px; border-radius: 10px; max-width: 80%;
+  opacity: 0; transition: opacity var(--pb-motion-duration-min) ease;
+  pointer-events: none; z-index: 9;
+}
+.pb-toast.pb-show { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pb-toast { transition: none; }
+}

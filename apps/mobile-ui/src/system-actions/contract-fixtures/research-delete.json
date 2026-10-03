@@ -1,0 +1,32 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-research-source-26bf290ff66c0895",
+    "operation": "mutate",
+    "idempotencyKey": "idem-research-source-26bf290ff66c0895",
+    "payload": {
+      "conversationId": "conv-1",
+      "targetId": "src-1",
+      "expectedRevision": 4,
+      "patch": {
+        "deleted": true,
+        "deletionScope": {
+          "index": "cascade",
+          "snippet": "cascade",
+          "citations": "cascade",
+          "derivedFacts": "retain"
+        }
+      }
+    },
+    "metadata": {
+      "entry": "system-action",
+      "kind": "research-source",
+      "returnTarget": {
+        "conversationId": "conv-1",
+        "anchorMessageId": null,
+        "origin": "system-actions"
+      }
+    }
+  }
+}

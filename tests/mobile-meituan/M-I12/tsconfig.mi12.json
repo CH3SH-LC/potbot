@@ -1,0 +1,10 @@
+{
+  "//": "M-I12 定向类型检查：业务码对账目录 + 其两个消费源（protocol / order-submit）与 M-I12 测试。不覆盖全仓，避免混入其它线的在途代码。",
+  "extends": "../../../tsconfig.json",
+  "include": [
+    "../../../src/mobile-plugins/meituan/business-codes/**/*.ts",
+    "../../../src/mobile-plugins/meituan/protocol/**/*.ts",
+    "../../../src/mobile-plugins/meituan/order-submit/**/*.ts",
+    "./**/*.ts"
+  ]
+}

@@ -1,0 +1,53 @@
+# ── 操作系统 ──
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── 编辑器 / IDE ──
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── 密钥与本地配置 ──
+# 任务书 §16 / §17 明文要求：密钥不进入代码仓库
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+local.properties
+
+# ── 依赖 ──
+node_modules/
+.pnpm-store/
+
+# ── 构建产物与日志 ──
+build/
+dist/
+coverage/
+*.log
+
+# ── 临时文件 ──
+*.tmp
+
+# ── Python 字节码缓存（验收器用 Python 写，跑一次就会生成）──
+__pycache__/
+*.pyc
+
+# ── 开发期证据输出（R38.4：与正式冻结证据分目录，明确标注"未冻结"）──
+.dev-evidence/
+
+# ── Demo 运行期产物（应用索引、产物映射、模型账本、临时文档；含个人文档，不入库）──
+.runtime/
+
+# ── Android 构建产物（S1：APK 8.4MB 与 Gradle 本地状态不入库）──
+apps/android/app/build/
+apps/android/.gradle/
+apps/android/local.properties
+
+# ── 修复批的历史证据快照（dev-output，不是新的冻结点）──
+docs/other/dev-output/freeze3-evidence-backup/
+
+# 并行 worktree（协调者 2026-10-03）
+.claude/worktrees/

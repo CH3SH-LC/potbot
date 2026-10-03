@@ -1,0 +1,14 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "F07 检索：query 分支，筛选条件放在 filters",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-f07-recall-1",
+    "operation": "query",
+    "idempotencyKey": "idem-f07-recall-1",
+    "payload": {
+      "conversationId": "conv-1",
+      "filters": { "kinds": ["preference"], "statuses": ["active"], "text": "咖啡" }
+    }
+  }
+}

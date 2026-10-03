@@ -1,0 +1,14 @@
+{
+  "$schemaRef": "schemas/external-receipt.schema.json",
+  "note": "unknown：外部结果未知时必须先查询原单，不得另发授权或重复下单；unknown 绝不等于完成。",
+  "value": {
+    "actionId": "act-3002",
+    "provider": "meituan",
+    "requestRef": "req-8802",
+    "externalId": "unknown-recover-02",
+    "observedState": "unknown",
+    "observedAt": "2026-10-03T08:45:00Z",
+    "evidenceRef": "evidence:timeout-recovery/req-8802.json",
+    "verificationMode": "real"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "对已有对象的 mutation：必须带 conversationId 或 taskId，且必须带 expectedRevision。",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-0002",
+    "operation": "mutate",
+    "idempotencyKey": "idem-0002",
+    "payload": {
+      "conversationId": "conv-42",
+      "targetId": "doc-7",
+      "expectedRevision": 11,
+      "patch": {
+        "op": "replace",
+        "path": "/title",
+        "value": "十月周报"
+      }
+    }
+  }
+}

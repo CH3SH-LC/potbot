@@ -1,0 +1,35 @@
+{
+  "fixtureId": "search.response.v1",
+  "operation": "search",
+  "protocolVersion": "wmh5-envelope-v1",
+  "provenance": "synthetic-unverified",
+  "verificationMode": "fixture",
+  "capturedAt": null,
+  "note": "协议形状示例（synthetic，非实测捕获）。poiId 与店名均为合成；自由文本 remark 中的联系方式已脱敏为占位符。",
+  "value": {
+    "code": 0,
+    "msg": "ok",
+    "data": {
+      "hasMore": false,
+      "poiList": [
+        {
+          "poiId": "poi-cbd-hg001",
+          "name": "「合成」一号火锅店",
+          "distanceMeters": 1280,
+          "minOrderAmount": "20.00",
+          "deliveryFee": "3.00",
+          "rating": 4.7,
+          "remark": "自由文本里的联系方式已脱敏：«redacted:phone#1»"
+        },
+        {
+          "poiId": "poi-cbd-fs002",
+          "name": "「合成」二号快餐店",
+          "distanceMeters": 640,
+          "minOrderAmount": "15.00",
+          "deliveryFee": "2.50",
+          "rating": 4.5
+        }
+      ]
+    }
+  }
+}

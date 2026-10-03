@@ -1,0 +1,25 @@
+{
+  "$schemaRef": "schemas/model-port.schema.json",
+  "note": "ModelPort 请求：keyRef 只能是引用（keyref: 前缀），绝不放密钥明文。",
+  "value": {
+    "messages": [
+      { "role": "system", "content": "你是任务式智能体的主控。" },
+      { "role": "user", "content": "帮我把这份周报改短一点。" }
+    ],
+    "toolSchemas": [
+      {
+        "name": "read_document",
+        "description": "读取当前文档的文本",
+        "parameters": {
+          "type": "object",
+          "properties": { "artifactId": { "type": "string" } }
+        }
+      }
+    ],
+    "cancellation": { "token": "cancel-42", "cancelled": false, "deadlineMs": 30000 },
+    "budget": { "maxTokens": 4096, "timeoutMs": 30000 },
+    "keyRef": "keyref:deepseek-app-primary",
+    "model": "deepseek-flash",
+    "stream": true
+  }
+}

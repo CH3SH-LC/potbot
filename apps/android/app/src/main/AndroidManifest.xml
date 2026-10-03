@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 只访问本机 127.0.0.1:8765 的 Node 服务，仍需 INTERNET 权限。 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!--
+      FA-APP-NOTIFY-PERM：后台进度通知（API 33+ 运行时权限）。
+      为什么它属于"功能必需且用户可见可撤销"的一类，而不是清单不变量原本要拦住的那类：
+        - 功能必需：没有它，PotbotProgressJobService 的进度通知在 API 33+ 上**一律发不出去**；
+        - 用户可见：系统弹窗明示请求，不是静默获取；
+        - 可随时撤销：系统设置里关掉即降级（通知发不出，进度仍可从持久层读回），
+          绝不会因此崩溃；
+        - 不读取任何用户隐私数据——与相机/定位/通讯录/后台定位/外部存储那些
+          "与功能无关的敏感权限"性质完全不同（后者仍被测试白名单**硬性拦红**）。
+      未验证（需真机）：弹窗形态、拒绝后的降级、撤销后的重新生效均未实测。
+    -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!--
+      K-I21 长任务前台服务（ForegroundTaskService）必需的**两个普通权限**。
+      普通权限 = 安装时自动授予、无运行时弹窗、用户可在系统设置里看到并控制；
+      缺任何一个，该服务在真机上一 `startForeground` 就抛 SecurityException。
+
+        - android.permission.FOREGROUND_SERVICE
+            API 28+ 起，任何 startForeground() 的前置权限（与服务的具体用途无关）。
+        - android.permission.FOREGROUND_SERVICE_DATA_SYNC
+            targetSdk 34 起，声明了 android:foregroundServiceType="dataSync" 的服务
+            必须**同时**持有该类型专属权限，否则 startForeground 抛 SecurityException。
+            （本工程 targetSdk = 34，见 app/build.gradle。）
+
+      证据（Java 侧真实调用，不是我推断的功能）：
+        - ForegroundTaskService.java:76-81 —— API 29+ 走
+          startForeground(id, notification, LifecycleConstants.FOREGROUND_SERVICE_TYPE)；
+        - LifecycleConstants.java:60 —— FOREGROUND_SERVICE_TYPE = FOREGROUND_SERVICE_TYPE_DATA_SYNC；
+        - LifecycleConstants.java:20-21 —— 该文件**明确写着**
+          "清单里的 foregroundServiceType 与相应 uses-permission 归集成人"。
+      未新增任何危险权限；没有一条是"与功能无关的隐私权限"。
+
+      ⚠️ 与既有测试的冲突（如实登记，不掩盖）：这两条不在
+      tests/full-app/android/android-app-source.ts:198 的 ALLOWED_PERMISSIONS 白名单里，
+      会让 tests/full-app/android/background-restore.test.ts:113 的
+      "声明集合 == 白名单" 等价断言变红。白名单文件归其他 lane，本集成未改它。
+      取舍与两条处置方案见 ANDROID-INTEGRATION-NOTES.md。
+    -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
+    <application
+        android:allowBackup="false"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!--
+              APP-03：接收系统分享（单条/多条）。类型判定**不在清单里**做，
+              而是在 PotbotInputGateway 里按 MIME + 扩展名双重判定——清单放 */* 是
+              为了先收进来再如实判定"支持/不支持"，未识别的类型会明确反馈，
+              绝不会被当成已识别。不声明任何新权限（分享不需要权限）。
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
+
+        <!--
+          APP-05：后台进度作业（JobScheduler 拉起）。选 JobScheduler 而不是前台服务，
+          是为了**不新增任何 uses-permission**（BIND_JOB_SERVICE 是组件属性，不是权限），
+          同时把"读进度"与 Activity 生命周期解耦（R255）。作业 id 固定，重复 schedule 覆盖。
+          未验证（需真机）：后台拉起时机、doze 行为、通知是否真出现。
+        -->
+        <service
+            android:name=".PotbotProgressJobService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <!--
+          ======================= 手机内核（K 线）原生接线 =======================
+          以下三个服务来自六线 run 新增的 com/potbot/kernel/** Java 源码。
+          **类名必须写全限定名**：本工程 namespace/applicationId 是 com.potbot.demo，
+          写 ".KernelRuntimeService" 会被解析成 com.potbot.demo.KernelRuntimeService（不存在）。
+          三个都 exported="false"：只由本应用内以显式 ComponentName 启动，不需要对外暴露，
+          也没有任何 intent-filter（不给外部提供入口，不新增攻击面）。
+        -->
+
+        <!--
+          K01 —— 内核业务运行时宿主（KernelRuntimeService.java:37）：
+          startCommand 起一个独立 HandlerThread 承载内核，并把 KernelLocalUiBridge 注册到 WebView。
+          它**不调用** startForeground，故不声明 android:foregroundServiceType
+          （类型是给真跑前台的服务用的；给非前台服务挂类型属虚标，也换不来常驻资格）。
+          ACTION_START / ACTION_STOP（KernelRuntimeService.java:40-41）是**自定义 action**，
+          由同进程以显式 Intent 发送，不需要也不应该有 intent-filter。
+          onBind 返回 null（KernelRuntimeService.java:152-155），故不构成 binder 服务。
+        -->
+        <service
+            android:name="com.potbot.kernel.runtime.KernelRuntimeService"
+            android:exported="false" />
+
+        <!--
+          K-I21 —— 长任务前台服务宿主（ForegroundTaskService.java:30）。
+          必须声明 foregroundServiceType="dataSync"：API 29+ 的
+          startForeground(id, notification, type) 要求 type 是清单声明值的子集，
+          不声明会抛 SecurityException/IllegalArgumentException；类型值须与
+          LifecycleConstants.java:60 的 FOREGROUND_SERVICE_TYPE_DATA_SYNC 一致。
+          配套的两个 uses-permission 见本文件顶部（FOREGROUND_SERVICE /
+          FOREGROUND_SERVICE_DATA_SYNC）；通知权限 POST_NOTIFICATIONS 已在白名单内、无需新增。
+          fail-closed：无通知权限时该服务在 startForeground **之前**就 stopSelf
+          （ForegroundTaskService.java:68-73），不会以"无通知常驻"绕过权限。
+        -->
+        <service
+            android:name="com.potbot.kernel.lifecycle.ForegroundTaskService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!--
+          K-I21 —— 后台恢复作业（ResumeJobService.java:25，JobService）。
+          BIND_JOB_SERVICE 是**组件属性不是权限**（与上面 .PotbotProgressJobService 同一口径）：
+          它保证只有 JobScheduler（系统）能拉起本服务，第三方 App 不能直接 startService 它。
+          与 JobScheduler 组件名绑定：ResumeJobService.schedule() 用
+          new ComponentName(context, ResumeJobService.class)（ResumeJobService.java:39），
+          没有这条 <service> 声明，schedule() 时 ComponentName 解析不到组件、作业会被丢弃。
+        -->
+        <service
+            android:name="com.potbot.kernel.lifecycle.ResumeJobService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <!-- 只负责把本应用私有目录里的 DOCX 通过 content:// 交给办公软件。 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+</manifest>

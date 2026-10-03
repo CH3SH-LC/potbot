@@ -1,0 +1,36 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-reminder-3bc704138f3aed5e",
+    "operation": "create",
+    "idempotencyKey": "idem-reminder-3bc704138f3aed5e",
+    "payload": {
+      "conversationId": "conv-1",
+      "content": "吃药",
+      "args": {
+        "kind": "reminder",
+        "reminderKind": "alarm",
+        "label": "吃药",
+        "owner": "self",
+        "permission": "granted",
+        "recurrence": null,
+        "occurrenceScope": null,
+        "time": {
+          "instant": "2026-10-04T01:00:00Z",
+          "timezone": "Asia/Shanghai",
+          "allDay": false
+        }
+      }
+    },
+    "metadata": {
+      "entry": "system-action",
+      "kind": "reminder",
+      "returnTarget": {
+        "conversationId": "conv-1",
+        "anchorMessageId": null,
+        "origin": "system-actions"
+      }
+    }
+  }
+}

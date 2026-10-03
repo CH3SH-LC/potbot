@@ -1,0 +1,158 @@
+{
+  "content_types": {
+    "/docProps/core.xml": "application/vnd.openxmlformats-package.core-properties+xml",
+    "/word/document.xml": "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+    "/word/styles.xml": "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml",
+    "customXml/item1.xml": "application/xml",
+    "word/media/image1.png": "image/png"
+  },
+  "deflate_parts": [
+    "word/document.xml"
+  ],
+  "label": "verify-docx-selftest-corpus",
+  "paragraph_count": 7,
+  "paragraphs": [
+    {
+      "align": "center",
+      "index": 0,
+      "outline_level": 0,
+      "runs": [
+        {
+          "bold": true,
+          "color": "1F3864",
+          "fonts": {
+            "ascii": "Arial",
+            "cs": "Arial",
+            "eastAsia": "黑体",
+            "hAnsi": "Arial"
+          },
+          "highlight": null,
+          "italic": null,
+          "size_pt": 16,
+          "text": "年度报告",
+          "underline": null
+        }
+      ],
+      "style": "Heading1",
+      "text": "年度报告"
+    },
+    {
+      "indent": {
+        "first_line_chars": 2
+      },
+      "index": 1,
+      "line_spacing": {
+        "multiple": 1.5
+      },
+      "runs": [
+        {
+          "fonts": {
+            "ascii": "Times New Roman",
+            "eastAsia": "宋体"
+          },
+          "highlight": "yellow",
+          "size_pt": 12,
+          "text": "第一段正文，首行缩进两个字符。"
+        },
+        {
+          "italic": true,
+          "size_pt": 12,
+          "text": "斜体下划线补充。",
+          "underline": "single"
+        }
+      ]
+    },
+    {
+      "align": "distribute",
+      "index": 2,
+      "line_spacing": {
+        "exact_pt": 20
+      },
+      "runs": [
+        {
+          "shading": {
+            "color": "auto",
+            "fill": "FFF2CC",
+            "val": "clear"
+          },
+          "size_pt": 10.5
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rId10",
+      "owner_part_path": "word/document.xml",
+      "target": "styles.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles"
+    },
+    {
+      "id": "rId11",
+      "owner_part_path": "word/document.xml",
+      "target": "media/image1.png",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+    },
+    {
+      "id": "rId12",
+      "owner_part_path": "word/document.xml",
+      "target": "../customXml/item1.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXml"
+    },
+    {
+      "id": "rId1",
+      "owner_part_path": null,
+      "target": "word/document.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
+    }
+  ],
+  "required_parts": [
+    "[Content_Types].xml",
+    "_rels/.rels",
+    "customXml/item1.xml",
+    "docProps/core.xml",
+    "word/_rels/document.xml.rels",
+    "word/document.xml",
+    "word/media/image1.png",
+    "word/styles.xml"
+  ],
+  "sections": [
+    {
+      "columns": 1,
+      "margins": {
+        "bottom": 1440,
+        "gutter": 0,
+        "left": 1800,
+        "right": 1800,
+        "top": 1440
+      },
+      "page_size": {
+        "h": 16838,
+        "w": 11906
+      }
+    }
+  ],
+  "sha256": "10a84344d004f5fab37c8cf66e6bd1bfad9eafc7e6f1b326aeae7b4b8106fcd7",
+  "tables": [
+    {
+      "cell_texts": [
+        [
+          "指标",
+          "数值"
+        ],
+        [
+          "人数",
+          "8"
+        ]
+      ],
+      "grid": [
+        2000,
+        3000
+      ]
+    }
+  ]
+}

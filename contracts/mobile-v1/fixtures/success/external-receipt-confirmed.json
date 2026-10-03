@@ -1,0 +1,14 @@
+{
+  "$schemaRef": "schemas/external-receipt.schema.json",
+  "note": "real 模式的 confirmed：只有 observedState=confirmed 才可声称外部动作已完成，且必须带真实读回证据引用。",
+  "value": {
+    "actionId": "act-3001",
+    "provider": "meituan",
+    "requestRef": "req-8801",
+    "externalId": "order-998877",
+    "observedState": "confirmed",
+    "observedAt": "2026-10-03T08:41:12Z",
+    "evidenceRef": "evidence:order-readback/order-998877.json",
+    "verificationMode": "real"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "deflate_parts": [],
+  "label": "legacy-golden-potbot-store (frozen regression baseline)",
+  "paragraph_count": 7,
+  "paragraphs": [
+    {
+      "index": 0,
+      "text": "聚餐安排"
+    },
+    {
+      "index": 1,
+      "text": "本文件只陈述已确认事实，不改写人数、金额与日期。"
+    },
+    {
+      "index": 2,
+      "text": "已确认事实"
+    },
+    {
+      "index": 3,
+      "text": "headcount: 8 人"
+    },
+    {
+      "index": 4,
+      "text": "event.date: 2026-10-02 (Asia/Shanghai)"
+    },
+    {
+      "index": 5,
+      "text": "资料引用"
+    },
+    {
+      "index": 6,
+      "text": "用户确认: 人数与预算由用户在前台确认"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rId1",
+      "owner_part_path": null,
+      "target": "word/document.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
+    }
+  ],
+  "required_parts": [
+    "[Content_Types].xml",
+    "_rels/.rels",
+    "word/document.xml"
+  ],
+  "sections": [
+    {
+      "page_size": {
+        "h": 16838,
+        "w": 11906
+      }
+    }
+  ],
+  "sha256": "3f30889034034b840718283ae6ab783205d40fec1ad2b58586406d1eac3c1378",
+  "source": {
+    "path": "docs/other/evidence/FREEZE-6/products/j1-j3-real-files-h8/T1/r1/document/art-9efb77a7dad8cf05d289865447f96e75.docx",
+    "sha256": "3f30889034034b840718283ae6ab783205d40fec1ad2b58586406d1eac3c1378"
+  },
+  "tables": []
+}

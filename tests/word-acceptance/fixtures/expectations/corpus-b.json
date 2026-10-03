@@ -1,0 +1,158 @@
+{
+  "content_types": {
+    "/docProps/custom.xml": "application/vnd.openxmlformats-officedocument.custom-properties+xml",
+    "/word/document.xml": "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+    "/word/styles.xml": "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml",
+    "word/media/image1.png": "image/png"
+  },
+  "deflate_parts": [
+    "word/document.xml"
+  ],
+  "label": "corpus-b-gongwen",
+  "paragraph_count": 9,
+  "paragraphs": [
+    {
+      "align": "center",
+      "index": 0,
+      "outline_level": 0,
+      "runs": [
+        {
+          "bold": true,
+          "fonts": {
+            "ascii": "Times New Roman",
+            "cs": "Times New Roman",
+            "eastAsia": "黑体"
+          },
+          "highlight": null,
+          "italic": null,
+          "shading": null,
+          "size_pt": 16,
+          "text": "关于规范文档格式的通知",
+          "underline": null
+        }
+      ],
+      "style": "Heading1",
+      "text": "关于规范文档格式的通知"
+    },
+    {
+      "after_pt": 12,
+      "indent": {
+        "first_line_chars": 2
+      },
+      "index": 1,
+      "line_spacing": {
+        "at_least_pt": 18
+      },
+      "runs": [
+        {
+          "fonts": {
+            "ascii": "Times New Roman",
+            "eastAsia": "仿宋"
+          },
+          "size_pt": 14,
+          "text": "各科室：为进一步规范格式，现将有关事项通知如下。"
+        }
+      ],
+      "style": "Normal",
+      "text": "各科室：为进一步规范格式，现将有关事项通知如下。"
+    },
+    {
+      "align": "right",
+      "indent": {
+        "hanging_chars": 2,
+        "left_chars": 1
+      },
+      "index": 2,
+      "line_spacing": {
+        "multiple": 1.0
+      },
+      "runs": [
+        {
+          "italic": true,
+          "size_pt": 10.5,
+          "text": "（此件公开发布）",
+          "underline": "double"
+        }
+      ],
+      "text": "（此件公开发布）"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rId1",
+      "owner_part_path": null,
+      "target": "word/document.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
+    },
+    {
+      "id": "rId2",
+      "owner_part_path": null,
+      "target": "docProps/custom.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties"
+    },
+    {
+      "id": "rId10",
+      "owner_part_path": "word/document.xml",
+      "target": "styles.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles"
+    },
+    {
+      "id": "rId11",
+      "owner_part_path": "word/document.xml",
+      "target": "media/image1.png",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+    }
+  ],
+  "required_parts": [
+    "[Content_Types].xml",
+    "_rels/.rels",
+    "docProps/custom.xml",
+    "word/_rels/document.xml.rels",
+    "word/document.xml",
+    "word/media/image1.png",
+    "word/styles.xml"
+  ],
+  "sections": [
+    {
+      "columns": 1,
+      "margins": {
+        "bottom": 1134,
+        "gutter": 0,
+        "left": 1701,
+        "right": 1134,
+        "top": 1134
+      },
+      "page_size": {
+        "h": 11906,
+        "orient": "landscape",
+        "w": 16838
+      }
+    }
+  ],
+  "sha256": "c6c7264486720021c1823fd8f6faa22dd831fb7858cc5e9c68be979c4dd6a7af",
+  "tables": [
+    {
+      "cell_texts": [
+        [
+          "序号",
+          "事项",
+          "负责"
+        ],
+        [
+          "1",
+          "字体字号",
+          "办公室"
+        ]
+      ],
+      "grid": [
+        1200,
+        2400,
+        1200
+      ]
+    }
+  ]
+}

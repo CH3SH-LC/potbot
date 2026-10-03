@@ -1,0 +1,17 @@
+# F-R05 targeted evidence — tsc
+# command: npx tsc --noEmit -p tsconfig.json
+# captured: 2026-10-03T09:17:16Z
+# tsc overall exit code: 2 (repo has pre-existing errors in OTHER lanes)
+# total TS error lines repo-wide: 93
+# lines matching tests/mobile-ui/F-R05: 0
+
+## breakdown by lane (top dirs)
+     26 tests/mobile-office/presentations/P05
+     16 tests/mobile-office/spreadsheets/X-R04
+      7 tests/mobile-office/presentations/P-R01
+      6 tests/mobile-office/spreadsheets/X-R05
+      3 tests/mobile-office/word/W09
+      3 tests/mobile-office/word/W03
+      2 tests/mobile-office/word/W02
+      1 tests/mobile-office/spreadsheets/X08
+      1 tests/mobile-office/spreadsheets/X02

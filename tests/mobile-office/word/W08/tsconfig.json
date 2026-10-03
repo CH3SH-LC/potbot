@@ -1,0 +1,10 @@
+{
+  "//": "W08 隔离类型检查：只编译本包新增/改动文件及其依赖子树，避开其他五线的既有 151 条错误。",
+  "extends": "../../../../tsconfig.json",
+  "include": [
+    "model-port-proofing.test.ts",
+    "../../../../src/documents/proofing/**/*.ts",
+    "../../../../src/documents/selection/**/*.ts",
+    "../../../../src/documents/model/**/*.ts"
+  ]
+}

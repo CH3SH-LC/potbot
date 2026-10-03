@@ -1,0 +1,19 @@
+{
+  "//": "M-I21 定向类型检查：只覆盖本单元消费的美团子包源码、K07 actions 与 M-I21 测试（含其相对依赖）。不覆盖全仓，避免混入其它线的在途代码。",
+  "extends": "../../../tsconfig.json",
+  "include": [
+    "../../../src/mobile-plugins/meituan/catalog/**/*.ts",
+    "../../../src/mobile-plugins/meituan/cart/**/*.ts",
+    "../../../src/mobile-plugins/meituan/address-delivery/**/*.ts",
+    "../../../src/mobile-plugins/meituan/purchase-confirmation/**/*.ts",
+    "../../../src/mobile-plugins/meituan/order-submit/**/*.ts",
+    "../../../src/mobile-plugins/meituan/payment/**/*.ts",
+    "../../../src/mobile-plugins/meituan/order-lifecycle/**/*.ts",
+    "../../../src/documents/docx/sha256.ts",
+    "../../../apps/mobile-kernel/actions/ledger.ts",
+    "../../../apps/mobile-kernel/actions/clock.ts",
+    "../../../apps/mobile-kernel/actions/types.ts",
+    "../../../apps/mobile-kernel/actions/errors.ts",
+    "./**/*.ts"
+  ]
+}

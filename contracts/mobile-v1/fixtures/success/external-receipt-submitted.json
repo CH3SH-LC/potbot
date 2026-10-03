@@ -1,0 +1,14 @@
+{
+  "$schemaRef": "schemas/external-receipt.schema.json",
+  "note": "已提交但未确认：submitted 不是完成；未拿到读回证据前不得声称成功。",
+  "value": {
+    "actionId": "act-3001",
+    "provider": "meituan",
+    "requestRef": "req-8801",
+    "externalId": "order-998877",
+    "observedState": "submitted",
+    "observedAt": "2026-10-03T08:40:30Z",
+    "evidenceRef": "evidence:submit-ack/req-8801.json",
+    "verificationMode": "real"
+  }
+}

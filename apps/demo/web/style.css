@@ -1,0 +1,851 @@
+/* potbot 手机 Word Demo —— 手机竖屏优先样式。无框架、无外部字体、无网络依赖。 */
+
+:root {
+  --bg: #f4f5f7;
+  --card: #ffffff;
+  --ink: #1b1d21;
+  --ink-dim: #5c626b;
+  --line: #e2e5ea;
+  --brand: #2f6bff;
+  --brand-ink: #ffffff;
+  --ok: #10824a;
+  --ok-bg: #e6f5ed;
+  --warn: #8a5a00;
+  --warn-bg: #fff5e0;
+  --err: #b3261e;
+  --err-bg: #fdecea;
+  --unknown: #6b7280;
+  --unknown-bg: #eceef1;
+  --radius: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16181c;
+    --card: #202329;
+    --ink: #eceef2;
+    --ink-dim: #a2a9b4;
+    --line: #34383f;
+    --brand: #6f96ff;
+    --brand-ink: #10131a;
+    --ok: #6ee7a8;
+    --ok-bg: #16351f;
+    --warn: #ffd591;
+    --warn-bg: #3a2c12;
+    --err: #ff9a92;
+    --err-bg: #3d1d1a;
+    --unknown: #b9bfc9;
+    --unknown-bg: #2c3037;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC",
+    "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 12px 12px calc(28px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- 顶栏 ---------- */
+
+.topbar { padding: 4px 2px 0; }
+
+.topbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.conn-hint {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--ink-dim);
+}
+
+.pill {
+  flex: none;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.pill-ok { background: var(--ok-bg); color: var(--ok); }
+.pill-warn { background: var(--warn-bg); color: var(--warn); }
+.pill-err { background: var(--err-bg); color: var(--err); }
+.pill-unknown { background: var(--unknown-bg); color: var(--unknown); }
+
+/* ---------- 提示条 ---------- */
+
+.banner {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  font-size: 13.5px;
+}
+/* 只用纯色/变量，避免依赖 color-mix()（旧 WebView 会整条丢弃） */
+.banner-warn {
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+/* ---------- 卡片 ---------- */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.note {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-dim);
+  line-height: 1.55;
+}
+.note strong { color: var(--ink); }
+.note-dim { color: var(--ink-dim); }
+
+/* ---------- 键值列表 ---------- */
+
+.kv {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kv-item {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.kv-key { color: var(--ink-dim); flex: none; }
+
+.kv-val { text-align: right; font-weight: 600; }
+.kv-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+.kv-break { overflow-wrap: anywhere; word-break: break-all; }
+
+.kv-ok { color: var(--ok); }
+.kv-err { color: var(--err); }
+.kv-warn { color: var(--warn); }
+.kv-unknown { color: var(--unknown); }
+
+/* ---------- 输入 ---------- */
+
+.instruction {
+  width: 100%;
+  min-height: 118px;
+  resize: vertical;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.55;
+}
+.instruction:focus {
+  outline: 2px solid var(--brand);
+  outline-offset: 1px;
+}
+
+.write-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.char-count { font-size: 12.5px; color: var(--ink-dim); }
+.char-count.over { color: var(--err); font-weight: 700; }
+
+.form-error {
+  margin: 0;
+  padding: 9px 11px;
+  border-radius: 10px;
+  background: var(--err-bg);
+  color: var(--err);
+  font-size: 13.5px;
+}
+
+/* ---------- 按钮 ---------- */
+
+.btn {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 12px 16px;
+  min-height: 46px;
+  cursor: pointer;
+}
+.btn-block { width: 100%; display: block; }
+.btn-small { min-height: 40px; font-size: 13.5px; padding: 9px 12px; }
+.btn-primary { background: var(--brand); color: var(--brand-ink); }
+.btn-secondary { background: var(--bg); color: var(--ink); border-color: var(--line); }
+.btn-ghost { background: transparent; color: var(--ink-dim); border-color: var(--line); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn:not(:disabled):active { transform: translateY(1px); }
+
+/* ---------- 状态 ---------- */
+
+.status-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.status-chip {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--unknown-bg);
+  color: var(--unknown);
+}
+.status-accepted, .status-running { background: var(--unknown-bg); color: var(--brand); }
+.status-ready { background: var(--ok-bg); color: var(--ok); }
+.status-failed { background: var(--err-bg); color: var(--err); }
+.status-interrupted { background: var(--warn-bg); color: var(--warn); }
+.status-unknown { background: var(--unknown-bg); color: var(--unknown); }
+
+.task-elapsed { font-size: 12.5px; color: var(--ink-dim); }
+
+.task-stage {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-dim);
+}
+
+/* ---------- 步骤条 ---------- */
+
+.steps {
+  list-style: none;
+  display: flex;
+  gap: 4px;
+  margin: 2px 0;
+  padding: 0;
+}
+
+.step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  color: var(--ink-dim);
+}
+
+.step-dot {
+  width: 100%;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--line);
+}
+
+.step.done .step-dot { background: var(--ok); }
+.step.done .step-label { color: var(--ok); }
+.step.active .step-dot { background: var(--brand); }
+.step.active .step-label { color: var(--brand); font-weight: 700; }
+.step.stopped .step-dot { background: var(--err); }
+.step.stopped .step-label { color: var(--err); }
+
+/* ---------- 面板 ---------- */
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.panel-title { margin: 0; font-size: 14px; font-weight: 700; }
+
+.panel-error { background: var(--err-bg); }
+.panel-artifact { background: var(--bg); }
+
+.error-message { margin: 0; font-size: 14.5px; font-weight: 700; color: var(--err); }
+.error-code {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  color: var(--ink-dim);
+  overflow-wrap: anywhere;
+}
+.error-retryable { margin: 0; font-size: 13px; color: var(--ink-dim); }
+
+.draft-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.draft-paras {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.draft-paras li { overflow-wrap: anywhere; }
+
+.download-status {
+  margin: 0;
+  font-size: 13.5px;
+  min-height: 1.2em;
+  color: var(--ink-dim);
+}
+.download-status.ok { color: var(--ok); font-weight: 600; }
+.download-status.err { color: var(--err); font-weight: 600; }
+
+/* ---------- 文档编辑（选区 / 格式控件 / 暂存步骤） ---------- */
+
+.file-input {
+  width: 100%;
+  font: inherit;
+  font-size: 14px;
+  padding: 10px;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.doc-preview {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  background: var(--card);
+  max-height: 46vh;
+  overflow: auto;
+  -webkit-user-select: text;
+  user-select: text;
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+
+.doc-preview .doc-para {
+  margin: 0 0 10px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.doc-preview .doc-para:last-child { margin-bottom: 0; }
+
+.doc-preview .doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+.doc-preview .doc-table td {
+  border: 1px solid var(--line);
+  padding: 6px 8px;
+  vertical-align: top;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.selection-text {
+  margin: 0;
+  padding: 9px 11px;
+  border-radius: 10px;
+  background: var(--bg);
+  font-size: 14px;
+  min-height: 2.2em;
+}
+
+.selection-expr {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  color: var(--ink-dim);
+  overflow-wrap: anywhere;
+}
+.selection-expr.is-ok { color: var(--ok); font-weight: 600; }
+.selection-expr.is-warn { color: var(--warn); font-weight: 600; }
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.toolbar-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  width: 100%;
+}
+
+.toolbar-label {
+  flex: none;
+  width: 100%;
+  font-size: 12.5px;
+  color: var(--ink-dim);
+}
+
+.tool-btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  border-radius: 9px;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 8px 10px;
+  min-height: 40px;
+  cursor: pointer;
+}
+.tool-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.tool-btn.is-active { border-color: var(--brand); color: var(--brand); }
+.tool-btn.is-unwired { text-decoration: line-through; }
+
+.staged-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.staged-item {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 13.5px;
+  background: var(--bg);
+}
+.staged-item .staged-range {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  color: var(--brand);
+}
+
+.staged-item .staged-domain {
+  font-size: 11.5px;
+  color: var(--ink-dim);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- 节摘要（第 N 节：横向 · 页边距已设置 …） ---------- */
+
+.section-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.section-line {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  margin: 0;
+  font-size: 12.5px;
+}
+
+.section-tag {
+  flex: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--brand);
+}
+
+.section-desc { color: var(--ink-dim); }
+
+.row-actions {
+  display: flex;
+  gap: 8px;
+}
+.row-actions .btn { flex: 1; }
+
+.edit-status {
+  margin: 0;
+  font-size: 13.5px;
+  min-height: 1.2em;
+  color: var(--ink-dim);
+}
+.edit-status.ok { color: var(--ok); font-weight: 600; }
+.edit-status.err { color: var(--err); font-weight: 600; }
+.edit-status.warn { color: var(--warn); font-weight: 600; }
+
+/* ---------- 历史 ---------- */
+
+.history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history-item {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  text-align: left;
+  background: var(--card);
+  color: var(--ink);
+  font: inherit;
+}
+.history-item.is-active { border-color: var(--brand); }
+
+.history-text { font-size: 14px; margin: 0; }
+.history-meta { font-size: 12px; color: var(--ink-dim); margin: 0; }
+
+/* ---------- 折叠 ---------- */
+
+.details {
+  border-top: 1px solid var(--line);
+  padding-top: 8px;
+  font-size: 13px;
+}
+.details summary {
+  cursor: pointer;
+  color: var(--ink-dim);
+  font-weight: 600;
+  padding: 4px 0;
+}
+.details .kv { margin-top: 8px; }
+
+/* ---------- 页脚 ---------- */
+
+.footer {
+  padding: 4px 4px 0;
+  font-size: 12px;
+  color: var(--ink-dim);
+  line-height: 1.6;
+}
+.footer p { margin: 0; }
+
+/* 窄屏微调 */
+@media (max-width: 360px) {
+  body { font-size: 15px; }
+  .app { padding-left: 10px; padding-right: 10px; }
+  .step-label { font-size: 10.5px; }
+  .kv-item { font-size: 13px; }
+}
+
+/* 横屏 / 平板：限制宽度，避免行长过宽 */
+@media (min-width: 641px) {
+  .app { padding-top: 20px; }
+}
+
+/* ===================== 导航骨架与视图（FA-A / APP-02） ===================== */
+
+/* 视图容器：默认全部隐藏，由 app.js 按当前视图显示；避免"全部卡片一次铺开"。 */
+.view { display: block; }
+.view[hidden] { display: none; }
+
+.nav-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 4px;
+}
+.nav-btn {
+  flex: 1 1 auto;
+  min-width: 64px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+.nav-btn.is-active {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--brand-ink);
+}
+
+.nav-history {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+/* 视图状态条：空白 / 加载 / 失败 / 离线四种「异常可见」状态。 */
+.view-state {
+  margin: 8px 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.55;
+  border: 1px solid var(--line);
+  background: var(--unknown-bg);
+  color: var(--ink);
+}
+.view-state-blank { background: var(--unknown-bg); border-color: var(--line); color: var(--ink-dim); }
+.view-state-loading { background: var(--warn-bg); border-color: var(--warn); color: var(--warn); }
+.view-state-failure { background: var(--err-bg); border-color: var(--err); color: var(--err); }
+.view-state-offline { background: var(--warn-bg); border-color: var(--warn); color: var(--warn); }
+
+/* ---------- APP-02 四态渲染层（nav-view.js）：四态在页面上必须看得出差别 ---------- */
+/* 语气来自 `PotbotAppNav.STATE_TONE`（四态取值互不相同）。左边留一条 4px 语气条，
+   配合下面的标题/说明/下一步排版，让「空白 / 加载 / 失败 / 离线」四态一眼可分。 */
+.view-state { border-left-width: 4px; }
+
+.view-state--neutral {
+  background: var(--unknown-bg);
+  border-color: var(--line);
+  border-left-color: var(--unknown);
+  color: var(--ink-dim);
+}
+.view-state--progress {
+  background: var(--warn-bg);
+  border-color: var(--warn);
+  border-left-color: var(--warn);
+  color: var(--warn);
+}
+.view-state--danger {
+  background: var(--err-bg);
+  border-color: var(--err);
+  border-left-color: var(--err);
+  color: var(--err);
+}
+/* 离线 ≠ 失败：不用实线红框，改用虚线语气条——「没连上」与「连上了没成」不是一回事。 */
+.view-state--warning {
+  background: var(--unknown-bg);
+  border-color: var(--warn);
+  border-style: dashed;
+  border-left-style: solid;
+  border-left-color: var(--warn);
+  color: var(--warn);
+}
+
+.view-state-title { margin: 0 0 2px; font-weight: 700; }
+.view-state-message { margin: 0; }
+.view-state-hint { margin: 2px 0 0; font-size: 12px; opacity: 0.85; }
+.view-state-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.view-state-action { flex: 0 0 auto; }
+.view-state-reason {
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  opacity: 0.85;
+}
+
+.banner-err {
+  background: var(--err-bg);
+  border-left-color: var(--err);
+  color: var(--err);
+}
+
+/* ---------- 连续对话 ---------- */
+
+.conv-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.conv-session-name { font-weight: 600; font-size: 14px; color: var(--ink-dim); }
+
+.conv-messages {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.conv-empty {
+  font-size: 13px;
+  color: var(--ink-dim);
+  padding: 8px 0;
+}
+.conv-msg {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px 10px;
+  background: var(--bg);
+}
+.conv-msg.conv-user { background: var(--card); border-color: var(--brand); }
+.conv-msg.conv-assistant { background: var(--unknown-bg); }
+.conv-msg.conv-state-failed { border-color: var(--err); background: var(--err-bg); }
+.conv-msg.conv-state-cancelled { border-color: var(--warn); background: var(--warn-bg); }
+.conv-text { margin: 0 0 4px; white-space: pre-wrap; word-break: break-word; }
+.conv-meta { margin: 0; font-size: 12px; color: var(--ink-dim); }
+.conv-note { margin: 4px 0 0; font-size: 12px; color: var(--ink-dim); }
+.conv-error { margin: 4px 0 0; font-size: 12px; color: var(--err); }
+.conv-retry { margin-top: 6px; }
+
+/* ---------- 会话列表 ---------- */
+
+.sess-list { list-style: none; margin: 8px 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.sess-item {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sess-item.is-active { border-color: var(--brand); }
+.sess-name { font-weight: 600; }
+.sess-meta { font-size: 12px; color: var(--ink-dim); }
+.sess-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* ---------- 任务 / 文件列表 ---------- */
+
+.task-list, .file-list { list-style: none; margin: 8px 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.task-item, .file-item {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.task-item.is-active { border-color: var(--brand); }
+.task-item-text, .file-name { font-weight: 600; word-break: break-word; }
+.task-item-meta, .file-meta { font-size: 12px; color: var(--ink-dim); }
+
+/* ---------- APP-04 任务与文件（FA-K） ---------- */
+
+.search-input {
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--ink);
+}
+.search-input:focus { outline: 2px solid var(--brand); outline-offset: 1px; }
+
+.action-bar { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.action-chip {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  line-height: 1.4;
+}
+.action-chip.is-on { border-color: var(--ok); color: var(--ok); background: var(--ok-bg); }
+.action-chip.is-off { color: var(--ink-dim); background: var(--unknown-bg); border-color: var(--line); }
+
+.uri-status { border-left: 3px solid var(--line); padding-left: 8px; }
+
+.version-list { list-style: none; margin: 6px 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.version-item { font-size: 13px; color: var(--ink-dim); }
+.version-item.is-latest { color: var(--ink); font-weight: 600; }
+.version-item.version-empty { font-style: italic; }
+
+.file-item.is-active { border-color: var(--brand); }
+
+/* ---------- APP-07 设置与授权（FA-K） ---------- */
+
+.auth-list { list-style: none; margin: 8px 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.auth-item {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+}
+.auth-label { font-weight: 600; }
+.auth-scope { flex-basis: 100%; font-size: 12px; color: var(--ink-dim); }
+.auth-note { flex-basis: 100%; font-size: 12px; color: var(--ink-dim); }
+.auth-state {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--unknown-bg);
+  color: var(--unknown);
+}
+.auth-state-granted { background: var(--ok-bg); color: var(--ok); }
+.auth-state-denied, .auth-state-revoked { background: var(--err-bg); color: var(--err); }
+.auth-state-requested { background: var(--warn-bg); color: var(--warn); }
+
+/* ===================== 四个管理面板（FA-PRODUCT-WEB-UI） ===================== */
+/* 只做加法：复用既有的 .card / .kv / .note，不新造设计语言。 */
+.panel-card .card-title { margin-bottom: 4px; }
+.panel-body { margin-top: 4px; }
+.panel-body:empty { display: none; }
+.panel-kv { margin: 0; }
+.panel-kv .kv-item { align-items: flex-start; }
+.panel-kv .kv-key { white-space: normal; }
+.panel-kv .kv-val { text-align: right; overflow-wrap: anywhere; }

@@ -1,0 +1,73 @@
+{
+  "package": "P-R05",
+  "lane": "P (PPT 演示)",
+  "scope": "手机放映、音视频播放、方向变化和导回验收",
+  "allowlist": ["tests/mobile-office/presentations/P-R05/"],
+  "sourceImportsOnly": true,
+  "srcModified": [],
+  "commands": [
+    {
+      "cmd": "npx vitest run tests/mobile-office/presentations/P-R05/playback.test.ts --reporter=basic",
+      "exitCode": 0,
+      "observed": "Test Files 1 passed (1); Tests 28 passed (28); Duration 13.95s",
+      "note": "最终确认运行。首次运行 21/25 通过（2 用例夹具错误 + 1 条真实发现）；修正后全绿。"
+    },
+    {
+      "cmd": "NODE_OPTIONS=--max-old-space-size=4096 npx tsc --noEmit --strict --target ES2023 --module NodeNext --moduleResolution NodeNext --types node --skipLibCheck --noUncheckedIndexedAccess --noImplicitOverride --noFallthroughCasesInSwitch --verbatimModuleSyntax tests/mobile-office/presentations/P-R05/playback.ts tests/mobile-office/presentations/P-R05/playback.test.ts",
+      "exitCode": 0,
+      "observed": "no output (clean)",
+      "note": "对两文件及其 src/presentations 传递依赖做类型检查。"
+    },
+    {
+      "cmd": "npx tsc --noEmit -p tsconfig.json",
+      "exitCode": 134,
+      "observed": "FATAL ERROR: MarkCompactCollector: young object promotion failed - JavaScript heap out of memory",
+      "note": "仓级 tsc 在本机 OOM（默认堆约 1GB，仓库过大，六线共享机器）。非本包代码问题；改用上一条定向文件列表检查。"
+    }
+  ],
+  "firstRunFailures": [
+    {
+      "test": "§7 导回验收 / §8 timing",
+      "realFinding": "shape_id 必须 ≥ 2（1 保留给 p:spTree 前导）：夹具用了 shape_id=1，render 抛 unsupported_shape_id。已改为 2/3。",
+      "type": "fixture-error"
+    },
+    {
+      "test": "§8 autoplay/loop/mute/vol/trim",
+      "realFinding": "裁剪 p14:trim 不落在 renderAvMediaTimingXml 的 timing 片段里，而在 renderAvMediaXml 的对象片段 p14:media 中。已拆成两条用例并登记该事实。",
+      "type": "real-behaviour-found"
+    },
+    {
+      "test": "§2 slide_range",
+      "realFinding": "planSlideshow 的 slide_range 序号针对全量页（含隐藏页），隐藏页在范围内再被过滤。原期望 [first,middle] 错误，改为 [first] 并补一条范围覆盖到中间页的用例。",
+      "type": "wrong-expectation"
+    },
+    {
+      "test": "§7 导回验收",
+      "realFinding": "renderPresentation→importPresentation 会把页面重新编号为 256 起，slide_id 不是跨保存的稳定键。已将 verifyPresentationRoundTrip 改为按页序位置比对，并新增 ids_stable / id_map 如实报告编号变化。",
+      "type": "real-behaviour-found"
+    }
+  ],
+  "verifiedLayers": ["unit", "contract"],
+  "contractDetail": "contract 层证据来自本仓真字节往返 renderPresentation→importPresentation（ZIP/XML 真字节），非 mock。",
+  "notVerified": [
+    "真机放映（无 Android SurfaceView/放映控件接入）",
+    "真机音视频播放出声出画（无 MediaPlayer/ExoPlayer、无解码器）",
+    "方向变化的像素观感（FitResult 是几何推算，未栅格化）",
+    "外部消费端（PowerPoint/WPS/手机放映端）打开与放映",
+    "音视频时长（由消费端注入，本层不猜）"
+  ],
+  "artifacts": {
+    "module": "tests/mobile-office/presentations/P-R05/playback.ts",
+    "test": "tests/mobile-office/presentations/P-R05/playback.test.ts",
+    "runbook": "tests/mobile-office/presentations/P-R05/RUNBOOK.md",
+    "evidence": "tests/mobile-office/presentations/P-R05/evidence/evidence.json"
+  },
+  "keyContracts": [
+    "fitSlideshow(slideSize, viewport, policy) -> FitResult（contain/cover，不拉伸）",
+    "startSession/nextSlide/prevSlide/gotoSlide/pauseSession/resumeSession/stopSession/advanceSession",
+    "playMedia/pauseMedia/resumeMedia/seekMedia（每项 AvPlaybackState）",
+    "changeOrientation(session, viewport)（只改几何，放映事实不变）",
+    "sessionSnapshot/diffSessionFacts（放映事实比对）",
+    "verifyPresentationRoundTrip(session) -> RoundTripResult（真字节往返）"
+  ]
+}

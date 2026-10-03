@@ -1,0 +1,14 @@
+{
+  "$schemaRef": "schemas/event.schema.json",
+  "note": "成功事件：succeeded 必须带 resultRef（fail-closed）。",
+  "value": {
+    "eventId": "evt-1001",
+    "seq": 1,
+    "commandId": "cmd-0001",
+    "revision": 1,
+    "status": "succeeded",
+    "resultRef": "artifact:doc-7@1",
+    "verificationMode": "fixture",
+    "idempotentReplay": false
+  }
+}

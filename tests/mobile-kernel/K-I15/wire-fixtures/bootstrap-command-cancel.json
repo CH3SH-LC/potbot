@@ -1,0 +1,13 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "K01 bootstrap.validateCommand() 通过后的 cancel 命令（$defs.queryBranch）。",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-k01-cancel",
+    "operation": "cancel",
+    "idempotencyKey": "idem-k01-cancel",
+    "payload": {
+      "conversationId": "conv-k01"
+    }
+  }
+}

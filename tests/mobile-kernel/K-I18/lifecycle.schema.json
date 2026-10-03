@@ -1,0 +1,346 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "potbot:tests/mobile-kernel/K-I18/lifecycle.schema.json",
+  "title": "Potbot mobile kernel lifecycle RUNTIME event/plan vocabulary (K10)",
+  "description": "K10 手机内核生命周期（前台服务 / 断网恢复 / 进程回收恢复）的**运行期**形状 schema（draft 2020-12 子集）。与 contracts/mobile-v1/schemas/lifecycle-plan.schema.json 的分工：那份是 wire 投影（at 用 ISO-8601 字符串、事件带 eventId），本份是 apps/mobile-kernel/lifecycle 真正 emit 的对象（at 用注入时钟的整数、日志条目带 seq/kind/data、诊断事件带 kind/severity/code），由 K-I18 用它校验真实产物。四套词表刻意不共用（合并会把『进程还在但网断了』误报成『进程死了』）。语义不变量由 schema 强制而非仅写在文档里：(a) externalPending=true 的恢复计划项 action 只能是 query-external（reclaim：查原单）或 none（force-stop：系统连查询都不允许，只标 blocked）；不得是 resume-from-cursor / start / finalize；(b) 终态任务（completed/failed/cancelled）的恢复计划项 action 必须为 none；(c) 恢复计划项 mayRedoCompletedSteps 恒为 false。词表枚举与运行期常量逐字一致，由 01-vocabulary-fidelity.test.ts 断言（含与已注册 wire 契约的漂移比对）。",
+  "oneOf": [
+    { "$ref": "#/$defs/journalEntry" },
+    { "$ref": "#/$defs/diagnosticEvent" },
+    { "$ref": "#/$defs/taskRecord" },
+    { "$ref": "#/$defs/fgsTaskView" },
+    { "$ref": "#/$defs/taskRecoveryPlan" },
+    { "$ref": "#/$defs/recoveryPlan" },
+    { "$ref": "#/$defs/connectivityChange" },
+    { "$ref": "#/$defs/residencyCheck" }
+  ],
+  "$defs": {
+    "fgsState": {
+      "description": "前台服务成员状态（运行期，不持久化）；来源 apps/mobile-kernel/lifecycle/types.ts FGS_STATES。",
+      "enum": ["registered", "foreground", "running", "finished", "cancelled", "failed"]
+    },
+    "taskState": {
+      "description": "持久任务状态；来源 TASK_STATES。reclaimed=进程被系统回收；unknown-external=已发起外部副作用未取回结果，只能查原单。",
+      "enum": [
+        "registered",
+        "running",
+        "awaiting-network",
+        "unknown-external",
+        "completed",
+        "failed",
+        "cancelled",
+        "reclaimed"
+      ]
+    },
+    "terminalTaskState": {
+      "description": "终态任务状态；来源 TERMINAL_TASK_STATES。终态不得重跑。",
+      "enum": ["completed", "failed", "cancelled"]
+    },
+    "recoveryAction": {
+      "description": "恢复动作；来源 RECOVERY_ACTIONS。query-external=只能查原单不得重做；none=无需动作（已结清或被 force-stop 系统限制）。",
+      "enum": ["none", "start", "resume-from-cursor", "query-external", "finalize"]
+    },
+    "killMode": {
+      "description": "进程消失方式；来源 KILL_MODES。reclaim 允许下次启动续跑；force-stop 后系统不允许自动复活。",
+      "enum": ["reclaim", "force-stop"]
+    },
+    "taskVisibility": {
+      "description": "任务可见性；来源 TASK_VISIBILITIES。",
+      "enum": ["foreground-visible", "background-deferred"]
+    },
+    "networkState": {
+      "description": "连通性；来源 NETWORK_STATES。",
+      "enum": ["online", "offline"]
+    },
+    "journalKind": {
+      "description": "账本日志条目种类；来源 JOURNAL_KINDS。",
+      "enum": [
+        "task-registered",
+        "run-started",
+        "step-completed",
+        "external-intent",
+        "external-settled",
+        "state-changed",
+        "reclaim-observed"
+      ]
+    },
+    "diagnosticKind": {
+      "description": "诊断种类词表；来源 observability/diagnostics.ts DIAGNOSTIC_KINDS。",
+      "enum": ["lifecycle", "network", "recovery", "notification", "task"]
+    },
+    "diagnosticSeverity": {
+      "description": "诊断严重级；来源 DIAGNOSTIC_SEVERITIES。",
+      "enum": ["debug", "info", "warn", "error"]
+    },
+    "journalEntry": {
+      "description": "K10 TaskLedger 的只追加日志条目（ledger.journal()）。at 为注入时钟的安全整数毫秒（非 wire ISO 串）；data 按 kind 定形（下方 if/then 强制），无嵌套对象。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["seq", "at", "kind", "taskId", "detail", "data"],
+      "properties": {
+        "seq": { "type": "integer", "minimum": 0 },
+        "at": { "type": "integer", "minimum": 0 },
+        "kind": { "$ref": "#/$defs/journalKind" },
+        "taskId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "detail": { "type": "string" },
+        "data": { "type": "object" }
+      },
+      "allOf": [
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "task-registered" } } },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["stepIds", "totalSteps"],
+                "properties": {
+                  "stepIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+                  "totalSteps": { "type": "integer", "minimum": 1 }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "run-started" } } },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["state"],
+                "properties": { "state": { "const": "running" } }
+              }
+            }
+          }
+        },
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "step-completed" } } },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["stepId"],
+                "properties": { "stepId": { "type": "string", "minLength": 1 } }
+              }
+            }
+          }
+        },
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "external-intent" } } },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["ref"],
+                "properties": { "ref": { "type": "string", "minLength": 1 } }
+              }
+            }
+          }
+        },
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "external-settled" } } },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["observedState"],
+                "properties": { "observedState": { "type": "string", "minLength": 1 } }
+              }
+            }
+          }
+        },
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "state-changed" } } },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["state"],
+                "properties": { "state": { "$ref": "#/$defs/taskState" } }
+              }
+            }
+          }
+        },
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "reclaim-observed" } } },
+          "then": {
+            "properties": {
+              "data": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["killMode"],
+                "properties": { "killMode": { "$ref": "#/$defs/killMode" } }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "diagnosticEvent": {
+      "description": "K10 脱敏诊断日志事件（observability/diagnostics.ts，白名单七字段）。生命周期事件经此落盘；taskId=task-registered 等 code 为机读拒因/事件名。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["seq", "at", "kind", "severity", "taskId", "code", "detail"],
+      "properties": {
+        "seq": { "type": "integer", "minimum": 0 },
+        "at": { "type": "integer", "minimum": 0 },
+        "kind": { "$ref": "#/$defs/diagnosticKind" },
+        "severity": { "$ref": "#/$defs/diagnosticSeverity" },
+        "taskId": { "type": "string", "minLength": 1 },
+        "code": { "type": "string", "minLength": 1 },
+        "detail": { "type": "string" }
+      }
+    },
+    "taskRecord": {
+      "description": "由日志重放得出的任务视图（TaskLedger.tasks() / getTask()）。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "taskId",
+        "stepIds",
+        "totalSteps",
+        "completedSteps",
+        "cursor",
+        "state",
+        "externalIntentRef",
+        "externalObservedState",
+        "failureReason",
+        "updatedAt",
+        "lastSeq"
+      ],
+      "properties": {
+        "taskId": { "type": "string", "minLength": 1 },
+        "stepIds": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "totalSteps": { "type": "integer", "minimum": 0 },
+        "completedSteps": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "cursor": { "type": "integer", "minimum": 0 },
+        "state": { "$ref": "#/$defs/taskState" },
+        "externalIntentRef": { "type": ["string", "null"] },
+        "externalObservedState": { "type": ["string", "null"] },
+        "failureReason": { "type": ["string", "null"] },
+        "updatedAt": { "type": "integer", "minimum": 0 },
+        "lastSeq": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "fgsTaskView": {
+      "description": "ForegroundTaskCoordinator 的只读任务视图（get(taskId)），状态取自 FGS_STATES。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["taskId", "visibility", "state", "notificationId", "promotedAt", "failureReason"],
+      "properties": {
+        "taskId": { "type": "string", "minLength": 1 },
+        "visibility": { "$ref": "#/$defs/taskVisibility" },
+        "state": { "$ref": "#/$defs/fgsState" },
+        "notificationId": { "type": ["string", "null"] },
+        "promotedAt": { "type": ["integer", "null"] },
+        "failureReason": { "type": ["string", "null"] }
+      }
+    },
+    "taskRecoveryPlan": {
+      "description": "单任务恢复计划项（TaskRecoveryPlan）。不变量：(a) externalPending=true ⇒ action 为 query-external 或 none（reclaim 查原单 / force-stop 连查询都不允许），不得是 resume-from-cursor/start/finalize；(b) 终态 ⇒ action=none；(c) mayRedoCompletedSteps 恒 false。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "taskId",
+        "state",
+        "action",
+        "resumeFromStep",
+        "totalSteps",
+        "externalPending",
+        "mayRedoCompletedSteps",
+        "detail"
+      ],
+      "properties": {
+        "taskId": { "type": "string", "minLength": 1 },
+        "state": { "$ref": "#/$defs/taskState" },
+        "action": { "$ref": "#/$defs/recoveryAction" },
+        "resumeFromStep": { "type": ["integer", "null"], "minimum": 0 },
+        "totalSteps": { "type": "integer", "minimum": 0 },
+        "externalPending": { "type": "boolean" },
+        "mayRedoCompletedSteps": { "const": false },
+        "detail": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": ["externalPending", "action"],
+            "properties": {
+              "externalPending": { "const": true },
+              "action": { "enum": ["resume-from-cursor", "start", "finalize"] }
+            }
+          }
+        },
+        {
+          "not": {
+            "required": ["state", "action"],
+            "properties": {
+              "state": { "$ref": "#/$defs/terminalTaskState" },
+              "action": { "not": { "const": "none" } }
+            }
+          }
+        }
+      ]
+    },
+    "recoveryPlan": {
+      "description": "整机恢复计划（RecoveryPlan）：由手机账本重放推出的『下一步做什么』。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["killMode", "resume", "queryExternal", "settled", "blockedBySystem", "tasks"],
+      "properties": {
+        "killMode": { "$ref": "#/$defs/killMode" },
+        "resume": {
+          "description": "会从游标续跑（含 start/finalize）的任务 id。",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "queryExternal": {
+          "description": "需要查原单的任务 id（已发起、未结清的外部副作用）。",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "settled": {
+          "description": "已结清、无需动作的任务 id。",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "blockedBySystem": {
+          "description": "force-stop 下被系统限制、本进程不自动复活的任务 id。",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "tasks": { "type": "array", "items": { "$ref": "#/$defs/taskRecoveryPlan" } }
+      }
+    },
+    "connectivityChange": {
+      "description": "NetworkResumeController.setConnectivity 的返回值，状态取自 NETWORK_STATES。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["changed", "lost", "restored", "state"],
+      "properties": {
+        "changed": { "type": "boolean" },
+        "lost": { "type": "boolean" },
+        "restored": { "type": "boolean" },
+        "state": { "$ref": "#/$defs/networkState" }
+      }
+    },
+    "residencyCheck": {
+      "description": "ForegroundTaskCoordinator.checkResidency 的返回值：『不承诺无限常驻』的可执行落点（超预算 degraded=true）。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["taskId", "elapsedMs", "budgetMs", "withinBudget", "degraded", "examinedAt"],
+      "properties": {
+        "taskId": { "type": "string", "minLength": 1 },
+        "elapsedMs": { "type": "integer", "minimum": 0 },
+        "budgetMs": { "type": "integer", "minimum": 1 },
+        "withinBudget": { "type": "boolean" },
+        "degraded": { "type": "boolean" },
+        "examinedAt": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

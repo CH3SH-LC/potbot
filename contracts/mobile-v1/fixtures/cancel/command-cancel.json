@@ -1,0 +1,13 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "取消命令：指向已有会话，取消必须落到事件流而不是静默丢弃。",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-0005",
+    "operation": "cancel",
+    "idempotencyKey": "idem-0005",
+    "payload": {
+      "conversationId": "conv-42"
+    }
+  }
+}

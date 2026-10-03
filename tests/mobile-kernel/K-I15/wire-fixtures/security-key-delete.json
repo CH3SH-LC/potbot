@@ -1,0 +1,9 @@
+{
+  "$schemaRef": "schemas/security-keystore.schema.json",
+  "note": "K03 assertSecurityCommand() 通过后的 key.delete payload（command.operation=\"mutate\"，无任何明文字段）。",
+  "value": {
+    "operation": "key.delete",
+    "kind": "meituan",
+    "expectedRevision": 4
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "package": "X-R06",
+  "unit": "X-I26",
+  "lane": "X (Excel / spreadsheets)",
+  "slot": "reserve X-R06 incremental (integration wave 2)",
+  "task": "accept a real (verification_mode='real') ArtifactFactClaim and bind checkCrossArtifactConsistency to src/facts/multi-artifact-update.ts semantics; keep missing-never-zero and the closed verdict vocabulary; wire only the spreadsheet-side producer, keep docx/pptx contract-only",
+  "repo_root": "<repo>",
+  "ran_at_utc": "2026-10-03T10:45:00Z",
+  "allowlist": "tests/mobile-office/spreadsheets/X-R06/",
+  "outside_allowlist_writes": [],
+  "artifacts": [
+    {
+      "path": "tests/mobile-office/spreadsheets/X-R06/real-lane-claims.ts",
+      "sha256": "8b691b8192dec38c7b6cb2525c2fda2ebd7d22a4da2937fa1a9857c4eaf2822d",
+      "role": "NEW: transaction-view -> real spreadsheet ArtifactFactClaim producer + fixed-point value conversion (contract layer)"
+    },
+    {
+      "path": "tests/mobile-office/spreadsheets/X-R06/real-lane-claims.test.ts",
+      "sha256": "249b19b52a9dccd6d905a27a2a12c2870dd73e3052431ed06015367f401ba256",
+      "role": "NEW: independent test (27 cases, 8 groups)"
+    },
+    {
+      "path": "tests/mobile-office/spreadsheets/X-R06/cross-artifact-consistency.ts",
+      "sha256": "74c746435553f11f1849f5a985e83161cd5054cd03410a79249d80acda6c24ae",
+      "role": "UNCHANGED (byte-identical to wave-1 evidence hash; mutation probes fully reverted)"
+    },
+    {
+      "path": "tests/mobile-office/spreadsheets/X-R06/README.md",
+      "sha256": "223031a149f050377623e4e1f216c75f4ebd7fb64523fbbe3c9bc7257bb48b50",
+      "role": "runbook updated with increment section"
+    }
+  ],
+  "commands": [
+    {
+      "cmd": "npx vitest run tests/mobile-office/spreadsheets/X-R06 --reporter=basic",
+      "exit_code": 0,
+      "summary": "Test Files 2 passed (2); Tests 53 passed (53) = base 26 + increment 27"
+    },
+    {
+      "cmd": "npx tsc --noEmit --skipLibCheck --strict --target ES2023 --module NodeNext --moduleResolution NodeNext --lib ES2023 --types node <real-lane-claims.ts real-lane-claims.test.ts>",
+      "exit_code": 0,
+      "summary": "0 type errors (task-specified targeted command)"
+    },
+    {
+      "cmd": "npx tsc --noEmit --skipLibCheck --strict --noUncheckedIndexedAccess --noImplicitOverride --noFallthroughCasesInSwitch --verbatimModuleSyntax ... <all 4 X-R06 files>",
+      "exit_code": 0,
+      "summary": "0 type errors with the repo's stricter flags (noUncheckedIndexedAccess etc.)"
+    },
+    {
+      "cmd": "vitest X-R06 (mutation A: compareAmounts unit-mismatch branch forced false)",
+      "exit_code": 1,
+      "summary": "2 red (base S3 unit_mismatch, base S7 unit divergence); reverted to 53 green"
+    },
+    {
+      "cmd": "vitest X-R06 (mutation B: versionVerdict stale branch never fires)",
+      "exit_code": 1,
+      "summary": "3 red (base S2 stale + increment S2 x2); reverted to 53 green"
+    },
+    {
+      "cmd": "vitest X-R06 (mutation C: sharedFactValueToClaimedValue(null) returns zero amount)",
+      "exit_code": 1,
+      "summary": "4 red (increment S3 x3 + S4 null); reverted to 53 green"
+    }
+  ],
+  "binding": {
+    "source": "src/facts/multi-artifact-update.ts (read-only; not modified)",
+    "fact_version": "Number(view.to_revision) - the transaction binds new fact versions to to_revision",
+    "value": "fact_changes[].new_value (SharedFactValue) -> ClaimedValue",
+    "artifact_id": "spreadsheet artifact entry new_artifact_id (via entry.via_fact_keys direct references)",
+    "missing": "new_value null/unknown/not_applicable -> unregistered_fact_keys (never zero, R248)"
+  },
+  "verified": [
+    "real spreadsheet claim produced from the multi-artifact transaction view",
+    "fact_version bound to view.to_revision; stale/ahead reverse controls bite",
+    "missing is not zero: null/unknown -> unregistered, no claim, missing_claim with claimed_display null",
+    "date fact not coerced -> unsupported_fact_keys",
+    "only spreadsheet claims are real; docx/pptx default contract-only",
+    "closed verdict vocabulary exactly 10 codes",
+    "determinism (replay -> identical claims + review_digest)",
+    "fixed-point: number fact via shortest round-trip decimal; NaN/Infinity/1e21 throw ValidationError",
+    "three mutation probes bite (A: 2 red, B: 3 red, C: 4 red)"
+  ],
+  "not_verified": [
+    "docx/pptx lanes NOT wired - contract layer only; their claims remain fixtures",
+    "no real spreadsheet materialization end-to-end (X-I27 producer) - transaction view built from test fixtures, not a live artifact store",
+    "no real DOCX/PPTX rendering or consumer readback",
+    "no device/APK/on-device run",
+    "no cross-lane integration with W (Word) or P (PPT) lanes",
+    "dates/booleans not covered as consistency value kinds (dates reported unsupported)"
+  ],
+  "stubbed": [],
+  "secrets_logged": false
+}

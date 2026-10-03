@@ -1,0 +1,17 @@
+{
+  "fixtureId": "submit.error.price-changed.v1",
+  "operation": "submit",
+  "protocolVersion": "wmh5-envelope-v1",
+  "provenance": "synthetic-unverified",
+  "verificationMode": "fixture",
+  "capturedAt": null,
+  "note": "关键负例：HTTP 200 + 数值业务码 1003（价格变动）。传输全绿但业务拒单——适配器绝不能报成功。",
+  "value": {
+    "code": 1003,
+    "msg": "price changed",
+    "data": {
+      "orderStatus": "rejected",
+      "reasonSymbol": "price_changed"
+    }
+  }
+}

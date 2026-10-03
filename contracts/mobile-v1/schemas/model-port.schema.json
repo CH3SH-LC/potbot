@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/mobile-v1/schemas/model-port.schema.json",
+  "title": "ModelPort",
+  "description": "模型端口。根对象是 ModelPort 请求：messages / toolSchemas / cancellation / budget / keyRef / model。流式输出片段见 #/$defs/streamChunk，类型为 text | tool-call | usage | error。工具结果（#/$defs/toolResult）必须带与调用 ID 对应的 toolCallId。keyRef 只能是『引用』（keyref: 前缀），任何 schema 都不接受密钥明文字段。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["messages", "toolSchemas", "cancellation", "budget", "keyRef", "model"],
+  "properties": {
+    "messages": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/message" }
+    },
+    "toolSchemas": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/toolSchema" }
+    },
+    "cancellation": { "$ref": "#/$defs/cancellation" },
+    "budget": { "$ref": "#/$defs/budget" },
+    "keyRef": { "$ref": "#/$defs/keyRef" },
+    "model": { "$ref": "#/$defs/modelName" },
+    "stream": { "type": "boolean" },
+    "metadata": { "type": "object" }
+  },
+  "$defs": {
+    "role": { "enum": ["system", "user", "assistant", "tool"] },
+    "toolCallId": { "type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9_.:-]+$" },
+    "message": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role"],
+      "properties": {
+        "role": { "$ref": "#/$defs/role" },
+        "content": { "type": "string" },
+        "name": { "type": "string", "minLength": 1 },
+        "toolCallId": { "$ref": "#/$defs/toolCallId" }
+      }
+    },
+    "toolSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "parameters"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "parameters": { "type": "object" }
+      }
+    },
+    "cancellation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["token"],
+      "properties": {
+        "token": { "type": "string", "minLength": 1 },
+        "cancelled": { "type": "boolean" },
+        "deadlineMs": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "anyOf": [
+        { "required": ["maxTokens"] },
+        { "required": ["maxCostMicros"] },
+        { "required": ["timeoutMs"] }
+      ],
+      "properties": {
+        "maxTokens": { "type": "integer", "minimum": 0 },
+        "maxCostMicros": { "type": "integer", "minimum": 0 },
+        "timeoutMs": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "keyRef": {
+      "description": "只接受引用，禁止密钥明文。",
+      "type": "string",
+      "pattern": "^keyref:[A-Za-z0-9._:-]+$"
+    },
+    "modelName": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["promptTokens", "completionTokens"],
+      "properties": {
+        "promptTokens": { "type": "integer", "minimum": 0 },
+        "completionTokens": { "type": "integer", "minimum": 0 },
+        "totalTokens": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "streamError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message"],
+      "properties": {
+        "code": { "type": "string", "minLength": 1 },
+        "message": { "type": "string", "minLength": 1 }
+      }
+    },
+    "toolCall": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["toolCallId", "toolName", "arguments"],
+      "properties": {
+        "toolCallId": { "$ref": "#/$defs/toolCallId" },
+        "toolName": { "type": "string", "minLength": 1 },
+        "arguments": { "type": "object" }
+      }
+    },
+    "toolResult": {
+      "description": "工具结果必须带与调用 ID 对应的 toolCallId。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["toolCallId", "result"],
+      "properties": {
+        "toolCallId": { "$ref": "#/$defs/toolCallId" },
+        "result": {},
+        "isError": { "type": "boolean" }
+      }
+    },
+    "streamChunk": {
+      "description": "流式输出片段：type ∈ text | tool-call | usage | error，各类型有各自的必需载荷。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": { "enum": ["text", "tool-call", "usage", "error"] },
+        "text": { "type": "string" },
+        "toolCall": { "$ref": "#/$defs/toolCall" },
+        "toolCallId": { "$ref": "#/$defs/toolCallId" },
+        "toolName": { "type": "string", "minLength": 1 },
+        "arguments": { "type": "object" },
+        "usage": { "$ref": "#/$defs/usage" },
+        "error": { "$ref": "#/$defs/streamError" },
+        "index": { "type": "integer", "minimum": 0 },
+        "done": { "type": "boolean" }
+      },
+      "allOf": [
+        {
+          "oneOf": [
+            { "required": ["type", "text"], "properties": { "type": { "const": "text" } } },
+            {
+              "required": ["type", "toolCallId", "toolName", "arguments"],
+              "properties": { "type": { "const": "tool-call" } }
+            },
+            { "required": ["type", "usage"], "properties": { "type": { "const": "usage" } } },
+            { "required": ["type", "error"], "properties": { "type": { "const": "error" } } }
+          ]
+        }
+      ]
+    }
+  }
+}

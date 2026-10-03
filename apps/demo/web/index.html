@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>potbot 手机助手</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <header class="topbar">
+      <div class="topbar-row">
+        <h1 class="app-title">potbot 手机助手</h1>
+        <span id="conn-pill" class="pill pill-unknown" role="status" aria-live="polite">未连接</span>
+      </div>
+      <p id="conn-hint" class="conn-hint">正在连接电脑服务…</p>
+    </header>
+
+    <p id="offline-banner" class="banner banner-err" hidden>
+      <strong>当前离线。</strong>新消息不会送达；已发送但未定局的消息可在恢复后重试，或从上次位置续取。
+    </p>
+
+    <p id="banner-keepalive" class="banner banner-warn">
+      <strong>需保持电脑服务运行。</strong>本版由电脑上的 potbot 服务完成模型生成与文件打包；电脑服务停止后，手机端无法再提交或取回文件。
+    </p>
+
+    <!--
+      七个区域的主导航（APP-02）。这里的按钮是**无脚本也能看见**的静态骨架：
+      运行时由 nav-view.js 按 PotbotAppNav 的清单重建（id / class / data-* 与这里一致），
+      所以文案与顺序在静态与运行时是同一套，不会两处漂移。
+    -->
+    <nav id="nav-bar" class="nav-bar" aria-label="主导航">
+      <button id="nav-conversation" type="button" class="nav-btn is-active" data-view="conversation" data-deep-link="#/conversation" aria-current="page">首页对话</button>
+      <button id="nav-sessions" type="button" class="nav-btn" data-view="sessions" data-deep-link="#/sessions">会话列表</button>
+      <button id="nav-tasks" type="button" class="nav-btn" data-view="tasks" data-deep-link="#/tasks">任务列表</button>
+      <button id="nav-files" type="button" class="nav-btn" data-view="files" data-deep-link="#/files">文件·产物</button>
+      <button id="nav-memory" type="button" class="nav-btn" data-view="memory" data-deep-link="#/memory">记忆管理</button>
+      <button id="nav-templates" type="button" class="nav-btn" data-view="templates" data-deep-link="#/templates">模板管理</button>
+      <button id="nav-settings" type="button" class="nav-btn" data-view="settings" data-deep-link="#/settings">权限与连接设置</button>
+    </nav>
+    <div class="nav-history">
+      <button id="nav-back" type="button" class="btn btn-ghost btn-small" disabled>后退</button>
+      <button id="nav-forward" type="button" class="btn btn-ghost btn-small" disabled>前进</button>
+    </div>
+    <p id="nav-note" class="note note-dim"></p>
+    <p id="nav-view-note" class="note note-dim" role="status" aria-live="polite"></p>
+
+    <!-- ===================== 视图：对话 ===================== -->
+    <section id="view-conversation" class="view card" aria-labelledby="conv-title">
+      <h2 id="conv-title" class="card-title">对话</h2>
+      <p id="view-state-conversation" class="view-state" data-state="blank" role="status" aria-live="polite" hidden></p>
+
+      <div class="conv-head">
+        <span id="conv-session-name" class="conv-session-name"></span>
+        <button id="conv-new-btn" type="button" class="btn btn-ghost btn-small">新建会话</button>
+      </div>
+
+      <ol id="conv-messages" class="conv-messages" aria-label="对话消息"></ol>
+
+      <label class="sr-only" for="conv-input">要说的话</label>
+      <textarea
+        id="conv-input"
+        class="instruction"
+        rows="3"
+        maxlength="4000"
+        placeholder="写下你的目标，或追问、补充资料、指代当前文件。"
+        autocapitalize="none"
+        autocomplete="off"
+        spellcheck="false"
+      ></textarea>
+      <button id="conv-send" type="button" class="btn btn-primary btn-block">发送</button>
+      <p id="conv-note" class="note" role="status" aria-live="polite"></p>
+
+      <div class="row-actions">
+        <button id="conv-resume-btn" type="button" class="btn btn-secondary btn-small" hidden>从上次位置继续接收</button>
+      </div>
+      <p id="conv-resume-note" class="note note-dim"></p>
+
+      <p class="note note-dim">
+        「已接收」只表示对话后端收下了这条消息，<strong>不等于业务完成</strong>。连续对话与增量回复需要
+        B 流的会话 / 后台内核；未接入时本页会把消息**如实标为失败**，不伪造回复。
+      </p>
+    </section>
+
+    <!-- ===================== 视图：会话 ===================== -->
+    <section id="view-sessions" class="view card" aria-labelledby="sessions-title">
+      <h2 id="sessions-title" class="card-title">会话</h2>
+      <p id="view-state-sessions" class="view-state" data-state="blank" role="status" aria-live="polite" hidden></p>
+
+      <button id="sess-new-btn" type="button" class="btn btn-primary btn-block">新建会话</button>
+
+      <div class="row-actions">
+        <label class="sr-only" for="sess-search">搜索会话</label>
+        <input id="sess-search" class="tool-input" type="search" placeholder="搜索会话（标题或首条消息）" autocomplete="off" />
+        <button id="sess-search-btn" type="button" class="btn btn-secondary btn-small">搜索</button>
+      </div>
+      <label class="sess-archived-toggle">
+        <input id="sess-show-archived" type="checkbox" /> 显示已归档
+      </label>
+      <p id="sess-search-note" class="note note-dim"></p>
+
+      <ul id="sess-list" class="sess-list"></ul>
+
+      <div class="row-actions">
+        <label class="sr-only" for="sess-rename-input">新的会话名字</label>
+        <input id="sess-rename-input" class="tool-input" type="text" placeholder="新的会话名字" autocomplete="off" />
+        <button id="sess-rename-btn" type="button" class="btn btn-secondary btn-small">应用改名</button>
+      </div>
+      <p id="sess-note" class="note" role="status" aria-live="polite"></p>
+      <p class="note note-dim">
+        接上电脑服务后，上面这份清单、改名 / 归档 / 删除与搜索**都走电脑端**（改完会重新读回核对），
+        刷新页面或重启服务后与本页看到的是一致的。删除会话会把它从电脑端一并移除；它不影响电脑上已生成的文件，
+        也不撤销任何已经发生的外部动作。
+      </p>
+    </section>
+
+    <!-- ===================== 视图：任务 ===================== -->
+    <div id="view-tasks" class="view">
+      <section class="card" aria-labelledby="write-title">
+        <h2 id="write-title" class="card-title">写下你的写作要求（一次性生成）</h2>
+        <p id="view-state-tasks" class="view-state" data-state="blank" role="status" aria-live="polite" hidden></p>
+        <label class="sr-only" for="instruction">写作要求</label>
+        <textarea
+          id="instruction"
+          class="instruction"
+          rows="5"
+          maxlength="4000"
+          placeholder="例如：为新生读书会写一封温暖的邀请函。"
+          autocapitalize="none"
+          autocomplete="off"
+          spellcheck="false"
+        ></textarea>
+        <div class="write-meta">
+          <span id="char-count" class="char-count">0 / 4000</span>
+          <button id="clear-btn" type="button" class="btn btn-ghost btn-small">清空</button>
+        </div>
+        <p id="submit-hint" class="note note-dim">
+          本版暂不支持未经你确认的具体业务数字（人数、金额、日期、联系方式等）。需要写进正文时，请先在要求里给出明确资料；否则生成的文字不会包含这类未经确认的数字。
+        </p>
+        <p id="form-error" class="form-error" hidden></p>
+        <button id="submit-btn" type="button" class="btn btn-primary btn-block">生成 Word 文档</button>
+      </section>
+
+      <section class="card" aria-labelledby="deliverable-title">
+        <h2 id="deliverable-title" class="card-title">新建表格 / 演示并交付真实文件</h2>
+        <p class="note note-dim">
+          这条入口走**真实内核发布链**（暂存 → 物化 → 版本闸门 → 原子发布 → 回读），
+          下载到的字节与回执里的摘要逐一核对；<strong>不是</strong>把样例文件当产出。
+          Word 请走上面的写作入口。
+        </p>
+
+        <label class="sr-only" for="deliverable-format">文件格式</label>
+        <select id="deliverable-format" class="search-input">
+          <option value="xlsx">表格（XLSX）</option>
+          <option value="pptx">演示（PPTX）</option>
+        </select>
+
+        <label class="sr-only" for="deliverable-filename">文件名</label>
+        <input
+          id="deliverable-filename"
+          class="search-input"
+          type="text"
+          maxlength="120"
+          placeholder="文件名（不必写扩展名，重复时自动追加 -2）"
+          autocomplete="off"
+          spellcheck="false"
+        />
+
+        <label class="sr-only" for="deliverable-edit-input">结构化编辑内容</label>
+        <textarea
+          id="deliverable-edit-input"
+          class="instruction"
+          rows="4"
+          autocapitalize="none"
+          autocomplete="off"
+          spellcheck="false"
+        ></textarea>
+        <p id="deliverable-edit-hint" class="note note-dim"></p>
+
+        <p id="deliverable-form-error" class="form-error" hidden></p>
+        <button id="deliverable-submit-btn" type="button" class="btn btn-primary btn-block">创建并交付</button>
+        <p id="deliverable-status" class="download-status" role="status" aria-live="polite"></p>
+
+        <div id="deliverable-result" class="panel panel-artifact" hidden>
+          <h3 class="panel-title">交付结果（取自服务端回执）</h3>
+          <ul class="kv">
+            <li class="kv-item"><span class="kv-key">文件名</span><span id="deliverable-result-filename" class="kv-val kv-mono"></span></li>
+            <li class="kv-item"><span class="kv-key">格式</span><span id="deliverable-result-format" class="kv-val"></span></li>
+            <li class="kv-item"><span class="kv-key">类型（MIME）</span><span id="deliverable-result-mime" class="kv-val kv-mono kv-break"></span></li>
+            <li class="kv-item"><span class="kv-key">大小</span><span id="deliverable-result-size" class="kv-val"></span></li>
+            <li class="kv-item"><span class="kv-key">校验值</span><span id="deliverable-result-sha" class="kv-val kv-mono kv-break"></span></li>
+          </ul>
+          <button id="deliverable-download-btn" type="button" class="btn btn-secondary btn-block">下载到手机（浏览器路径）</button>
+          <p id="deliverable-download-status" class="download-status" role="status" aria-live="polite"></p>
+        </div>
+
+        <div id="deliverable-completion" class="panel" hidden>
+          <h3 class="panel-title">任务完成情况</h3>
+          <p id="deliverable-completion-completed" class="kv-val"></p>
+          <p id="deliverable-completion-success" class="kv-val"></p>
+          <p id="deliverable-completion-detail" class="note note-dim"></p>
+          <ul class="kv">
+            <li class="kv-item"><span class="kv-key">全部工作项终态</span><span id="deliverable-pred-work" class="kv-val"></span></li>
+            <li class="kv-item"><span class="kv-key">无在途轮次</span><span id="deliverable-pred-runs" class="kv-val"></span></li>
+            <li class="kv-item"><span class="kv-key">无未决动作</span><span id="deliverable-pred-actions" class="kv-val"></span></li>
+          </ul>
+          <p class="note note-dim">
+            完成是<strong>从工作项 / 轮次 / 动作三个集合算出来的结论</strong>，不是某个可以点一下的按钮；
+            单轮结束不等于任务完成。
+          </p>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="task-search-title">
+        <h2 id="task-search-title" class="card-title">搜索任务</h2>
+        <label class="sr-only" for="task-search">搜索任务</label>
+        <input
+          id="task-search"
+          class="search-input"
+          type="search"
+          placeholder="按文件名 / 要求文本 / 任务或请求编号搜索"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <p id="task-search-note" class="note note-dim"></p>
+      </section>
+
+      <section class="card" aria-labelledby="task-list-title">
+        <h2 id="task-list-title" class="card-title">任务列表</h2>
+        <ul id="task-list" class="task-list"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="task-actions-title">
+        <h2 id="task-actions-title" class="card-title">选中任务的文件操作</h2>
+        <div id="task-action-bar" class="action-bar"></div>
+        <p id="task-actions-note" class="note note-dim"></p>
+        <p id="task-uri-status" class="note uri-status" role="status" aria-live="polite"></p>
+        <h3 class="panel-title">历史版本</h3>
+        <ul id="task-version-list" class="version-list"></ul>
+      </section>
+
+      <section id="task-section" class="card" aria-labelledby="task-title">
+        <h2 id="task-title" class="card-title">当前任务</h2>
+
+        <p id="task-empty" class="note note-dim">还没有任务。写下要求后点击上面的按钮。</p>
+
+        <div id="task-body" hidden>
+          <div class="status-head">
+            <span id="task-status" class="status-chip status-unknown">未知</span>
+            <span id="task-elapsed" class="task-elapsed"></span>
+          </div>
+          <p id="task-stage" class="task-stage"></p>
+
+          <ol id="steps" class="steps" aria-label="生成进度">
+            <li class="step" data-step="0"><span class="step-dot"></span><span class="step-label">已接收</span></li>
+            <li class="step" data-step="1"><span class="step-dot"></span><span class="step-label">模型生成</span></li>
+            <li class="step" data-step="2"><span class="step-dot"></span><span class="step-label">内核发布</span></li>
+            <li class="step" data-step="3"><span class="step-dot"></span><span class="step-label">文件就绪</span></li>
+          </ol>
+
+          <p id="task-note" class="note"></p>
+
+          <div id="error-panel" class="panel panel-error" hidden>
+            <h3 class="panel-title">本次没有生成成功</h3>
+            <p id="error-message" class="error-message"></p>
+            <p id="error-code" class="error-code"></p>
+            <p id="error-retryable" class="error-retryable"></p>
+            <button id="retry-btn" type="button" class="btn btn-secondary btn-block">用同样要求重试一次</button>
+          </div>
+
+          <div id="draft-panel" class="panel" hidden>
+            <h3 class="panel-title">草稿预览（模型生成，未经你确认）</h3>
+            <h4 id="draft-title" class="draft-title"></h4>
+            <ol id="draft-paras" class="draft-paras"></ol>
+            <p id="draft-meta" class="note note-dim"></p>
+          </div>
+
+          <div id="artifact-panel" class="panel panel-artifact" hidden>
+            <h3 class="panel-title">文件</h3>
+            <ul class="kv">
+              <li class="kv-item"><span class="kv-key">文件名</span><span id="artifact-filename" class="kv-val kv-mono"></span></li>
+              <li class="kv-item"><span class="kv-key">大小</span><span id="artifact-size" class="kv-val"></span></li>
+              <li class="kv-item"><span class="kv-key">校验值</span><span id="artifact-sha" class="kv-val kv-mono kv-break"></span></li>
+              <li class="kv-item"><span class="kv-key">文件版本</span><span id="artifact-version" class="kv-val"></span></li>
+            </ul>
+
+            <button id="save-native-btn" type="button" class="btn btn-primary btn-block" hidden>交给系统软件打开（应用内）</button>
+            <button id="save-copy-btn" type="button" class="btn btn-secondary btn-block" hidden>另存副本到手机（应用内）</button>
+            <p id="save-native-note" class="note note-dim" hidden>应用内路径由 potbot App 下载并交给系统软件；<strong>「已交给系统」不等于办公软件已经打开、也不等于内容能编辑</strong>，打开与编辑的结果以真机验收为准。</p>
+
+            <button id="save-browser-btn" type="button" class="btn btn-secondary btn-block">下载到手机（浏览器路径）</button>
+            <p id="save-browser-note" class="note note-dim">当前为浏览器路径：文件由本页下载，能不能被办公软件长期编辑取决于手机浏览器与文件管理方式，<strong>该路径的安装与保存能力尚未验证</strong>。</p>
+
+            <p id="download-status" class="download-status" role="status" aria-live="polite"></p>
+
+            <button id="opened-btn" type="button" class="btn btn-ghost btn-block btn-small">我已在办公软件中打开（记录我的反馈）</button>
+            <p class="note note-dim">该按钮只记录你本人的反馈，不会被当作机器验证结果。</p>
+          </div>
+
+          <details class="details">
+            <summary>详细信息</summary>
+            <ul class="kv">
+              <li class="kv-item"><span class="kv-key">请求编号</span><span id="meta-request" class="kv-val kv-mono kv-break"></span></li>
+              <li class="kv-item"><span class="kv-key">任务编号</span><span id="meta-task" class="kv-val kv-mono kv-break"></span></li>
+              <li class="kv-item"><span class="kv-key">接口版本</span><span id="meta-contract" class="kv-val kv-mono"></span></li>
+              <li class="kv-item"><span class="kv-key">构建标识</span><span id="meta-build" class="kv-val kv-mono kv-break"></span></li>
+              <li class="kv-item"><span class="kv-key">启动标识</span><span id="meta-boot" class="kv-val kv-mono kv-break"></span></li>
+            </ul>
+          </details>
+        </div>
+      </section>
+
+      <section id="history-section" class="card" aria-labelledby="history-title" hidden>
+        <h2 id="history-title" class="card-title">这台手机上的历史任务</h2>
+        <ul id="history-list" class="history-list"></ul>
+        <button id="forget-btn" type="button" class="btn btn-ghost btn-small btn-block">清除本机记录（不影响电脑上的文件）</button>
+      </section>
+    </div>
+
+    <!-- ===================== 视图：文件 / 产物 ===================== -->
+    <div id="view-files" class="view">
+      <section class="card" aria-labelledby="file-search-title">
+        <h2 id="file-search-title" class="card-title">搜索文件与产物</h2>
+        <label class="sr-only" for="file-search">搜索文件与产物</label>
+        <input
+          id="file-search"
+          class="search-input"
+          type="search"
+          placeholder="按文件名 / 要求文本 / 任务编号搜索"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <p id="file-search-note" class="note note-dim"></p>
+      </section>
+
+      <section class="card" aria-labelledby="files-title">
+        <h2 id="files-title" class="card-title">文件与产物</h2>
+        <p id="view-state-files" class="view-state" data-state="blank" role="status" aria-live="polite" hidden></p>
+        <ul id="file-list" class="file-list"></ul>
+        <p id="files-note" class="note note-dim"></p>
+        <h3 class="panel-title">选中产物能做什么</h3>
+        <div id="file-action-bar" class="action-bar"></div>
+        <p id="file-uri-note" class="note uri-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section id="editor-section" class="card" aria-labelledby="editor-title">
+        <h2 id="editor-title" class="card-title">编辑已有文档</h2>
+        <p class="note">
+          这条路<strong>不经过模型</strong>：你在预览里选中文字、点格式控件，页面把它翻成内核的
+          <strong>固定范围表达式</strong>后提交；一次「保存」= 一次事务 = 版本号只 +1。
+        </p>
+        <label class="sr-only" for="docx-file">选择要编辑的 DOCX 文件</label>
+        <input
+          id="docx-file"
+          class="file-input"
+          type="file"
+          accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        />
+        <button id="import-btn" type="button" class="btn btn-secondary btn-block">导入并开始编辑</button>
+        <p id="editor-error" class="form-error" hidden></p>
+
+        <div id="editor-body" hidden>
+          <ul class="kv">
+            <li class="kv-item"><span class="kv-key">会话编号</span><span id="session-id" class="kv-val kv-mono kv-break"></span></li>
+            <li class="kv-item"><span class="kv-key">当前文档版本</span><span id="session-revision" class="kv-val"></span></li>
+            <li class="kv-item"><span class="kv-key">内容摘要</span><span id="session-digest" class="kv-val kv-mono kv-break"></span></li>
+          </ul>
+
+          <h3 class="panel-title">文档预览（可直接选中文字）</h3>
+          <p id="preview-meta" class="note note-dim"></p>
+          <div id="doc-preview" class="doc-preview"></div>
+
+          <h3 class="panel-title">当前选区</h3>
+          <p id="selection-text" class="selection-text">还没有选中文字。</p>
+          <p id="selection-expr" class="selection-expr"></p>
+          <button id="refresh-selection-btn" type="button" class="btn btn-ghost btn-small btn-block">重新读取选中文字</button>
+
+          <details id="format-check" class="details">
+            <summary>格式检查（选区当前状态）</summary>
+            <ul id="format-state" class="kv"></ul>
+            <p id="format-source" class="note note-dim"></p>
+          </details>
+
+          <h3 class="panel-title">格式控件</h3>
+          <div id="format-toolbar" class="toolbar"></div>
+          <p id="toolbar-note" class="note note-dim"></p>
+
+          <h3 class="panel-title">节与页面设置（纸张 / 横纵 / 页边距 / 页码）</h3>
+          <div id="section-summary" class="section-summary"></div>
+          <div id="section-toolbar" class="toolbar"></div>
+          <p id="section-note" class="note note-dim"></p>
+
+          <h3 class="panel-title">列表与编号</h3>
+          <div id="list-toolbar" class="toolbar"></div>
+          <p id="list-note" class="note note-dim"></p>
+
+          <h3 class="panel-title">待保存的步骤</h3>
+          <p id="staged-empty" class="note note-dim">还没有步骤。先在预览里选中文字，再点上面的格式按钮。</p>
+          <ol id="staged-list" class="staged-list"></ol>
+          <div class="row-actions">
+            <button id="undo-btn" type="button" class="btn btn-secondary btn-small">撤销一步</button>
+            <button id="redo-btn" type="button" class="btn btn-secondary btn-small">重做一步</button>
+            <button id="clear-staged-btn" type="button" class="btn btn-ghost btn-small">清空步骤</button>
+          </div>
+          <p class="note note-dim">
+            撤销 / 重做只作用于<strong>尚未提交</strong>的步骤；跨保存的回退需要服务端支持，不在本版范围内。
+          </p>
+
+          <button id="save-edit-btn" type="button" class="btn btn-primary btn-block">保存为新版本（一次事务）</button>
+          <p id="edit-status" class="edit-status" role="status" aria-live="polite"></p>
+
+          <div id="version-panel" class="panel" hidden>
+            <h4 class="panel-title">已保存的版本</h4>
+            <ul id="version-list" class="kv"></ul>
+            <button id="download-version-btn" type="button" class="btn btn-secondary btn-block btn-small">下载最新版本（浏览器路径）</button>
+            <p id="version-download-status" class="download-status" role="status" aria-live="polite"></p>
+            <p class="note note-dim">下载会核对长度与校验值；<strong>没有算出校验值时不会声称已核验</strong>。</p>
+          </div>
+        </div>
+      </section>
+
+      <!--
+        文件·产物：文档工作流面板（FA-PRODUCT-WEB-UI）。
+        真的打 `GET /api/documents/status`，把就绪与能力清单渲染成行；四态由
+        app-nav.js + nav-view.js 渲染（`view-state-files` 就是它的落点）。
+      -->
+      <section class="card panel-card" aria-labelledby="panel-files-title">
+        <h2 id="panel-files-title" class="card-title">文档工作流（电脑端真实服务）</h2>
+        <p class="note note-dim">
+          这一块直接读电脑端的文档工作流接口（页 / 节 / 表格 / 图形 / 引用 / 审阅），
+          显示它**接线了哪些能力、哪些已知不支持**；不返回任何文档正文。
+        </p>
+        <button id="panel-files-refresh" type="button" class="btn btn-secondary btn-block btn-small" data-panel-refresh="files">重新读取文档能力</button>
+        <div id="panel-files-actions" class="panel-actions"></div>
+        <label class="note note-dim" for="panel-files-export-id">
+          产物编号（当前任务已有产物时留空即可；没有任务时可以填它直接下载）：</label>
+        <input id="panel-files-export-id" class="tool-input" type="text" autocomplete="off"
+               placeholder="例如 art-…" />
+        <p id="panel-files-status" class="note" role="status" aria-live="polite"></p>
+        <div id="panel-files-body" class="panel-body"></div>
+        <p id="panel-files-note" class="note note-dim"></p>
+      </section>
+    </div>
+
+    <!-- ===================== 视图：记忆 ===================== -->
+    <section id="view-memory" class="view card" aria-labelledby="memory-title">
+      <h2 id="memory-title" class="card-title">记忆</h2>
+      <p id="view-state-memory" class="view-state" data-state="blank" role="status" aria-live="polite" hidden></p>
+      <p class="note note-dim">
+        记忆管理（查看 / 修改 / 停用 / 删除 / 忘记）由 C 流的记忆平台提供。本页已预留入口；
+        接入后在这里显示<strong>真实条目</strong>。现在这里没有任何条目，也<strong>不代表"已经记住"</strong>。
+      </p>
+    </section>
+
+    <!--
+      记忆管理：真实记忆条目面板（FA-PRODUCT-WEB-UI）。
+      真的打 `GET /api/memory/entries`，把真实条目渲染成行；取不到时按四态分流，
+      端口没接上是 `memory_not_ready`（人话 + 你能做什么，码只进「查看原因」）。
+    -->
+    <section class="card panel-card" aria-labelledby="panel-memory-title">
+      <h2 id="panel-memory-title" class="card-title">记忆条目（电脑端真实存储）</h2>
+      <p class="note note-dim">
+        这一块直接读电脑端的记忆接口，显示**真实条目**（类型 / 状态 / 文本）与本次读取的上限；
+        本页只列清单，不改动任何记忆。
+      </p>
+      <button id="panel-memory-refresh" type="button" class="btn btn-secondary btn-block btn-small" data-panel-refresh="memory">重新读取记忆条目</button>
+      <div id="panel-memory-actions" class="panel-actions"></div>
+      <p id="panel-memory-status" class="note" role="status" aria-live="polite"></p>
+      <div id="panel-memory-body" class="panel-body"></div>
+      <p id="panel-memory-note" class="note note-dim"></p>
+    </section>
+
+    <!-- ===================== 视图：模板 ===================== -->
+    <section id="view-templates" class="view card" aria-labelledby="templates-title">
+      <h2 id="templates-title" class="card-title">模板</h2>
+      <p id="view-state-templates" class="view-state" data-state="blank" role="status" aria-live="polite" hidden></p>
+      <p class="note note-dim">
+        模板管理（安装 / 启用 / 停用 / 卸载 / 能力发现）由 C 流的模板平台提供。本页已预留入口；
+        接入后在这里显示真实模板清单与五态能力（已安装 / 启用 / 授权 / 依赖就绪 / 实测支持）。
+      </p>
+    </section>
+
+    <!--
+      模板管理：真实模板平台面板（FA-PRODUCT-WEB-UI）。
+      真的打 `GET /api/plugins`，把业务模板清单与**五态**（已安装 / 启用 / 授权 /
+      依赖就绪 / 实测支持）渲染成行；电脑端没接存储时是结构化 503，照样给人话。
+    -->
+    <section class="card panel-card" aria-labelledby="panel-templates-title">
+      <h2 id="panel-templates-title" class="card-title">模板目录（电脑端真实清单）</h2>
+      <p class="note note-dim">
+        这一块直接读电脑端的模板平台接口，显示每个业务模板的版本、产出格式与**五态能力**；
+        五个状态是五个独立问题，未就绪会列出缺哪几项。
+      </p>
+      <button id="panel-templates-refresh" type="button" class="btn btn-secondary btn-block btn-small" data-panel-refresh="templates">重新读取模板目录</button>
+      <div id="panel-templates-actions" class="panel-actions"></div>
+      <p id="panel-templates-status" class="note" role="status" aria-live="polite"></p>
+      <div id="panel-templates-body" class="panel-body"></div>
+      <p id="panel-templates-note" class="note note-dim"></p>
+    </section>
+
+    <!-- ===================== 视图：设置 ===================== -->
+    <div id="view-settings" class="view">
+      <section class="card" aria-labelledby="health-title">
+        <h2 id="health-title" class="card-title">电脑服务状态</h2>
+        <ul class="kv">
+          <li class="kv-item">
+            <span class="kv-key">服务就绪</span>
+            <span id="health-ready" class="kv-val kv-unknown">未知</span>
+          </li>
+          <li class="kv-item">
+            <span class="kv-key">模型已配置</span>
+            <span id="health-configured" class="kv-val kv-unknown">未知</span>
+          </li>
+          <li class="kv-item">
+            <span class="kv-key">模型实调通过</span>
+            <span id="health-verified" class="kv-val kv-unknown">未知</span>
+          </li>
+        </ul>
+        <p id="health-note" class="note">「已配置」只表示电脑上填好了模型信息；<strong>「实调通过」表示本轮真的成功调用过一次模型</strong>，两者不是一回事。</p>
+      </section>
+
+      <section class="card" aria-labelledby="settings-title">
+        <h2 id="settings-title" class="card-title">设置</h2>
+        <p id="view-state-settings" class="view-state" data-state="blank" role="status" aria-live="polite" hidden></p>
+        <ul id="settings-summary" class="kv"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="settings-conn-title">
+        <h2 id="settings-conn-title" class="card-title">账号与服务连接</h2>
+        <ul id="settings-connection" class="kv"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="settings-auth-title">
+        <h2 id="settings-auth-title" class="card-title">授权与撤销</h2>
+        <ul id="settings-auth-list" class="auth-list"></ul>
+        <p id="settings-auth-note" class="note note-dim"></p>
+      </section>
+
+      <section class="card" aria-labelledby="settings-quota-title">
+        <h2 id="settings-quota-title" class="card-title">额度</h2>
+        <ul id="settings-quota" class="kv"></ul>
+        <p id="settings-quota-note" class="note note-dim"></p>
+      </section>
+
+      <section class="card" aria-labelledby="settings-storage-title">
+        <h2 id="settings-storage-title" class="card-title">存储</h2>
+        <ul id="settings-storage" class="kv"></ul>
+        <p id="settings-storage-note" class="note note-dim"></p>
+      </section>
+
+      <section class="card" aria-labelledby="settings-error-title">
+        <h2 id="settings-error-title" class="card-title">出错时你能做什么</h2>
+        <p id="settings-error-code" class="note note-dim"></p>
+        <p id="settings-error-hint" class="note" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="card" aria-labelledby="settings-secret-title">
+        <h2 id="settings-secret-title" class="card-title">密钥与外泄防护</h2>
+        <p id="settings-secret-note" class="note note-dim" role="status" aria-live="polite"></p>
+      </section>
+
+      <!--
+        权限与连接设置：连接 / 出口边界面板（FA-PRODUCT-WEB-UI）。
+        真的打 `GET /api/research/status`，显示联网查询 / 链接抓取 / OCR 三段就绪、
+        整链是否通、以及**出口策略探针**（本机 vs 外部目的地）——远程与本机工具的边界。
+      -->
+      <section class="card panel-card" aria-labelledby="panel-settings-title">
+        <h2 id="panel-settings-title" class="card-title">连接与外部工具边界（电脑端真实服务）</h2>
+        <p class="note note-dim">
+          这一块直接读电脑端的检索与连接接口，显示各段能力就绪没有、整链通不通，
+          以及数据出不出本机；未注入端口的段落如实标为未就绪。
+        </p>
+        <button id="panel-settings-refresh" type="button" class="btn btn-secondary btn-block btn-small" data-panel-refresh="settings">重新读取连接状态</button>
+        <div id="panel-settings-actions" class="panel-actions"></div>
+        <p id="panel-settings-status" class="note" role="status" aria-live="polite"></p>
+        <div id="panel-settings-body" class="panel-body"></div>
+        <p id="panel-settings-note" class="note note-dim"></p>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <p>potbot 手机助手 Demo。电脑负责模型调用与文件生成，手机负责输入、取回与打开；页面本身不存储密钥，也不直接生成文件。</p>
+    </footer>
+
+  </div>
+
+  <script src="./bridge-ops.js"></script>
+  <script src="./download-verify.js"></script>
+  <script src="./doc-read.js"></script>
+  <script src="./edit-intent.js"></script>
+  <script src="./section-intent.js"></script>
+  <script src="./list-intent.js"></script>
+  <script src="./nav.js"></script>
+  <!-- APP-02：七视图纯逻辑（app-nav.js）+ 它的真实 DOM 渲染层（nav-view.js）。必须早于 app.js。 -->
+  <script src="./app-nav.js"></script>
+  <script src="./nav-view.js"></script>
+  <script src="./conversation-store.js"></script>
+  <script src="./chat-transport.js"></script>
+  <script src="./asset-ops.js"></script>
+  <script src="./deliverable-ops.js"></script>
+  <script src="./settings-model.js"></script>
+  <!-- FA-PRODUCT-WEB-UI：四个管理面板（公共层 + 四个视图各一）。必须早于 app.js。 -->
+  <script src="./panel-core.js"></script>
+  <script src="./panel-documents.js"></script>
+  <script src="./panel-memory.js"></script>
+  <script src="./panel-templates.js"></script>
+  <script src="./panel-research.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

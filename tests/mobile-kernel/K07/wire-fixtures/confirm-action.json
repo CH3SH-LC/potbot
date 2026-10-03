@@ -1,0 +1,15 @@
+{
+  "$schemaRef": "schemas/confirm-action.schema.json",
+  "note": "K07 wire-codec.ts 的 toWireConfirmAction() 输出（领域整数分 3980 → 十进制字符串 39.80；注入时钟整数 → ISO-8601）。必须通过 contracts/mobile-v1 校验器。",
+  "value": {
+    "actionId": "act-wire-1",
+    "accountRef": "acct:meituan:7788",
+    "taskRevision": 7,
+    "paramsDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "quoteRef": "quote:mt-001",
+    "amount": "39.80",
+    "currency": "CNY",
+    "expiresAt": "2026-10-03T00:00:00.000Z",
+    "scope": "purchase"
+  }
+}

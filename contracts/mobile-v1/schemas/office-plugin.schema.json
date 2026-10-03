@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/mobile-v1/schemas/office-plugin.schema.json",
+  "title": "OfficePlugin",
+  "description": "Office 插件（Word/Excel/PPT 同版）。操作：import/create/inspect/apply/preview/export/undo/redo（见 #/$defs/operation 与 #/$defs/request）。统一返回：#/$defs/result，必需字段 artifactId / revision / digest / mime / changedObjects / warnings / receipt。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["artifactId", "revision", "digest", "mime", "changedObjects", "warnings", "receipt"],
+  "properties": {
+    "operation": { "$ref": "#/$defs/operation" },
+    "artifactId": { "$ref": "#/$defs/id" },
+    "revision": { "type": "integer", "minimum": 0 },
+    "digest": { "$ref": "#/$defs/digest" },
+    "mime": { "$ref": "#/$defs/mime" },
+    "changedObjects": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/changedObject" }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/warning" }
+    },
+    "receipt": { "$ref": "#/$defs/receipt" }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "operation": {
+      "enum": ["import", "create", "inspect", "apply", "preview", "export", "undo", "redo"]
+    },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "mime": { "type": "string", "pattern": "^[a-z][a-z0-9.+-]*/[a-z0-9.+-]+$" },
+    "verificationMode": { "enum": ["fixture", "real"] },
+    "verificationLayer": {
+      "enum": ["unit", "contract", "real-api", "on-device", "consumer-reopen", "cross-lane"]
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifactId", "revision", "digest", "mime", "changedObjects", "warnings", "receipt"],
+      "properties": {
+        "operation": { "$ref": "#/$defs/operation" },
+        "artifactId": { "$ref": "#/$defs/id" },
+        "revision": { "type": "integer", "minimum": 0 },
+        "digest": { "$ref": "#/$defs/digest" },
+        "mime": { "$ref": "#/$defs/mime" },
+        "changedObjects": { "type": "array", "items": { "$ref": "#/$defs/changedObject" } },
+        "warnings": { "type": "array", "items": { "$ref": "#/$defs/warning" } },
+        "receipt": { "$ref": "#/$defs/receipt" }
+      }
+    },
+    "changedObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objectId", "objectType", "changeType"],
+      "properties": {
+        "objectId": { "type": "string", "minLength": 1 },
+        "objectType": {
+          "enum": [
+            "paragraph",
+            "table",
+            "cell",
+            "image",
+            "shape",
+            "slide",
+            "sheet",
+            "chart",
+            "style",
+            "hyperlink"
+          ]
+        },
+        "changeType": { "enum": ["insert", "update", "delete", "move"] }
+      }
+    },
+    "warning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message"],
+      "properties": {
+        "code": { "type": "string", "minLength": 1 },
+        "message": { "type": "string", "minLength": 1 },
+        "severity": { "enum": ["info", "warn", "error"] }
+      }
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receiptId", "verificationMode"],
+      "properties": {
+        "receiptId": { "type": "string", "minLength": 1 },
+        "verificationMode": { "$ref": "#/$defs/verificationMode" },
+        "layers": { "type": "array", "items": { "$ref": "#/$defs/verificationLayer" } },
+        "producedAt": { "type": "string", "minLength": 1 }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation"],
+      "properties": {
+        "operation": { "$ref": "#/$defs/operation" },
+        "artifactId": { "$ref": "#/$defs/id" },
+        "conversationId": { "$ref": "#/$defs/id" },
+        "taskId": { "$ref": "#/$defs/id" },
+        "expectedRevision": { "type": "integer", "minimum": 0 },
+        "args": { "type": "object" }
+      }
+    }
+  }
+}

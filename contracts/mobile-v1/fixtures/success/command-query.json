@@ -1,0 +1,16 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "只读命令：指向已有任务，不需要 expectedRevision。",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-0003",
+    "operation": "inspect",
+    "idempotencyKey": "idem-0003",
+    "payload": {
+      "taskId": "task-9",
+      "filters": {
+        "includeArtifacts": true
+      }
+    }
+  }
+}

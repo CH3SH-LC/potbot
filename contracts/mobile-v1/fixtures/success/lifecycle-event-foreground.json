@@ -1,0 +1,10 @@
+{
+  "$schemaRef": "schemas/lifecycle-plan.schema.json#/$defs/lifecycleEvent",
+  "note": "lifecycleEvent 正例：只带运行期 fgsState（foreground），证明两套状态词可以在同一信封的不同实例上分别成立。",
+  "value": {
+    "eventId": "evt-lifecycle-2",
+    "taskId": "task-report",
+    "at": "2026-10-03T08:31:00Z",
+    "fgsState": "foreground"
+  }
+}

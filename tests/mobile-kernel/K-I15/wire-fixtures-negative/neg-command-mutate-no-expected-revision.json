@@ -1,0 +1,13 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "反例：mutate 缺 expectedRevision（mutationBranch required）。",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-neg-mutate",
+    "operation": "mutate",
+    "idempotencyKey": "idem-neg-mutate",
+    "payload": {
+      "conversationId": "conv-1"
+    }
+  }
+}

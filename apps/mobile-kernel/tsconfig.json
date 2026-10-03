@@ -1,0 +1,21 @@
+{
+  "//": "Lane-K 手机内核本地类型门禁（K-I28）。根 tsconfig.json 归总协调独占，本文件**不**修改它；这是 apps/mobile-kernel/** 的独立作用域类型检查配置，compilerOptions 与根配置逐项对齐（target/lib/module 解析 + strict 全家桶 + verbatimModuleSyntax + noEmit）。**零隔离**：exclude 仅 node_modules，apps/mobile-kernel/** 下每个 .ts 都必须进 program（曾排除的两个适配器子树的根因已在源头修好）；覆盖由 apps/mobile-kernel/typecheck.mjs 的 --listFiles 复核、由 tests/mobile-kernel/K-I28/ 断言 quarantinedCount === 0。",
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["node"],
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "verbatimModuleSyntax": true,
+
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
+}

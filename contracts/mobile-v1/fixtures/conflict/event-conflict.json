@@ -1,0 +1,20 @@
+{
+  "$schemaRef": "schemas/event.schema.json",
+  "note": "冲突事件：expectedRevision 与当前不符 ⇒ status=conflict（不是 succeeded）。",
+  "value": {
+    "eventId": "evt-1004",
+    "seq": 4,
+    "commandId": "cmd-0004",
+    "revision": 7,
+    "status": "conflict",
+    "error": {
+      "code": "STALE_REVISION",
+      "message": "expectedRevision=3 与当前修订 7 不符",
+      "retryable": true,
+      "details": {
+        "expectedRevision": 3,
+        "currentRevision": 7
+      }
+    }
+  }
+}

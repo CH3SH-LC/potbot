@@ -1,0 +1,6 @@
+# command: node --experimental-transform-types tests/mobile-office/word/W-R03/run-cjk-demo.ts selftest
+# date: 2026-10-03
+(node:74660) ExperimentalWarning: Transform Types is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+selftest PASSED (10 invariants)
+EXIT=0

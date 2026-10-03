@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/mobile-v1/schemas/confirm-action.schema.json",
+  "title": "ConfirmAction",
+  "description": "确认动作（K07 独占发行/验证/消费）。冻结必需字段：actionId / accountRef / taskRevision / paramsDigest / quoteRef / amount / currency / expiresAt / scope。关键条件（参数摘要、任务修订、报价、金额、币种、期限、范围）任一变化即失效——这些字段全部在 required 中，且 AuthorizationGrant 只能由 K07 从持久账本读取后签发。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "actionId",
+    "accountRef",
+    "taskRevision",
+    "paramsDigest",
+    "quoteRef",
+    "amount",
+    "currency",
+    "expiresAt",
+    "scope"
+  ],
+  "properties": {
+    "actionId": { "$ref": "#/$defs/id" },
+    "accountRef": { "$ref": "#/$defs/accountRef" },
+    "taskRevision": { "type": "integer", "minimum": 0 },
+    "paramsDigest": { "$ref": "#/$defs/digest" },
+    "quoteRef": { "type": "string", "minLength": 1 },
+    "amount": { "$ref": "#/$defs/amount" },
+    "currency": { "$ref": "#/$defs/currency" },
+    "expiresAt": { "$ref": "#/$defs/timestamp" },
+    "scope": { "$ref": "#/$defs/scope" },
+    "authorizationGrant": { "$ref": "#/$defs/grant" }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "accountRef": {
+      "description": "账号引用，不是凭据。",
+      "type": "string",
+      "pattern": "^acct:[A-Za-z0-9._:-]+$"
+    },
+    "amount": {
+      "description": "十进制金额字符串（避免浮点误差）。",
+      "type": "string",
+      "pattern": "^[0-9]+(\\.[0-9]{1,4})?$"
+    },
+    "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,6})?Z$"
+    },
+    "scope": {
+      "enum": ["purchase", "payment", "submit-order", "write-file", "external-mutation"]
+    },
+    "grant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["grantId", "actionId", "issuedAt", "consumed"],
+      "properties": {
+        "grantId": { "type": "string", "minLength": 1 },
+        "actionId": { "type": "string", "minLength": 1 },
+        "issuedAt": { "$ref": "#/$defs/timestamp" },
+        "consumed": { "type": "boolean" },
+        "consumedAt": { "$ref": "#/$defs/timestamp" }
+      }
+    }
+  }
+}

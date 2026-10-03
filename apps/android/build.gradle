@@ -1,0 +1,23 @@
+// 根构建脚本。
+//
+// 刻意使用 buildscript + classpath 而不是 plugins DSL：
+// plugins DSL 需要解析插件标记模块 com.android.application:com.android.application.gradle.plugin，
+// 该标记不在本机 Gradle 缓存中（2026-10-02 只读检查），会让 --offline 直接失败。
+// buildscript classpath 直接指向已缓存的 com.android.tools.build:gradle。
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.7.3'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}

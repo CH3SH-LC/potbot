@@ -1,0 +1,38 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-calendar-event-73f8baa5cb4f0a1c",
+    "operation": "create",
+    "idempotencyKey": "idem-calendar-event-73f8baa5cb4f0a1c",
+    "payload": {
+      "conversationId": "conv-1",
+      "content": "评审会",
+      "args": {
+        "kind": "calendar-event",
+        "title": "评审会",
+        "timezone": "Asia/Shanghai",
+        "accountRef": "acct:cal-work",
+        "time": {
+          "instant": "2026-10-04T01:00:00Z",
+          "timezone": "Asia/Shanghai",
+          "allDay": false
+        },
+        "recurrence": null,
+        "occurrenceScope": null,
+        "conflictRefs": [],
+        "inviteRefs": [],
+        "inviteState": "none"
+      }
+    },
+    "metadata": {
+      "entry": "system-action",
+      "kind": "calendar-event",
+      "returnTarget": {
+        "conversationId": "conv-1",
+        "anchorMessageId": null,
+        "origin": "system-actions"
+      }
+    }
+  }
+}

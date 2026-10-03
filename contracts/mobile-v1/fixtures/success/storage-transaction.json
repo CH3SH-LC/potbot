@@ -1,0 +1,10 @@
+{
+  "$schemaRef": "schemas/storage-port.schema.json",
+  "note": "原子事务：beginTransaction 返回事务句柄，未 commit 前 committed=false。",
+  "value": {
+    "operation": "beginTransaction",
+    "status": "ok",
+    "transactionId": "txn-9001",
+    "committed": false
+  }
+}

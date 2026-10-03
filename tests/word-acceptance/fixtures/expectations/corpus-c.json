@@ -1,0 +1,196 @@
+{
+  "content_types": {
+    "/docProps/app.xml": "application/vnd.openxmlformats-officedocument.extended-properties+xml",
+    "/docProps/core.xml": "application/vnd.openxmlformats-package.core-properties+xml",
+    "/word/document.xml": "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+    "/word/fontTable.xml": "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml",
+    "/word/settings.xml": "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml",
+    "/word/styles.xml": "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml",
+    "/word/theme/theme1.xml": "application/vnd.openxmlformats-officedocument.theme+xml",
+    "/word/webSettings.xml": "application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml"
+  },
+  "deflate_parts": [
+    "[Content_Types].xml",
+    "_rels/.rels",
+    "docProps/app.xml",
+    "docProps/core.xml",
+    "word/_rels/document.xml.rels",
+    "word/document.xml",
+    "word/fontTable.xml",
+    "word/settings.xml",
+    "word/styles.xml",
+    "word/theme/theme1.xml",
+    "word/webSettings.xml"
+  ],
+  "label": "corpus-c-word16-created (real Microsoft Word)",
+  "paragraph_count": 8,
+  "paragraphs": [
+    {
+      "align": "center",
+      "index": 0,
+      "runs": [
+        {
+          "bold": true,
+          "fonts": {
+            "eastAsia": "黑体"
+          },
+          "italic": null,
+          "size_pt": 16,
+          "text": "年度报告"
+        }
+      ],
+      "text": "年度报告"
+    },
+    {
+      "indent": {
+        "first_line_chars": 2,
+        "first_line_twips": 480
+      },
+      "index": 1,
+      "line_spacing": {
+        "multiple": 1.5
+      },
+      "runs": [
+        {
+          "bold": null,
+          "fonts": {
+            "eastAsia": "宋体"
+          },
+          "size_pt": 12,
+          "text": "第一段正文，首行缩进两个字符。"
+        }
+      ],
+      "text": "第一段正文，首行缩进两个字符。"
+    },
+    {
+      "align": "right",
+      "index": 2,
+      "line_spacing": {
+        "multiple": 1.0
+      },
+      "runs": [
+        {
+          "italic": true,
+          "size_pt": 12,
+          "text": "（右对齐斜体补充）"
+        }
+      ],
+      "text": "（右对齐斜体补充）"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rId1",
+      "owner_part_path": null,
+      "target": "word/document.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
+    },
+    {
+      "id": "rId2",
+      "owner_part_path": null,
+      "target": "docProps/core.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties"
+    },
+    {
+      "id": "rId3",
+      "owner_part_path": null,
+      "target": "docProps/app.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties"
+    },
+    {
+      "id": "rId1",
+      "owner_part_path": "word/document.xml",
+      "target": "styles.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles"
+    },
+    {
+      "id": "rId2",
+      "owner_part_path": "word/document.xml",
+      "target": "settings.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings"
+    },
+    {
+      "id": "rId3",
+      "owner_part_path": "word/document.xml",
+      "target": "webSettings.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings"
+    },
+    {
+      "id": "rId4",
+      "owner_part_path": "word/document.xml",
+      "target": "fontTable.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable"
+    },
+    {
+      "id": "rId5",
+      "owner_part_path": "word/document.xml",
+      "target": "theme/theme1.xml",
+      "target_mode": "Internal",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme"
+    }
+  ],
+  "required_parts": [
+    "[Content_Types].xml",
+    "_rels/.rels",
+    "docProps/app.xml",
+    "docProps/core.xml",
+    "word/_rels/document.xml.rels",
+    "word/document.xml",
+    "word/fontTable.xml",
+    "word/settings.xml",
+    "word/styles.xml",
+    "word/theme/theme1.xml",
+    "word/webSettings.xml"
+  ],
+  "sections": [
+    {
+      "margins": {
+        "bottom": 1440,
+        "gutter": 0,
+        "left": 1800,
+        "right": 1800,
+        "top": 1440
+      },
+      "page_size": {
+        "h": 16838,
+        "w": 11906
+      }
+    }
+  ],
+  "sha256": "6b2c2e142faa7a563a8ec142f1389107445bed8162567713f1903bfaa4481026",
+  "tables": [
+    {
+      "cell_texts": [
+        [
+          "指标",
+          "数值"
+        ],
+        [
+          "人数",
+          "8"
+        ]
+      ],
+      "grid": [
+        4153,
+        4153
+      ]
+    }
+  ],
+  "word": {
+    "authoring_script": "tests/word-acceptance/fixtures/word-author-corpus-c.py",
+    "build": "16.0.20430",
+    "exe": "C:/Program Files/Microsoft Office/root/Office16/WINWORD.EXE",
+    "how_saved": "COM 自动化：Documents.Add() 建文档 → Range.Font / Range.ParagraphFormat 授权格式 → SaveAs2(FileFormat=wdFormatDocumentDefault=16)",
+    "licensing": "本机处于**未授权**状态但功能可用；授权持续性不可依赖。Word 在本任务中只是**取证工具**，不是产品依赖。",
+    "product": "Microsoft Word",
+    "scope_of_claim": "只声明「Microsoft Word 16.0.20430 通过」。**未**在 WPS、**未**在手机端、**未**在 Word 其他版本上验证（R156）。",
+    "version": "16.0"
+  }
+}

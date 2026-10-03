@@ -1,0 +1,13 @@
+{
+  "$schemaRef": "schemas/command.schema.json",
+  "note": "K05 派发命令 plan → 契约 operation \"create\" 的投影（内部 payload 键 split/max_parallel/reason 无契约字段，故只保留契约允许的子集）。",
+  "value": {
+    "schemaVersion": "mobile-v1",
+    "commandId": "cmd-k05-plan",
+    "operation": "create",
+    "idempotencyKey": "idem-k05-plan",
+    "payload": {
+      "goal": "完成一份周报"
+    }
+  }
+}

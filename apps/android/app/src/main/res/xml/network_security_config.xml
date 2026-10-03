@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  APP-06（R254）：服务地址**可配置**（见 PotbotEndpoints）。这里保持同一条安全姿态：
+    - 只对回环 127.0.0.1 放行明文 HTTP —— 它只是**开发便利**（电脑侧 Node 服务经
+      adb reverse 映射），**不是产品运行前提**；
+    - 其余所有域名保持 cleartextTrafficPermitted="false"，即远程后端**必须走 HTTPS**。
+      因此换远程地址**不需要**放宽本配置，也不会因为"地址一改"就允许明文外发。
+  这里**没有**任何 trust-anchors 覆盖或 certificatePinner 关闭动作，
+  默认系统信任锚保持不变，TLS 校验未被关闭。
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">127.0.0.1</domain>
+    </domain-config>
+</network-security-config>

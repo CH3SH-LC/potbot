@@ -1,0 +1,15 @@
+{
+  "$schemaRef": "schemas/confirm-action.schema.json",
+  "note": "负例对照：amount 有 5 位小数（契约 pattern ^[0-9]+(\\.[0-9]{1,4})?$ 只允许 1–4 位）。此文件使校验器 exit 1，是反向对照。",
+  "value": {
+    "actionId": "act-wire-bad",
+    "accountRef": "acct:meituan:7788",
+    "taskRevision": 7,
+    "paramsDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "quoteRef": "quote:mt-001",
+    "amount": "39.80000",
+    "currency": "CNY",
+    "expiresAt": "2026-10-03T00:00:00.000Z",
+    "scope": "purchase"
+  }
+}

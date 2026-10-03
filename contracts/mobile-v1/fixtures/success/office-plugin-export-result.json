@@ -1,0 +1,24 @@
+{
+  "$schemaRef": "schemas/office-plugin.schema.json",
+  "note": "OfficePlugin 统一返回：artifactId/revision/digest/mime/changedObjects/warnings/receipt。",
+  "value": {
+    "operation": "export",
+    "artifactId": "doc-7",
+    "revision": 12,
+    "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "changedObjects": [
+      { "objectId": "p-1", "objectType": "paragraph", "changeType": "update" },
+      { "objectId": "tbl-2", "objectType": "table", "changeType": "insert" }
+    ],
+    "warnings": [
+      { "code": "FONT_SUBSTITUTED", "message": "字体 宋体 缺失，已替换为等价字体", "severity": "warn" }
+    ],
+    "receipt": {
+      "receiptId": "rcpt-1001",
+      "verificationMode": "fixture",
+      "layers": ["unit", "contract"],
+      "producedAt": "2026-10-03T08:05:00Z"
+    }
+  }
+}

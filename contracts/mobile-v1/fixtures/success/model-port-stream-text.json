@@ -1,0 +1,10 @@
+{
+  "$schemaRef": "schemas/model-port.schema.json#/$defs/streamChunk",
+  "note": "流式片段：text。",
+  "value": {
+    "type": "text",
+    "text": "好的，我来",
+    "index": 0,
+    "done": false
+  }
+}

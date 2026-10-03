@@ -1,0 +1,142 @@
+{
+  "package": "F-R04",
+  "area": "long-list / long-stream / large-file — performance & resource retention",
+  "machineNote": "shared machine (six lanes); timings are same-machine relative, not absolute",
+  "reps": 7,
+  "sizeFactor": 4,
+  "ceiling": 8,
+  "node": "v24.13.0",
+  "platform": "win32/x64",
+  "results": [
+    {
+      "probeId": "FR04-STREAM-01",
+      "metric": "scaling-ratio",
+      "value": 5.684837023027968,
+      "threshold": 10,
+      "unit": "ratio(20k→80k)",
+      "pass": true,
+      "enforced": true,
+      "note": "单条消息累积分片数 4 倍（含 8 万个状态的 GC 开销，上限放宽到 10）"
+    },
+    {
+      "probeId": "FR04-STREAM-02",
+      "metric": "scaling-ratio",
+      "value": 4.190051020408093,
+      "threshold": 10,
+      "unit": "ratio(1k→4k)",
+      "pass": true,
+      "enforced": true,
+      "note": "固定 5000 片，会话消息数 1k→4k"
+    },
+    {
+      "probeId": "FR04-STREAM-10",
+      "metric": "absolute-budget",
+      "value": 4.775999999999954,
+      "threshold": 3000,
+      "unit": "ms@80k",
+      "pass": true,
+      "enforced": true,
+      "note": "中位 4.78ms"
+    },
+    {
+      "probeId": "FR04-LIST-10",
+      "metric": "absolute-budget",
+      "value": 5.184599999999932,
+      "threshold": 300,
+      "unit": "ms@16k",
+      "pass": true,
+      "enforced": true,
+      "note": "中位 5.18ms"
+    },
+    {
+      "probeId": "FR04-LIST-11",
+      "metric": "absolute-budget",
+      "value": 4.574200000000019,
+      "threshold": 300,
+      "unit": "ms@16k",
+      "pass": true,
+      "enforced": true,
+      "note": "中位 4.57ms"
+    },
+    {
+      "probeId": "FR04-FILE-10",
+      "metric": "absolute-budget",
+      "value": 7.261899999999969,
+      "threshold": 500,
+      "unit": "ms@16k",
+      "pass": true,
+      "enforced": true,
+      "note": "中位 7.26ms"
+    },
+    {
+      "probeId": "FR04-LIST-01",
+      "metric": "scaling-ratio",
+      "value": 4.2381749686062955,
+      "threshold": 8,
+      "unit": "ratio(4k→16k)",
+      "pass": true,
+      "enforced": false,
+      "note": "中位比值 4.24（噪声大，详见 RUNBOOK）"
+    },
+    {
+      "probeId": "FR04-LIST-02",
+      "metric": "scaling-ratio",
+      "value": 5.176597636894941,
+      "threshold": 8,
+      "unit": "ratio(4k→16k)",
+      "pass": true,
+      "enforced": false,
+      "note": "中位比值 5.18（噪声大，详见 RUNBOOK）"
+    },
+    {
+      "probeId": "FR04-FILE-03",
+      "metric": "scaling-ratio",
+      "value": 4.713836632447376,
+      "threshold": 8,
+      "unit": "ratio(4k→16k)",
+      "pass": true,
+      "enforced": false,
+      "note": "中位比值 4.71（噪声大，详见 RUNBOOK）"
+    },
+    {
+      "probeId": "FR04-LIST-03",
+      "metric": "scaling-ratio",
+      "value": 6.73131269237739,
+      "threshold": 12,
+      "unit": "ratio(1k→5k)",
+      "pass": true,
+      "enforced": true,
+      "note": "连续绑定 k 个任务；归属唯一走不可变前缀树索引 + 任务追加结构共享（O(1)/次）"
+    },
+    {
+      "probeId": "FR04-FILE-01",
+      "metric": "scaling-ratio",
+      "value": 4.980621289405722,
+      "threshold": 12,
+      "unit": "ratio(1k→5k)",
+      "pass": true,
+      "enforced": true,
+      "note": "连续追加 k 版；结构共享单链 O(1) 追加，不再整拷版本数组"
+    },
+    {
+      "probeId": "FR04-FILE-02",
+      "metric": "scaling-ratio",
+      "value": 5.086432160814484,
+      "threshold": 12,
+      "unit": "ratio(1k→5k)",
+      "pass": true,
+      "enforced": true,
+      "note": "在 k 版链上取 k 次；revision→下标索引 O(1)，不再线性 find"
+    },
+    {
+      "probeId": "FR04-RET-05",
+      "metric": "retention-count",
+      "value": 0,
+      "threshold": 0,
+      "unit": "count",
+      "pass": true,
+      "enforced": true,
+      "note": "1000 个订阅者全部退订后，事件零投递（无监听器泄漏）"
+    }
+  ]
+}
